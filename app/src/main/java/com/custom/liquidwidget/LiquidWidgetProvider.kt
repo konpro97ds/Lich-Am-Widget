@@ -129,7 +129,7 @@ class LiquidWidgetProvider : AppWidgetProvider() {
         }
 
         /**
-         * Dựng khung Xem Trước trong MainActivity dùng chung 100% layout & logic với Widget thật
+         * Dựng khung Xem Trước 1:1 trong MainActivity dùng chung toàn bộ layout & logic với Widget thật
          */
         fun renderPreviewView(context: Context, root: View, cfg: RenderConfig) {
             val prefs = context.getSharedPreferences("widget_prefs", Context.MODE_PRIVATE)
@@ -234,7 +234,7 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             bindTv(R.id.tv_lunar_left_r, displayLunarOrHoliday, 11f, accentColor)
             bindTv(R.id.tv_range_right_r, rangeStr, 11f, mainColor)
 
-            // Lịch tuần 7 ngày
+            // Dải lịch tuần 7 ngày
             val weekCal = Calendar.getInstance()
             val currentDow = weekCal.get(Calendar.DAY_OF_WEEK)
             val offsetToMon = if (currentDow == Calendar.SUNDAY) -6 else Calendar.MONDAY - currentDow
@@ -282,7 +282,7 @@ class LiquidWidgetProvider : AppWidgetProvider() {
                 weekCal.add(Calendar.DAY_OF_MONTH, 1)
             }
 
-            // Dự báo 7 ngày
+            // Dải dự báo 7 ngày
             val fcIds = intArrayOf(R.id.fc_0, R.id.fc_1, R.id.fc_2, R.id.fc_3, R.id.fc_4, R.id.fc_5, R.id.fc_6)
             for (i in 0..6) {
                 val colHeader = if (i == todayIndexInWeek) "Nay" else labels[i]
