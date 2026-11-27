@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector android:width="300dp" android:height="160dp" android:viewportWidth="300" android:viewportHeight="160">
+            <group android:name="cloud_drift">
+                <path android:fillColor="#22FFFFFF"
+                    android:pathData="M140,42 C140,30 154,22 166,26 C174,18 190,20 196,30 C206,30 214,38 214,48 C214,56 206,62 196,62 L144,62 C134,62 128,54 132,46 C134,43 137,42 140,42 Z" />
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="cloud_drift">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="translateX" android:duration="6500" android:valueFrom="-16" android:valueTo="16" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+        </aapt:attr>
+    </target>
+</animated-vector>
