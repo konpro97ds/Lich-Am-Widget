@@ -25,17 +25,28 @@ class WeatherWorker(
 
     override fun doWork(): Result {
         val prefs = context.getSharedPreferences("widget_prefs", Context.MODE_PRIVATE)
-        val loc = getBestLastKnownLocation()
-        val lat = loc?.latitude ?: prefs.getFloat("last_lat", 10.8231f).toDouble()
-        val lon = loc?.longitude ?: prefs.getFloat("last_lon", 106.6297f).toDouble()
+        val locationMode = prefs.getString("location_mode", "AUTO") ?: "AUTO"
 
-        if (loc != null) {
-            prefs.edit()
-                .putFloat("last_lat", lat.toFloat())
-                .putFloat("last_lon", lon.toFloat())
-                .apply()
-            resolveCityName(lat, lon)?.let { city ->
-                prefs.edit().putString("last_city", "🏙️ $city").apply()
+        val lat: Double
+        val lon: Double
+
+        if (locationMode == "MANUAL") {
+            lat = prefs.getFloat("manual_lat", 10.8231f).toDouble()
+            lon = prefs.getFloat("manual_lon", 106.6297f).toDouble()
+            val manualCity = prefs.getString("manual_city_name", "TP. Hồ Chí Minh") ?: "TP. Hồ Chí Minh"
+            prefs.edit().putString("last_city", "🏙️ $manualCity").apply()
+        } else {
+            val loc = getBestLastKnownLocation()
+            lat = loc?.latitude ?: prefs.getFloat("last_lat", 10.8231f).toDouble()
+            lon = loc?.longitude ?: prefs.getFloat("last_lon", 106.6297f).toDouble()
+            if (loc != null) {
+                prefs.edit()
+                    .putFloat("last_lat", lat.toFloat())
+                    .putFloat("last_lon", lon.toFloat())
+                    .apply()
+                resolveCityName(lat, lon)?.let { city ->
+                    prefs.edit().putString("last_city", "📍 $city").apply()
+                }
             }
         }
 
