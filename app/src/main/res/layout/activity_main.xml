@@ -19,141 +19,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="10dp"
-        android:text="Xem trước trực tiếp &amp; tùy chỉnh giao diện Kính Lỏng"
+        android:text="Xem trước 1:1 trực tiếp &amp; tùy chỉnh Kính Lỏng"
         android:textColor="#94A3B8"
         android:textSize="12sp" />
 
-    <!-- KHUNG XEM TRƯỚC TRỰC TIẾP (LIVE PREVIEW) -->
+    <!-- KHUNG XEM TRƯỚC 1:1 DÙNG CHUNG LAYOUT THẬT CỦA WIDGET -->
     <FrameLayout
-        android:id="@+id/preview_container"
+        android:id="@+id/preview_wrapper"
         android:layout_width="match_parent"
-        android:layout_height="176dp"
+        android:layout_height="196dp"
         android:layout_marginBottom="12dp">
 
-        <ImageView
-            android:id="@+id/iv_preview_bg"
+        <include
+            android:id="@+id/included_widget_preview"
+            layout="@layout/widget_liquid"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_liquid_glass" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="12dp">
-
-            <TextView
-                android:id="@+id/tv_prev_greeting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chào buổi tối ⚙"
-                android:textColor="#FFFFFF"
-                android:textSize="10.5sp"
-                android:textStyle="bold" />
-
-            <!-- Header Trái / Phải / Giữa trong Preview -->
-            <LinearLayout
-                android:id="@+id/prev_header_row"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.15"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/prev_left_col"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.35"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_prev_clock"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="22:08"
-                        android:textColor="#FFFFFF"
-                        android:textSize="36sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_prev_solar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Thứ Sáu, 27 Thg 11, 2026"
-                        android:textColor="#FFFFFF"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_prev_lunar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="19/10 · Năm Bính Ngọ"
-                        android:textColor="#FFD54F"
-                        android:textSize="11.5sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/prev_right_col"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_prev_temp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="28°"
-                        android:textColor="#FFFFFF"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_prev_desc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ít mây"
-                        android:textColor="#FFFFFF"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_prev_city"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🏙️ TP. Hồ Chí Minh"
-                        android:textColor="#FFFFFF"
-                        android:textSize="11sp" />
-
-                    <TextView
-                        android:id="@+id/tv_prev_range"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="↑32° ↓24°"
-                        android:textColor="#FFFFFF"
-                        android:textSize="11sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Thanh mẫu Lịch tuần thu gọn trong Preview -->
-            <TextView
-                android:id="@+id/tv_prev_week_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/bg_glass_pill"
-                android:gravity="center"
-                android:paddingVertical="5dp"
-                android:text="T2 · T3 · T4 · T5 · [T6 Hôm nay] · T7 · CN"
-                android:textColor="#FFD54F"
-                android:textSize="10.5sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+            android:layout_height="match_parent" />
     </FrameLayout>
 
     <!-- BẢNG TÙY CHỈNH CUỘN DỌC -->
