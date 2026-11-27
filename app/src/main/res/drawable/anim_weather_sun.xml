@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector android:width="300dp" android:height="160dp" android:viewportWidth="300" android:viewportHeight="160">
+            <group android:name="sun_rays" android:pivotX="216" android:pivotY="56">
+                <path android:strokeColor="#55FDE047" android:strokeWidth="1.5" android:strokeLineCap="round"
+                    android:pathData="M216,24 L216,32 M216,80 L216,88 M184,56 L192,56 M240,56 L248,56 M193,33 L199,39 M233,73 L239,79 M239,33 L233,39 M199,73 L193,79" />
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="sun_rays">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="rotation" android:duration="14000" android:valueFrom="0" android:valueTo="360" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+        </aapt:attr>
+    </target>
+</animated-vector>
