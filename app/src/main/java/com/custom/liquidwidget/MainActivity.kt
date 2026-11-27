@@ -6,12 +6,9 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,7 +18,6 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import java.io.File
 import java.io.FileOutputStream
-import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
 
@@ -66,32 +62,22 @@ class MainActivity : AppCompatActivity() {
     private val accentValues = listOf("#FFD54F", "#7DD3FC", "#FDA4AF", "#6EE7B7", "#FFFFFF")
 
     private val effectLabels = listOf(
-        "Tự động theo Thời tiết & Lễ Tết",
+        "Tự động theo Thời tiết & Lễ Tết (AUTO)",
         "Mưa rơi & Giọt đọng (RAIN)",
         "Giông bão & Sấm chớp (THUNDER)",
-        "Nắng ấm & Mây trôi (SUN_CLOUD)",
+        "Nắng ấm rực rỡ (SUN)",
+        "Nắng nhẹ & Mây trôi (SUN_CLOUD)",
         "Trăng sao ban đêm (MOON)",
+        "Trăng mờ & Mây đêm (MOON_CLOUD)",
         "Mây nhiều âm u (CLOUD)",
         "Tết Nguyên Đán & Pháo hoa (TET)",
         "Quốc Khánh Cờ Đỏ Sao Vàng (NATIONAL)",
         "Tết Trung Thu Trăng Rằm (MID_AUTUMN)",
         "Giáng Sinh Tuyết Rơi (XMAS)"
     )
-    private val effectValues = listOf("AUTO", "RAIN", "THUNDER", "SUN_CLOUD", "MOON", "CLOUD", "TET", "NATIONAL", "MID_AUTUMN", "XMAS")
+    private val effectValues = listOf("AUTO", "RAIN", "THUNDER", "SUN", "SUN_CLOUD", "MOON", "MOON_CLOUD", "CLOUD", "TET", "NATIONAL", "MID_AUTUMN", "XMAS")
 
-    private lateinit var ivPreviewBg: ImageView
-    private lateinit var prevLeftCol: LinearLayout
-    private lateinit var prevRightCol: LinearLayout
-    private lateinit var tvPrevGreeting: TextView
-    private lateinit var tvPrevClock: TextView
-    private lateinit var tvPrevSolar: TextView
-    private lateinit var tvPrevLunar: TextView
-    private lateinit var tvPrevTemp: TextView
-    private lateinit var tvPrevDesc: TextView
-    private lateinit var tvPrevCity: TextView
-    private lateinit var tvPrevRange: TextView
-    private lateinit var tvPrevWeekBar: TextView
-
+    private lateinit var previewRoot: View
     private lateinit var sbClockSize: SeekBar
     private lateinit var tvClockSizeVal: TextView
     private lateinit var sbTextScale: SeekBar
@@ -149,21 +135,7 @@ class MainActivity : AppCompatActivity() {
 
         val prefs = getSharedPreferences("widget_prefs", Context.MODE_PRIVATE)
 
-        // Bind Preview views
-        ivPreviewBg = findViewById(R.id.iv_preview_bg)
-        prevLeftCol = findViewById(R.id.prev_left_col)
-        prevRightCol = findViewById(R.id.prev_right_col)
-        tvPrevGreeting = findViewById(R.id.tv_prev_greeting)
-        tvPrevClock = findViewById(R.id.tv_prev_clock)
-        tvPrevSolar = findViewById(R.id.tv_prev_solar)
-        tvPrevLunar = findViewById(R.id.tv_prev_lunar)
-        tvPrevTemp = findViewById(R.id.tv_prev_temp)
-        tvPrevDesc = findViewById(R.id.tv_prev_desc)
-        tvPrevCity = findViewById(R.id.tv_prev_city)
-        tvPrevRange = findViewById(R.id.tv_prev_range)
-        tvPrevWeekBar = findViewById(R.id.tv_prev_week_bar)
-
-        // Bind Controls
+        previewRoot = findViewById(R.id.included_widget_preview)
         sbClockSize = findViewById(R.id.sb_clock_size)
         tvClockSizeVal = findViewById(R.id.tv_clock_size_val)
         sbTextScale = findViewById(R.id.sb_text_scale)
@@ -184,7 +156,6 @@ class MainActivity : AppCompatActivity() {
         val btnPinWidget = findViewById<Button>(R.id.btn_pin_widget)
         val btnApply = findViewById<Button>(R.id.btn_apply)
 
-        // 1. Setup City Spinner
         spCitySelect.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, cityList.map { it.name })
         val savedLocMode = prefs.getString("location_mode", "AUTO")
         val savedManualCity = prefs.getString("manual_city_name", "")
@@ -193,7 +164,6 @@ class MainActivity : AppCompatActivity() {
         } else 0
         spCitySelect.setSelection(initCityIdx)
 
-        // 2. Setup SeekBars
         val initClock = prefs.getInt("clock_size", 36)
         sbClockSize.progress = (initClock - 24).coerceIn(0, 36)
         tvClockSizeVal.text = "${initClock}sp"
@@ -220,7 +190,6 @@ class MainActivity : AppCompatActivity() {
         sbTextScale.setOnSeekBarChangeListener(seekListener)
         sbBgAlpha.setOnSeekBarChangeListener(seekListener)
 
-        // 3. Setup Other Spinners
         val layoutLabels = listOf("Giờ bên Trái (Mặc định)", "Giờ Căn Giữa", "Giờ bên Phải")
         spLayoutMode.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, layoutLabels)
         spLayoutMode.setSelection(prefs.getInt("layout_mode", 0).coerceIn(0, 2))
@@ -253,7 +222,6 @@ class MainActivity : AppCompatActivity() {
         spTestEffect.onItemSelectedListener = itemSelectedListener
         swEnableEffects.setOnCheckedChangeListener { _, _ -> updateLivePreview() }
 
-        // 4. Buttons
         btnPickFont.setOnClickListener {
             pickFontLauncher.launch("*/*")
         }
@@ -330,93 +298,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateLivePreview() {
-        val prefs = getSharedPreferences("widget_prefs", Context.MODE_PRIVATE)
-        val clockSize = (sbClockSize.progress + 24).toFloat()
-        val textScale = (sbTextScale.progress + 70) / 100f
-        val bgAlpha = sbBgAlpha.progress
-        val bgColorHex = bgValues[spBgColor.selectedItemPosition]
-        val accentColor = Color.parseColor(accentValues[spAccentColor.selectedItemPosition])
-        val fontType = fontValues[spFontType.selectedItemPosition]
-        val tf = LiquidWidgetProvider.loadCustomTypeface(this, fontType)
-        val layoutMode = spLayoutMode.selectedItemPosition
-
-        val cal = Calendar.getInstance()
-        val dd = cal.get(Calendar.DAY_OF_MONTH)
-        val mm = cal.get(Calendar.MONTH) + 1
-        val yy = cal.get(Calendar.YEAR)
-        val hour = cal.get(Calendar.HOUR_OF_DAY)
-        val min = cal.get(Calendar.MINUTE)
-        val isNight = (hour >= 18 || hour < 6)
-
-        val lunarToday = LunarCalendar.getLunarInfo(dd, mm, yy)
-        val holiday = LunarCalendar.getVietnameseHoliday(dd, mm, yy)
-        val descStr = prefs.getString("last_desc", "Ít mây") ?: "Ít mây"
-        val testEffectMode = effectValues[spTestEffect.selectedItemPosition]
-
-        val activeEffect = if (!swEnableEffects.isChecked) "NONE"
-        else if (testEffectMode != "AUTO") testEffectMode
-        else if (holiday.themeType != "NONE") holiday.themeType
-        else LiquidWidgetProvider.detectWeatherEffect(descStr, isNight)
-
-        ivPreviewBg.setImageBitmap(
-            LiquidWidgetProvider.drawLiquidGlassBitmap(bgColorHex, bgAlpha, 56f, activeEffect, isNight, lunarToday.first)
-        )
-
-        val dayOfWeek = arrayOf("", "Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy")[cal.get(Calendar.DAY_OF_WEEK)]
-        tvPrevGreeting.text = when (hour) {
-            in 5..10 -> "Chào buổi sáng ⚙"
-            in 11..13 -> "Chào buổi trưa ⚙"
-            in 14..17 -> "Chào buổi chiều ⚙"
-            else -> "Chào buổi tối ⚙"
-        }
-        tvPrevClock.text = String.format("%02d:%02d", hour, min)
-        tvPrevSolar.text = "$dayOfWeek, $dd Thg $mm, $yy"
-        tvPrevLunar.text = if (holiday.name.isNotEmpty()) "${holiday.name} · ${lunarToday.third}" else lunarToday.third
-        tvPrevTemp.text = prefs.getString("last_temp", "28°")
-        tvPrevDesc.text = descStr
-        tvPrevRange.text = prefs.getString("last_range", "↑32° ↓24°")
-
         val cityIdx = spCitySelect.selectedItemPosition
-        tvPrevCity.text = if (cityIdx == 0) {
-            prefs.getString("last_city", "📍 Khu vực của bạn")
-        } else {
-            "🏙️ ${cityList[cityIdx].name}"
-        }
+        val overrideCity = if (cityIdx == 0) null else "🏙️ ${cityList[cityIdx].name}"
 
-        // Cập nhật Font & Kích thước trên Preview
-        listOf(tvPrevGreeting, tvPrevClock, tvPrevSolar, tvPrevLunar, tvPrevTemp, tvPrevDesc, tvPrevCity, tvPrevRange, tvPrevWeekBar).forEach {
-            it.typeface = tf
-        }
-        tvPrevClock.setTextSize(TypedValue.COMPLEX_UNIT_SP, clockSize)
-        tvPrevGreeting.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.5f * textScale)
-        tvPrevSolar.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f * textScale)
-        tvPrevLunar.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11.5f * textScale)
-        tvPrevTemp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f * textScale)
-        tvPrevDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f * textScale)
-        tvPrevCity.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f * textScale)
-        tvPrevRange.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f * textScale)
-        tvPrevWeekBar.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.5f * textScale)
-
-        tvPrevLunar.setTextColor(accentColor)
-        tvPrevWeekBar.setTextColor(accentColor)
-
-        // Cập nhật bố cục Trái / Giữa / Phải trong Preview
-        when (layoutMode) {
-            1 -> {
-                prevRightCol.visibility = View.GONE
-                prevLeftCol.gravity = Gravity.CENTER_HORIZONTAL
-            }
-            2 -> {
-                prevRightCol.visibility = View.VISIBLE
-                prevLeftCol.gravity = Gravity.END
-                prevRightCol.gravity = Gravity.START
-            }
-            else -> {
-                prevRightCol.visibility = View.VISIBLE
-                prevLeftCol.gravity = Gravity.START
-                prevRightCol.gravity = Gravity.END
-            }
-        }
+        val cfg = LiquidWidgetProvider.RenderConfig(
+            clockSize = (sbClockSize.progress + 24).toFloat(),
+            textScale = (sbTextScale.progress + 70) / 100f,
+            bgAlpha = sbBgAlpha.progress,
+            bgColorHex = bgValues[spBgColor.selectedItemPosition],
+            accentColorHex = accentValues[spAccentColor.selectedItemPosition],
+            layoutMode = spLayoutMode.selectedItemPosition,
+            fontType = fontValues[spFontType.selectedItemPosition],
+            enableEffects = swEnableEffects.isChecked,
+            testEffectMode = effectValues[spTestEffect.selectedItemPosition],
+            overrideCity = overrideCity
+        )
+        LiquidWidgetProvider.renderPreviewView(this, previewRoot, cfg)
     }
 
     private fun triggerWeatherSync() {
