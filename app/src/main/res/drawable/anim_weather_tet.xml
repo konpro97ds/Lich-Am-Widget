@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector android:width="300dp" android:height="160dp" android:viewportWidth="300" android:viewportHeight="160">
+            <group android:name="tet_petals">
+                <path android:fillColor="#DDFDE047"
+                    android:pathData="M170,12 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M220,24 m-2.0,0 a2.0,2.0 0 1,0 4.0,0 a2.0,2.0 0 1,0 -4.0,0 M255,16 m-2.3,0 a2.3,2.3 0 1,0 4.6,0 a2.3,2.3 0 1,0 -4.6,0 M195,44 m-1.8,0 a1.8,1.8 0 1,0 3.6,0 a1.8,1.8 0 1,0 -3.6,0" />
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="tet_petals">
+        <aapt:attr name="android:animation">
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateY" android:duration="2800" android:valueFrom="-10" android:valueTo="90" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="1400" android:valueFrom="-6" android:valueTo="6" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>
