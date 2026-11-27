@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0B1120"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lịch Âm Widget · Ken Phúc"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Chạm nút bên dưới để thêm Widget ra màn hình chính hoặc thử hiệu ứng thời tiết."
+            android:textColor="#94A3B8"
+            android:textSize="13sp" />
+
+        <!-- Khung xem trước trực tiếp -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_liquid_glass">
+
+            <ProgressBar
+                android:id="@+id/preview_rain"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/anim_weather_rain" />
+
+            <TextView
+                android:id="@+id/tv_preview_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Xem trước hiệu ứng Mưa 60fps"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/btn_pin_widget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#2563EB"
+            android:text="Ghim Widget ra Màn hình chính"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btn_mode_auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Chế độ Tự động theo Thời tiết thật" />
+
+        <Button
+            android:id="@+id/btn_mode_rain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Test Hiệu ứng Mưa 60fps" />
+
+        <Button
+            android:id="@+id/btn_sync_weather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Cập nhật Thời tiết ngay" />
+    </LinearLayout>
+</ScrollView>
