@@ -19,7 +19,11 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.util.TypedValue
 import android.view.View
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.RemoteViews
+import android.widget.TextClock
+import android.widget.TextView
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
@@ -59,6 +63,20 @@ class LiquidWidgetProvider : AppWidgetProvider() {
     }
 
     companion object {
+        data class RenderConfig(
+            val clockSize: Float = 36f,
+            val textScale: Float = 0.95f,
+            val bgAlpha: Int = 48,
+            val bgColorHex: String = "#0F172A",
+            val textColorHex: String = "#FFFFFF",
+            val accentColorHex: String = "#FFD54F",
+            val layoutMode: Int = 0,
+            val fontType: String = "DEFAULT",
+            val enableEffects: Boolean = true,
+            val testEffectMode: String = "AUTO",
+            val overrideCity: String? = null
+        )
+
         private fun buildClockPendingIntent(context: Context): PendingIntent {
             val clockPackages = listOf(
                 "com.coloros.alarmclock",
@@ -110,6 +128,180 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             return PendingIntent.getActivity(context, 13, webIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         }
 
+        /**
+         * Dựng khung Xem Trước trong MainActivity dùng chung 100% layout & logic với Widget thật
+         */
+        fun renderPreviewView(context: Context, root: View, cfg: RenderConfig) {
+            val prefs = context.getSharedPreferences("widget_prefs", Context.MODE_PRIVATE)
+            val mainColor = Color.parseColor(cfg.textColorHex)
+            val accentColor = Color.parseColor(cfg.accentColorHex)
+            val typeface = loadCustomTypeface(context, cfg.fontType)
+
+            val cal = Calendar.getInstance()
+            val dd = cal.get(Calendar.DAY_OF_MONTH)
+            val mm = cal.get(Calendar.MONTH) + 1
+            val yy = cal.get(Calendar.YEAR)
+            val hour = cal.get(Calendar.HOUR_OF_DAY)
+            val isNight = (hour >= 18 || hour < 6)
+
+            val lunarToday = LunarCalendar.getLunarInfo(dd, mm, yy)
+            val holiday = LunarCalendar.getVietnameseHoliday(dd, mm, yy)
+            val descStr = prefs.getString("last_desc", "Ít mây") ?: "Ít mây"
+
+            val activeEffect = if (!cfg.enableEffects) "NONE"
+            else if (cfg.testEffectMode != "AUTO") cfg.testEffectMode
+            else if (holiday.themeType != "NONE") holiday.themeType
+            else detectWeatherEffect(descStr, isNight)
+
+            root.findViewById<ImageView>(R.id.iv_glass_bg)?.setImageBitmap(
+                drawLiquidGlassBitmap(cfg.bgColorHex, cfg.bgAlpha, 56f, activeEffect, isNight, lunarToday.first)
+            )
+            root.findViewById<ProgressBar>(R.id.pb_glass_shimmer)?.visibility = if (cfg.enableEffects) View.VISIBLE else View.GONE
+
+            val showRain = cfg.enableEffects && (activeEffect == "RAIN" || activeEffect == "THUNDER")
+            val showSun = cfg.enableEffects && (activeEffect == "SUN" || activeEffect == "SUN_CLOUD" || activeEffect == "MID_AUTUMN")
+            val showMoon = cfg.enableEffects && (activeEffect == "MOON" || activeEffect == "MOON_CLOUD")
+            val showCloud = cfg.enableEffects && (activeEffect == "CLOUD" || activeEffect == "SUN" || activeEffect == "SUN_CLOUD" || activeEffect == "MOON_CLOUD" || activeEffect == "RAIN" || activeEffect == "THUNDER")
+            val showThunder = cfg.enableEffects && (activeEffect == "THUNDER")
+            val showTet = cfg.enableEffects && (activeEffect == "TET" || activeEffect == "NATIONAL")
+            val showXmas = cfg.enableEffects && (activeEffect == "XMAS")
+
+            root.findViewById<View>(R.id.pb_weather_rain)?.visibility = if (showRain) View.VISIBLE else View.GONE
+            root.findViewById<View>(R.id.pb_weather_sun)?.visibility = if (showSun) View.VISIBLE else View.GONE
+            root.findViewById<View>(R.id.pb_weather_moon)?.visibility = if (showMoon) View.VISIBLE else View.GONE
+            root.findViewById<View>(R.id.pb_weather_cloud)?.visibility = if (showCloud) View.VISIBLE else View.GONE
+            root.findViewById<View>(R.id.pb_weather_thunder)?.visibility = if (showThunder) View.VISIBLE else View.GONE
+            root.findViewById<View>(R.id.pb_weather_tet)?.visibility = if (showTet) View.VISIBLE else View.GONE
+            root.findViewById<View>(R.id.pb_weather_xmas)?.visibility = if (showXmas) View.VISIBLE else View.GONE
+
+            intArrayOf(R.id.tc_hour, R.id.tc_hour_c, R.id.tc_hour_r, R.id.tc_minute, R.id.tc_minute_c, R.id.tc_minute_r).forEach { id ->
+                root.findViewById<TextClock>(id)?.apply {
+                    setTextColor(mainColor)
+                    setTextSize(TypedValue.COMPLEX_UNIT_SP, cfg.clockSize)
+                    this.typeface = typeface
+                }
+            }
+
+            root.findViewById<View>(R.id.layout_header_left)?.visibility = if (cfg.layoutMode == 0) View.VISIBLE else View.GONE
+            root.findViewById<View>(R.id.layout_header_center)?.visibility = if (cfg.layoutMode == 1) View.VISIBLE else View.GONE
+            root.findViewById<View>(R.id.layout_header_right)?.visibility = if (cfg.layoutMode == 2) View.VISIBLE else View.GONE
+
+            val greeting = when (hour) {
+                in 5..10 -> "Chào buổi sáng ⚙"
+                in 11..13 -> "Chào buổi trưa ⚙"
+                in 14..17 -> "Chào buổi chiều ⚙"
+                else -> "Chào buổi tối ⚙"
+            }
+            val dayOfWeek = arrayOf("", "Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy")[cal.get(Calendar.DAY_OF_WEEK)]
+            val solarStr = "$dayOfWeek, $dd Thg $mm, $yy"
+            val baseLunarStr = lunarToday.third
+            val upcomingStr = LunarCalendar.getNextUpcomingHoliday(dd, mm, yy)
+            val displayLunarOrHoliday = when {
+                holiday.name.isNotEmpty() -> "${holiday.name} · $baseLunarStr"
+                upcomingStr.isNotEmpty() -> "$baseLunarStr · $upcomingStr"
+                else -> baseLunarStr
+            }
+            val tempStr = prefs.getString("last_temp", "28°") ?: "28°"
+            val cityStr = cfg.overrideCity ?: (prefs.getString("last_city", "🏙️ TP. Hồ Chí Minh") ?: "🏙️ TP. Hồ Chí Minh")
+            val rangeStr = prefs.getString("last_range", "↑32° ↓24°") ?: "↑32° ↓24°"
+
+            root.findViewById<TextView>(R.id.tv_greeting)?.apply {
+                text = greeting
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.5f * cfg.textScale)
+                setTextColor(mainColor)
+                this.typeface = typeface
+            }
+
+            root.findViewById<ImageView>(R.id.iv_solar_custom)?.setImageBitmap(drawTextBitmap(context, solarStr, 12.5f * cfg.textScale, mainColor, typeface))
+            root.findViewById<ImageView>(R.id.iv_lunar_custom)?.setImageBitmap(drawTextBitmap(context, displayLunarOrHoliday, 12f * cfg.textScale, accentColor, typeface))
+            root.findViewById<ImageView>(R.id.iv_temp_custom)?.setImageBitmap(drawTextBitmap(context, tempStr, 31f * cfg.textScale, mainColor, typeface))
+
+            fun bindTv(id: Int, txt: String, sp: Float, col: Int) {
+                root.findViewById<TextView>(id)?.apply {
+                    text = txt
+                    setTextSize(TypedValue.COMPLEX_UNIT_SP, sp * cfg.textScale)
+                    setTextColor(col)
+                    this.typeface = typeface
+                }
+            }
+
+            bindTv(R.id.tv_weather_desc, descStr, 12f, mainColor)
+            bindTv(R.id.tv_city, cityStr, 11f, mainColor)
+            bindTv(R.id.tv_temp_range, rangeStr, 11f, mainColor)
+            bindTv(R.id.tv_sub_center, "$solarStr · $displayLunarOrHoliday · $tempStr $descStr", 11.5f, mainColor)
+            bindTv(R.id.tv_weather_left_r, "$tempStr · $descStr · $cityStr", 12f, mainColor)
+            bindTv(R.id.tv_solar_left_r, solarStr, 11.5f, mainColor)
+            bindTv(R.id.tv_lunar_left_r, displayLunarOrHoliday, 11f, accentColor)
+            bindTv(R.id.tv_range_right_r, rangeStr, 11f, mainColor)
+
+            // Lịch tuần 7 ngày
+            val weekCal = Calendar.getInstance()
+            val currentDow = weekCal.get(Calendar.DAY_OF_WEEK)
+            val offsetToMon = if (currentDow == Calendar.SUNDAY) -6 else Calendar.MONDAY - currentDow
+            val todayIndexInWeek = if (currentDow == Calendar.SUNDAY) 6 else currentDow - Calendar.MONDAY
+            weekCal.add(Calendar.DAY_OF_MONTH, offsetToMon)
+
+            val dayIds = intArrayOf(R.id.day_0, R.id.day_1, R.id.day_2, R.id.day_3, R.id.day_4, R.id.day_5, R.id.day_6)
+            val labels = arrayOf("T2", "T3", "T4", "T5", "T6", "T7", "CN")
+
+            for (i in 0..6) {
+                val d = weekCal.get(Calendar.DAY_OF_MONTH)
+                val m = weekCal.get(Calendar.MONTH) + 1
+                val y = weekCal.get(Calendar.YEAR)
+                val lunar = LunarCalendar.getLunarInfo(d, m, y)
+
+                val nextCal = (weekCal.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, 1) }
+                val nextLunar = LunarCalendar.getLunarInfo(nextCal.get(Calendar.DAY_OF_MONTH), nextCal.get(Calendar.MONTH) + 1, nextCal.get(Calendar.YEAR))
+                val isGoldDotDay = (lunar.first == 14 || lunar.first == 15 || lunar.first == 1 || nextLunar.first == 1)
+                val dayHoliday = LunarCalendar.getVietnameseHoliday(d, m, y)
+                val isMajorHoliday = dayHoliday.themeType == "TET" || dayHoliday.themeType == "NATIONAL"
+
+                val baseText = "${labels[i]}\n$d\n${lunar.first}/${lunar.second}"
+                root.findViewById<TextView>(dayIds[i])?.apply {
+                    if (isGoldDotDay) {
+                        val fullText = "$baseText●"
+                        val spannable = SpannableString(fullText)
+                        val dotStart = fullText.length - 1
+                        spannable.setSpan(ForegroundColorSpan(Color.parseColor("#FDE047")), dotStart, fullText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        spannable.setSpan(RelativeSizeSpan(1.35f), dotStart, fullText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        text = spannable
+                    } else {
+                        text = baseText
+                    }
+                    setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.5f * cfg.textScale)
+                    this.typeface = typeface
+                    if (i == todayIndexInWeek) {
+                        setBackgroundResource(R.drawable.bg_glass_pill)
+                        setTextColor(accentColor)
+                    } else {
+                        setBackgroundResource(0)
+                        val isRedDay = (i == 6) || isMajorHoliday
+                        setTextColor(if (isRedDay) Color.parseColor("#FF8A80") else mainColor)
+                    }
+                }
+                weekCal.add(Calendar.DAY_OF_MONTH, 1)
+            }
+
+            // Dự báo 7 ngày
+            val fcIds = intArrayOf(R.id.fc_0, R.id.fc_1, R.id.fc_2, R.id.fc_3, R.id.fc_4, R.id.fc_5, R.id.fc_6)
+            for (i in 0..6) {
+                val colHeader = if (i == todayIndexInWeek) "Nay" else labels[i]
+                val forecastOffset = i - todayIndexInWeek
+                val content = if (forecastOffset >= 0) {
+                    val raw = prefs.getString("fc_$forecastOffset", "⛅\n32°\n24°")
+                    "$colHeader\n$raw"
+                } else {
+                    "$colHeader\n·\n--°\n--°"
+                }
+                root.findViewById<TextView>(fcIds[i])?.apply {
+                    text = content
+                    setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.5f * cfg.textScale)
+                    setTextColor(if (i == todayIndexInWeek) accentColor else mainColor)
+                    this.typeface = typeface
+                }
+            }
+        }
+
         fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
             val views = RemoteViews(context.packageName, R.layout.widget_liquid)
             val prefs = context.getSharedPreferences("widget_prefs", Context.MODE_PRIVATE)
@@ -138,7 +330,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
 
             val lunarToday = LunarCalendar.getLunarInfo(dd, mm, yy)
             val lunarDay = lunarToday.first
-
             val holiday = LunarCalendar.getVietnameseHoliday(dd, mm, yy)
             val descStr = prefs.getString("last_desc", "Đang tải...") ?: "Đang tải..."
 
@@ -199,11 +390,11 @@ class LiquidWidgetProvider : AppWidgetProvider() {
                 else -> "Chào buổi tối ⚙"
             }
             val dayOfWeek = arrayOf("", "Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy")[cal.get(Calendar.DAY_OF_WEEK)]
-            val solarStr = "$dayOfWeek, $dd Thg $mm, $yy"
+            val solarStr = "$dayOfWeek,$dd Thg $mm,$yy"
             val baseLunarStr = lunarToday.third
             val upcomingStr = LunarCalendar.getNextUpcomingHoliday(dd, mm, yy)
             val displayLunarOrHoliday = when {
-                holiday.name.isNotEmpty() -> "${holiday.name} · $baseLunarStr"
+                holiday.name.isNotEmpty() -> "${holiday.name} ·$baseLunarStr"
                 upcomingStr.isNotEmpty() -> "$baseLunarStr · $upcomingStr"
                 else -> baseLunarStr
             }
@@ -215,7 +406,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             views.setTextViewTextSize(R.id.tv_greeting, TypedValue.COMPLEX_UNIT_SP, 10.5f * textScale)
             views.setTextColor(R.id.tv_greeting, mainColor)
 
-            // Chế độ 0: Giờ bên Trái
             views.setImageViewBitmap(R.id.iv_solar_custom, drawTextBitmap(context, solarStr, 12.5f * textScale, mainColor, typeface))
             views.setImageViewBitmap(R.id.iv_lunar_custom, drawTextBitmap(context, displayLunarOrHoliday, 12f * textScale, accentColor, typeface))
             views.setImageViewBitmap(R.id.iv_temp_custom, drawTextBitmap(context, tempStr, 31f * textScale, mainColor, typeface))
@@ -229,12 +419,10 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             views.setTextColor(R.id.tv_city, mainColor)
             views.setTextColor(R.id.tv_temp_range, mainColor)
 
-            // Chế độ 1: Giờ Căn Giữa
-            views.setTextViewText(R.id.tv_sub_center, "$solarStr · $displayLunarOrHoliday · $tempStr $descStr")
+            views.setTextViewText(R.id.tv_sub_center, "$solarStr · $displayLunarOrHoliday · $tempStr$descStr")
             views.setTextViewTextSize(R.id.tv_sub_center, TypedValue.COMPLEX_UNIT_SP, 11.5f * textScale)
             views.setTextColor(R.id.tv_sub_center, mainColor)
 
-            // Chế độ 2: Giờ bên Phải
             views.setTextViewText(R.id.tv_weather_left_r, "$tempStr · $descStr · $cityStr")
             views.setTextViewText(R.id.tv_solar_left_r, solarStr)
             views.setTextViewText(R.id.tv_lunar_left_r, displayLunarOrHoliday)
@@ -248,7 +436,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             views.setTextColor(R.id.tv_lunar_left_r, accentColor)
             views.setTextColor(R.id.tv_range_right_r, mainColor)
 
-            // Dải lịch tuần T2 -> CN
             val weekCal = Calendar.getInstance()
             val currentDow = weekCal.get(Calendar.DAY_OF_WEEK)
             val offsetToMon = if (currentDow == Calendar.SUNDAY) -6 else Calendar.MONDAY - currentDow
@@ -265,13 +452,8 @@ class LiquidWidgetProvider : AppWidgetProvider() {
                 val lunar = LunarCalendar.getLunarInfo(d, m, y)
 
                 val nextCal = (weekCal.clone() as Calendar).apply { add(Calendar.DAY_OF_MONTH, 1) }
-                val nextLunar = LunarCalendar.getLunarInfo(
-                    nextCal.get(Calendar.DAY_OF_MONTH),
-                    nextCal.get(Calendar.MONTH) + 1,
-                    nextCal.get(Calendar.YEAR)
-                )
-                val isBeforeFirstLunar = (nextLunar.first == 1)
-                val isGoldDotDay = (lunar.first == 14 || lunar.first == 15 || lunar.first == 1 || isBeforeFirstLunar)
+                val nextLunar = LunarCalendar.getLunarInfo(nextCal.get(Calendar.DAY_OF_MONTH), nextCal.get(Calendar.MONTH) + 1, nextCal.get(Calendar.YEAR))
+                val isGoldDotDay = (lunar.first == 14 || lunar.first == 15 || lunar.first == 1 || nextLunar.first == 1)
 
                 val dayHoliday = LunarCalendar.getVietnameseHoliday(d, m, y)
                 val isMajorHoliday = dayHoliday.themeType == "TET" || dayHoliday.themeType == "NATIONAL"
@@ -301,7 +483,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
                 weekCal.add(Calendar.DAY_OF_MONTH, 1)
             }
 
-            // Dự báo 7 ngày
             val fcIds = intArrayOf(R.id.fc_0, R.id.fc_1, R.id.fc_2, R.id.fc_3, R.id.fc_4, R.id.fc_5, R.id.fc_6)
             for (i in 0..6) {
                 val colHeader = if (i == todayIndexInWeek) "Nay" else labels[i]
@@ -316,7 +497,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
                 views.setTextColor(fcIds[i], if (i == todayIndexInWeek) accentColor else mainColor)
             }
 
-            // Sự kiện chạm
             val playEffectIntent = Intent(context, LiquidWidgetProvider::class.java).apply {
                 action = "com.custom.liquidwidget.PLAY_EFFECT"
             }
@@ -437,106 +617,60 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             return bmp
         }
 
-        private fun drawArtisticOverlay(canvas: Canvas, w: Float, h: Float, effect: String, isNight: Boolean, lunarDay: Int) {
-            val rnd = Random(System.currentTimeMillis() / 60000L)
+        private fun drawFivePetalBlossom(canvas: Canvas, cx: Float, cy: Float, r: Float, petalColor: Int, centerColor: Int) {
             val p = Paint(Paint.ANTI_ALIAS_FLAG)
-            when (effect) {
-                "RAIN" -> {
-                    p.shader = LinearGradient(
-                        0f, 0f, 0f, h,
-                        intArrayOf(Color.argb(115, 51, 65, 85), Color.argb(85, 71, 85, 105), Color.argb(65, 30, 41, 59)),
-                        null, Shader.TileMode.CLAMP
-                    )
-                    canvas.drawRect(0f, 0f, w, h, p)
-                    p.shader = null
-                    drawCloud(canvas, w * 0.36f, h * 0.28f, 1.15f, 0.72f)
-                    drawCloud(canvas, w * 0.68f, h * 0.30f, 1.25f, 0.78f)
-                }
-                "THUNDER" -> {
-                    p.shader = LinearGradient(
-                        0f, 0f, 0f, h,
-                        Color.argb(125, 9, 13, 22), Color.argb(65, 30, 27, 75), Shader.TileMode.CLAMP
-                    )
-                    canvas.drawRect(0f, 0f, w, h, p)
-                    p.shader = null
-                    drawCloud(canvas, w * 0.48f, h * 0.30f, 1.15f, 0.85f)
-                }
-                "SUN", "SUN_CLOUD" -> {
-                    p.shader = RadialGradient(
-                        w * 0.72f, h * 0.35f, 200f,
-                        intArrayOf(Color.argb(135, 253, 224, 71), Color.argb(55, 245, 158, 11), Color.TRANSPARENT),
-                        null, Shader.TileMode.CLAMP
-                    )
-                    canvas.drawCircle(w * 0.72f, h * 0.35f, 200f, p)
-                    p.shader = null
-                    if (effect == "SUN_CLOUD") drawCloud(canvas, w * 0.60f, h * 0.42f, 0.95f, 0.90f)
-                }
-                "MOON", "MOON_CLOUD" -> {
-                    p.shader = LinearGradient(0f, 0f, 0f, h, Color.argb(85, 9, 13, 28), Color.argb(35, 30, 27, 75), Shader.TileMode.CLAMP)
-                    canvas.drawRect(0f, 0f, w, h, p)
-                    p.shader = null
-                    for (i in 0..24) {
-                        p.color = Color.argb(120 + rnd.nextInt(135), 255, 255, 255)
-                        canvas.drawCircle(rnd.nextFloat() * w, rnd.nextFloat() * (h * 0.75f), 1.2f, p)
-                    }
-                    if (effect == "MOON_CLOUD") drawCloud(canvas, w * 0.60f, h * 0.42f, 0.90f, 0.75f)
-                }
-                "TET", "NATIONAL" -> {
-                    p.shader = LinearGradient(0f, 0f, w, h, Color.argb(145, 153, 27, 27), Color.argb(105, 120, 53, 15), Shader.TileMode.CLAMP)
-                    canvas.drawRect(0f, 0f, w, h, p)
-                    p.shader = null
-                }
-                "XMAS" -> {
-                    p.shader = LinearGradient(0f, 0f, w, h, Color.argb(115, 6, 78, 59), Color.argb(85, 15, 23, 42), Shader.TileMode.CLAMP)
-                    canvas.drawRect(0f, 0f, w, h, p)
-                    p.shader = null
-                }
-                "CLOUD" -> {
-                    drawCloud(canvas, w * 0.45f, h * 0.35f, 1.1f, 0.85f)
-                    drawCloud(canvas, w * 0.72f, h * 0.38f, 0.95f, 0.80f)
-                }
+            p.color = petalColor
+            for (i in 0 until 5) {
+                val angle = Math.toRadians((i * 72 - 18).toDouble())
+                val px = cx + (Math.cos(angle) * r * 0.58f).toFloat()
+                val py = cy + (Math.sin(angle) * r * 0.58f).toFloat()
+                canvas.drawCircle(px, py, r * 0.48f, p)
             }
+            p.color = centerColor
+            canvas.drawCircle(cx, cy, r * 0.25f, p)
         }
 
-        private fun drawCloud(canvas: Canvas, cx: Float, cy: Float, scale: Float, alphaMult: Float) {
+        private fun drawTetLantern3D(canvas: Canvas, lx: Float, ly: Float, scale: Float) {
             val p = Paint(Paint.ANTI_ALIAS_FLAG)
-            val cloudPath = Path().apply {
-                addRoundRect(RectF(cx - 56f * scale, cy - 4f * scale, cx + 56f * scale, cy + 24f * scale), 16f * scale, 16f * scale, Path.Direction.CW)
-                addCircle(cx - 32f * scale, cy + 2f * scale, 22f * scale, Path.Direction.CW)
-                addCircle(cx - 8f * scale, cy - 10f * scale, 28f * scale, Path.Direction.CW)
-                addCircle(cx + 20f * scale, cy - 6f * scale, 24f * scale, Path.Direction.CW)
-            }
-            p.shader = LinearGradient(
-                cx, cy - 38f * scale, cx, cy + 24f * scale,
-                intArrayOf(Color.argb((190 * alphaMult).toInt(), 255, 255, 255), Color.argb((110 * alphaMult).toInt(), 203, 213, 225)),
-                null, Shader.TileMode.CLAMP
-            )
-            canvas.drawPath(cloudPath, p)
+            p.shader = RadialGradient(lx, ly, 44f * scale, intArrayOf(Color.argb(135, 253, 224, 71), Color.argb(65, 239, 68, 68), Color.TRANSPARENT), null, Shader.TileMode.CLAMP)
+            canvas.drawCircle(lx, ly, 44f * scale, p)
+            p.shader = null
+            p.strokeWidth = 2f * scale
+            p.color = Color.rgb(253, 224, 71)
+            canvas.drawLine(lx, ly - 32f * scale, lx, ly - 16f * scale, p)
+            val bodyRect = RectF(lx - 17f * scale, ly - 15f * scale, lx + 17f * scale, ly + 15f * scale)
+            p.shader = RadialGradient(lx - 5f * scale, ly - 4f * scale, 22f * scale, intArrayOf(Color.rgb(254, 202, 202), Color.rgb(220, 38, 38), Color.rgb(127, 29, 29)), null, Shader.TileMode.CLAMP)
+            canvas.drawOval(bodyRect, p)
+            p.shader = null
+            p.color = Color.rgb(250, 204, 21)
+            canvas.drawRoundRect(RectF(lx - 9f * scale, ly - 18f * scale, lx + 9f * scale, ly - 13f * scale), 3f, 3f, p)
+            canvas.drawRoundRect(RectF(lx - 9f * scale, ly + 13f * scale, lx + 9f * scale, ly + 18f * scale), 3f, 3f, p)
+            p.strokeWidth = 1.6f * scale
+            canvas.drawLine(lx, ly + 18f * scale, lx, ly + 30f * scale, p)
         }
 
-        fun scheduleWeatherUpdate(context: Context) {
-            val wm = WorkManager.getInstance(context)
-            wm.enqueue(OneTimeWorkRequestBuilder<WeatherWorker>().build())
-            val periodic = PeriodicWorkRequestBuilder<WeatherWorker>(1, TimeUnit.HOURS).build()
-            wm.enqueueUniquePeriodicWork("WeatherSync", ExistingPeriodicWorkPolicy.KEEP, periodic)
-        }
+        private fun drawVietnameseTetScene3D(canvas: Canvas, w: Float, h: Float, rnd: Random) {
+            val p = Paint(Paint.ANTI_ALIAS_FLAG)
+            p.shader = LinearGradient(0f, 0f, w, h, intArrayOf(Color.argb(155, 153, 27, 27), Color.argb(125, 185, 28, 28), Color.argb(115, 120, 53, 15)), null, Shader.TileMode.CLAMP)
+            canvas.drawRect(0f, 0f, w, h, p)
+            p.shader = null
 
-        fun schedulePeriodicRefresh(context: Context) {
-            val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val intent = Intent(context, LiquidWidgetProvider::class.java).apply {
-                action = "com.custom.liquidwidget.TICK_CLOCK"
+            p.style = Paint.Style.STROKE
+            p.strokeCap = Paint.Cap.ROUND
+            p.strokeWidth = 3.5f
+            p.color = Color.rgb(92, 45, 22)
+            val branch = Path().apply {
+                moveTo(w * 0.96f, h * 0.72f)
+                quadTo(w * 0.82f, h * 0.56f, w * 0.68f, h * 0.48f)
+                moveTo(w * 0.85f, h * 0.60f)
+                quadTo(w * 0.80f, h * 0.44f, w * 0.73f, h * 0.36f)
             }
-            val pi = PendingIntent.getBroadcast(context, 1001, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-            val nextRefresh = System.currentTimeMillis() + 15 * 60 * 1000L
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                if (am.canScheduleExactAlarms()) {
-                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextRefresh, pi)
-                } else {
-                    am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextRefresh, pi)
-                }
-            } else {
-                am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextRefresh, pi)
-            }
-        }
-    }
-}
+            canvas.drawPath(branch, p)
+            p.style = Paint.Style.FILL
+
+            drawFivePetalBlossom(canvas, w * 0.68f, h * 0.48f, 9.5f, Color.rgb(253, 224, 71), Color.rgb(217, 119, 6))
+            drawFivePetalBlossom(canvas, w * 0.73f, h * 0.36f, 8.5f, Color.rgb(254, 240, 138), Color.rgb(217, 119, 6))
+            drawFivePetalBlossom(canvas, w * 0.82f, h * 0.46f, 9.0f, Color.rgb(253, 164, 175), Color.rgb(225, 29, 72))
+            drawTetLantern3D(canvas, w * 0.60f, h * 0.14f, 0.82f)
+            drawTetLantern3D(canvas, w * 0.86f, h * 0.13f, 0.72f)
+            drawRealisticFirework(canvas, w * 0.66f, h * 0.34f, 52f, Color.argb(240, 253, 224, 71), Color.argb(220, 25
