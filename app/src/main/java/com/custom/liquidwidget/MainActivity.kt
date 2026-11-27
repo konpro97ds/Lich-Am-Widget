@@ -301,7 +301,7 @@ class MainActivity : AppCompatActivity() {
         val cityIdx = spCitySelect.selectedItemPosition
         val overrideCity = if (cityIdx == 0) null else "🏙️ ${cityList[cityIdx].name}"
 
-        val cfg = LiquidWidgetProvider.RenderConfig(
+        val cfg = WidgetPreviewConfig(
             clockSize = (sbClockSize.progress + 24).toFloat(),
             textScale = (sbTextScale.progress + 70) / 100f,
             bgAlpha = sbBgAlpha.progress,
@@ -313,7 +313,7 @@ class MainActivity : AppCompatActivity() {
             testEffectMode = effectValues[spTestEffect.selectedItemPosition],
             overrideCity = overrideCity
         )
-        LiquidWidgetProvider.renderPreviewView(this, previewRoot, cfg)
+        WidgetPreviewHelper.renderPreview(this, previewRoot, cfg)
     }
 
     private fun triggerWeatherSync() {
