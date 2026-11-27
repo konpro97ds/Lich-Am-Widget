@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="300dp"
+            android:height="160dp"
+            android:viewportWidth="300"
+            android:viewportHeight="160">
+            <group android:name="shimmer_beam">
+                <path
+                    android:fillColor="#14FFFFFF"
+                    android:pathData="M-60,0 L-20,0 L-70,160 L-110,160 Z" />
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="shimmer_beam">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="translateX"
+                android:duration="4200"
+                android:valueFrom="0"
+                android:valueTo="460"
+                android:repeatCount="infinite"
+                android:repeatMode="restart"
+                android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+        </aapt:attr>
+    </target>
+</animated-vector>
