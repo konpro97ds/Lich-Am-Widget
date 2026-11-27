@@ -4,16 +4,30 @@
     <aapt:attr name="android:drawable">
         <vector android:width="300dp" android:height="160dp" android:viewportWidth="300" android:viewportHeight="160">
             <group android:name="tet_petals">
-                <path android:fillColor="#DDFDE047"
-                    android:pathData="M170,12 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M220,24 m-2.0,0 a2.0,2.0 0 1,0 4.0,0 a2.0,2.0 0 1,0 -4.0,0 M255,16 m-2.3,0 a2.3,2.3 0 1,0 4.6,0 a2.3,2.3 0 1,0 -4.6,0 M195,44 m-1.8,0 a1.8,1.8 0 1,0 3.6,0 a1.8,1.8 0 1,0 -3.6,0" />
+                <path android:fillColor="#E6FDE047"
+                    android:pathData="M165,10 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M215,22 m-2.0,0 a2.0,2.0 0 1,0 4.0,0 a2.0,2.0 0 1,0 -4.0,0 M255,14 m-2.3,0 a2.3,2.3 0 1,0 4.6,0 a2.3,2.3 0 1,0 -4.6,0 M190,42 m-1.9,0 a1.9,1.9 0 1,0 3.8,0 a1.9,1.9 0 1,0 -3.8,0" />
+                <path android:fillColor="#DDFDA4AF"
+                    android:pathData="M145,26 m-2.0,0 a2.0,2.0 0 1,0 4.0,0 a2.0,2.0 0 1,0 -4.0,0 M238,38 m-2.1,0 a2.1,2.1 0 1,0 4.2,0 a2.1,2.1 0 1,0 -4.2,0 M276,28 m-1.8,0 a1.8,1.8 0 1,0 3.6,0 a1.8,1.8 0 1,0 -3.6,0" />
+            </group>
+            <group android:name="firework_spark" android:pivotX="198" android:pivotY="54">
+                <path android:strokeColor="#CCFEF08A" android:strokeWidth="1.2" android:strokeLineCap="round"
+                    android:pathData="M198,38 L198,45 M198,63 L198,70 M182,54 L189,54 M207,54 L214,54 M187,43 L192,48 M204,60 L209,65 M209,43 L204,48 M192,60 L187,65" />
             </group>
         </vector>
     </aapt:attr>
     <target android:name="tet_petals">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="2800" android:valueFrom="-10" android:valueTo="90" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
-                <objectAnimator android:propertyName="translateX" android:duration="1400" android:valueFrom="-6" android:valueTo="6" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="2900" android:valueFrom="-10" android:valueTo="95" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="1450" android:valueFrom="-6" android:valueTo="6" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="firework_spark">
+        <aapt:attr name="android:animation">
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="scaleX" android:duration="1400" android:valueFrom="0.2" android:valueTo="1.35" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="scaleY" android:duration="1400" android:valueFrom="0.2" android:valueTo="1.35" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
