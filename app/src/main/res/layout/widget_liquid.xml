@@ -3,22 +3,79 @@
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_liquid_glass">
+    android:padding="4dp">
 
-    <!-- Nền vẽ nghệ thuật theo thời tiết / ngày lễ -->
+    <!-- Lớp nền Kính Lỏng vẽ bằng Canvas -->
     <ImageView
         android:id="@+id/iv_glass_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_liquid_glass" />
 
-    <!-- Lớp hiệu ứng mưa 60fps -->
+    <!-- Lớp ánh sáng quét mặt kính -->
+    <ProgressBar
+        android:id="@+id/pb_glass_shimmer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/anim_glass_shimmer" />
+
+    <!-- Các lớp hiệu ứng thời tiết & lễ hội -->
+    <ProgressBar
+        android:id="@+id/pb_weather_cloud"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/anim_weather_cloud"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/pb_weather_sun"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/anim_weather_sun"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/pb_weather_moon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/anim_weather_moon"
+        android:visibility="gone" />
+
     <ProgressBar
         android:id="@+id/pb_weather_rain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/anim_weather_rain"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/pb_weather_thunder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/anim_weather_thunder"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/pb_weather_tet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/anim_weather_tet"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/pb_weather_xmas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/anim_weather_xmas"
         android:visibility="gone" />
 
     <!-- Nội dung chính -->
@@ -28,34 +85,150 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <!-- Lời chào góc trên -->
+        <!-- Lời chào góc trái trên (chạm để mở cài đặt) -->
         <TextView
             android:id="@+id/tv_greeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chào buổi tối ⚙"
-            android:textColor="#E2E8F0"
+            android:text="Chào buổi sáng ⚙"
+            android:textColor="#FFFFFF"
             android:textSize="10.5sp"
             android:textStyle="bold" />
 
-        <!-- Hàng trên: Đồng hồ + Ngày Dương/Âm + Nhiệt độ -->
+        <!-- CHẾ ĐỘ 0: Giờ bên Trái -->
         <LinearLayout
+            android:id="@+id/layout_header_left"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="1.15"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!-- Khu vực Đồng hồ -->
+            <!-- Cụm đồng hồ + ngày -->
             <LinearLayout
-                android:id="@+id/zone_clock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.35"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/zone_clock_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextClock
+                        android:id="@+id/tc_hour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:format12Hour="HH"
+                        android:format24Hour="HH"
+                        android:textColor="#FFFFFF"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/pb_colon"
+                        android:layout_width="12dp"
+                        android:layout_height="28dp"
+                        android:layout_marginHorizontal="2dp"
+                        android:indeterminate="true"
+                        android:indeterminateDrawable="@drawable/anim_colon_blink" />
+
+                    <TextClock
+                        android:id="@+id/tc_minute"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:format12Hour="mm"
+                        android:format24Hour="mm"
+                        android:textColor="#FFFFFF"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/zone_calendar_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_solar_custom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitStart" />
+
+                    <ImageView
+                        android:id="@+id/iv_lunar_custom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:scaleType="fitStart" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Cụm thời tiết bên phải -->
+            <LinearLayout
+                android:id="@+id/zone_weather_right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_temp_custom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitEnd" />
+
+                <TextView
+                    android:id="@+id/tv_weather_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đang tải..."
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🏙️ TP. Hồ Chí Minh"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tv_temp_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="↑--° ↓--°"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- CHẾ ĐỘ 1: Giờ Căn Giữa -->
+        <LinearLayout
+            android:id="@+id/layout_header_center"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.15"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/zone_clock_center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextClock
-                    android:id="@+id/tc_hour"
+                    android:id="@+id/tc_hour_c"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:format12Hour="HH"
@@ -65,14 +238,15 @@
                     android:textStyle="bold" />
 
                 <ProgressBar
-                    android:id="@+id/pb_colon"
-                    android:layout_width="10dp"
-                    android:layout_height="30dp"
+                    android:id="@+id/pb_colon_c"
+                    android:layout_width="12dp"
+                    android:layout_height="28dp"
+                    android:layout_marginHorizontal="2dp"
                     android:indeterminate="true"
                     android:indeterminateDrawable="@drawable/anim_colon_blink" />
 
                 <TextClock
-                    android:id="@+id/tc_minute"
+                    android:id="@+id/tc_minute_c"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:format12Hour="mm"
@@ -82,100 +256,141 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Khu vực Ngày Dương & Lịch Âm -->
+            <TextView
+                android:id="@+id/tv_sub_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="11.5sp" />
+        </LinearLayout>
+
+        <!-- CHẾ ĐỘ 2: Giờ bên Phải -->
+        <LinearLayout
+            android:id="@+id/layout_header_right"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.15"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
             <LinearLayout
-                android:id="@+id/zone_calendar"
+                android:id="@+id/zone_info_left_in_right_mode"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
+                android:layout_weight="1.35"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_solar_date"
+                    android:id="@+id/tv_weather_left_r"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Thứ Sáu, 27 Thg 11"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_lunar_date"
+                    android:id="@+id/tv_solar_left_r"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="19/10 Âm lịch"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11.5sp" />
+
+                <TextView
+                    android:id="@+id/tv_lunar_left_r"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:textColor="#FFD54F"
-                    android:textSize="11.5sp"
-                    android:textStyle="bold" />
+                    android:textSize="11sp" />
             </LinearLayout>
 
-            <!-- Khu vực Thời tiết hiện tại -->
             <LinearLayout
-                android:id="@+id/zone_weather"
-                android:layout_width="wrap_content"
+                android:id="@+id/zone_clock_right"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="end"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_temp_now"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="28°"
-                    android:textColor="#FFFFFF"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextClock
+                        android:id="@+id/tc_hour_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:format12Hour="HH"
+                        android:format24Hour="HH"
+                        android:textColor="#FFFFFF"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/pb_colon_r"
+                        android:layout_width="12dp"
+                        android:layout_height="28dp"
+                        android:layout_marginHorizontal="2dp"
+                        android:indeterminate="true"
+                        android:indeterminateDrawable="@drawable/anim_colon_blink" />
+
+                    <TextClock
+                        android:id="@+id/tc_minute_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:format12Hour="mm"
+                        android:format24Hour="mm"
+                        android:textColor="#FFFFFF"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_weather_desc"
+                    android:id="@+id/tv_range_right_r"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mưa rào nhẹ"
-                    android:textColor="#E2E8F0"
+                    android:textColor="#FFFFFF"
                     android:textSize="11sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Dải Lịch Tuần T2 -> CN -->
+        <!-- DẢI LỊCH TUẦN T2 -> CN -->
         <LinearLayout
             android:id="@+id/zone_week_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:background="@drawable/bg_glass_pill"
             android:orientation="horizontal"
-            android:weightSum="7">
+            android:paddingVertical="4dp">
 
-            <TextView android:id="@+id/day_0" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="3dp" android:textColor="#FFFFFF" android:textSize="10sp" />
-            <TextView android:id="@+id/day_1" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="3dp" android:textColor="#FFFFFF" android:textSize="10sp" />
-            <TextView android:id="@+id/day_2" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="3dp" android:textColor="#FFFFFF" android:textSize="10sp" />
-            <TextView android:id="@+id/day_3" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="3dp" android:textColor="#FFFFFF" android:textSize="10sp" />
-            <TextView android:id="@+id/day_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="3dp" android:textColor="#FFFFFF" android:textSize="10sp" />
-            <TextView android:id="@+id/day_5" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="3dp" android:textColor="#FFFFFF" android:textSize="10sp" />
-            <TextView android:id="@+id/day_6" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="3dp" android:textColor="#FF8A80" android:textSize="10sp" />
+            <TextView android:id="@+id/day_0" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="2dp" android:textSize="10.5sp" />
+            <TextView android:id="@+id/day_1" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="2dp" android:textSize="10.5sp" />
+            <TextView android:id="@+id/day_2" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="2dp" android:textSize="10.5sp" />
+            <TextView android:id="@+id/day_3" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="2dp" android:textSize="10.5sp" />
+            <TextView android:id="@+id/day_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="2dp" android:textSize="10.5sp" />
+            <TextView android:id="@+id/day_5" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="2dp" android:textSize="10.5sp" />
+            <TextView android:id="@+id/day_6" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="2dp" android:textSize="10.5sp" />
         </LinearLayout>
 
-        <!-- Dải Dự Báo Thời Tiết 7 Ngày -->
+        <!-- DẢI DỰ BÁO THỜI TIẾT 7 NGÀY -->
         <LinearLayout
             android:id="@+id/zone_forecast_weather"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:orientation="horizontal"
-            android:weightSum="7">
+            android:orientation="horizontal">
 
-            <TextView android:id="@+id/fc_0" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="#E2E8F0" android:textSize="10sp" />
-            <TextView android:id="@+id/fc_1" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="#E2E8F0" android:textSize="10sp" />
-            <TextView android:id="@+id/fc_2" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="#E2E8F0" android:textSize="10sp" />
-            <TextView android:id="@+id/fc_3" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="#E2E8F0" android:textSize="10sp" />
-            <TextView android:id="@+id/fc_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="#E2E8F0" android:textSize="10sp" />
-            <TextView android:id="@+id/fc_5" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="#E2E8F0" android:textSize="10sp" />
-            <TextView android:id="@+id/fc_6" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textColor="#E2E8F0" android:textSize="10sp" />
+            <TextView android:id="@+id/fc_0" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textSize="10.5sp" />
+            <TextView android:id="@+id/fc_1" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textSize="10.5sp" />
+            <TextView android:id="@+id/fc_2" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textSize="10.5sp" />
+            <TextView android:id="@+id/fc_3" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textSize="10.5sp" />
+            <TextView android:id="@+id/fc_4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textSize="10.5sp" />
+            <TextView android:id="@+id/fc_5" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textSize="10.5sp" />
+            <TextView android:id="@+id/fc_6" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:textSize="10.5sp" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
