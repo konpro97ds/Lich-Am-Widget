@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector android:width="300dp" android:height="160dp" android:viewportWidth="300" android:viewportHeight="160">
+            <group android:name="bolt_flash">
+                <path android:fillColor="#EEFEF08A"
+                    android:pathData="M192,38 L178,66 L190,66 L182,92 L206,58 L193,58 Z" />
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="bolt_flash">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="scaleX" android:duration="1900" android:valueFrom="1.0" android:valueTo="0.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+        </aapt:attr>
+    </target>
+</animated-vector>
