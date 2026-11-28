@@ -8,6 +8,46 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
+    <!-- Cho phép nhận diện & mở thẳng các app Đồng hồ, Lịch, Thời tiết hệ thống -->
+    <queries>
+        <!-- Đồng hồ -->
+        <package android:name="com.coloros.alarmclock" />
+        <package android:name="com.oneplus.deskclock" />
+        <package android:name="com.oplus.alarmclock" />
+        <package android:name="com.android.deskclock" />
+        <package android:name="com.google.android.deskclock" />
+        <package android:name="com.sec.android.app.clockpackage" />
+        <package android:name="com.android.BBKClock" />
+
+        <!-- Lịch -->
+        <package android:name="com.coloros.calendar" />
+        <package android:name="com.oplus.calendar" />
+        <package android:name="com.google.android.calendar" />
+        <package android:name="com.android.calendar" />
+        <package android:name="com.samsung.android.calendar" />
+
+        <!-- Thời tiết -->
+        <package android:name="com.coloros.weather2" />
+        <package android:name="com.coloros.weather" />
+        <package android:name="com.oplus.weather" />
+        <package android:name="com.heytap.weather" />
+        <package android:name="com.google.android.apps.weather" />
+        <package android:name="com.miui.weather2" />
+        <package android:name="com.sec.android.daemonapp" />
+
+        <intent>
+            <action android:name="android.intent.action.SHOW_ALARMS" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.APP_CALENDAR" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.APP_WEATHER" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:label="Lịch Âm Widget"
