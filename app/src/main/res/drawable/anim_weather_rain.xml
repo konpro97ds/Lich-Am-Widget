@@ -8,88 +8,86 @@
             android:viewportWidth="360"
             android:viewportHeight="168">
 
-            <!-- Tầng mưa bụi xa -->
+            <!-- Tầng mưa bụi xa (mảnh, xiên nhẹ tự nhiên như Oppo Weather) -->
             <group android:name="rain_far">
                 <path
-                    android:strokeColor="#48E0F2FE"
-                    android:strokeWidth="0.6"
+                    android:strokeColor="#48FFFFFF"
+                    android:strokeWidth="0.65"
                     android:strokeLineCap="round"
-                    android:pathData="M24,-22 L20,-12 M64,-34 L60,-22 M104,-18 L100,-8 M144,-30 L140,-18 M184,-20 L180,-10 M224,-32 L220,-20 M264,-16 L260,-6 M304,-28 L300,-16 M340,-20 L336,-10 M44,24 L40,34 M84,12 L80,24 M124,28 L120,38 M164,16 L160,28 M204,26 L200,36 M244,14 L240,26 M284,30 L280,40 M324,18 L320,30" />
+                    android:pathData="M26,-24 L23,-14 M68,-36 L65,-24 M110,-20 L107,-10 M152,-32 L149,-20 M194,-22 L191,-12 M236,-34 L233,-22 M278,-18 L275,-8 M320,-30 L317,-18 M46,22 L43,32 M88,10 L85,22 M130,26 L127,36 M172,14 L169,26 M214,24 L211,34 M256,12 L253,24 M298,28 L295,38 M340,16 L337,28 M34,62 L31,72 M76,50 L73,62 M118,66 L115,76 M160,54 L157,66 M202,64 L199,74 M244,52 L241,64 M286,68 L283,78 M328,56 L325,68" />
             </group>
 
             <!-- Tầng mưa vừa -->
             <group android:name="rain_mid">
                 <path
-                    android:strokeColor="#75E0F2FE"
-                    android:strokeWidth="0.85"
+                    android:strokeColor="#78FFFFFF"
+                    android:strokeWidth="0.9"
                     android:strokeLineCap="round"
-                    android:pathData="M36,-28 L30,-13 M82,-14 L76,1 M128,-32 L122,-16 M174,-18 L168,-3 M220,-30 L214,-14 M266,-16 L260,-1 M312,-28 L306,-12 M22,22 L16,37 M68,34 L62,49 M114,18 L108,34 M160,30 L154,45 M206,20 L200,36 M252,32 L246,47 M298,18 L292,34" />
+                    android:pathData="M38,-30 L33,-15 M86,-16 L81,-1 M134,-34 L129,-18 M182,-20 L177,-5 M230,-32 L225,-16 M278,-18 L273,-3 M326,-30 L321,-14 M24,20 L19,35 M72,32 L67,47 M120,16 L115,32 M168,28 L163,43 M216,18 L211,34 M264,30 L259,45 M312,16 L307,32 M50,60 L45,75 M98,72 L93,87 M146,56 L141,72 M194,68 L189,83 M242,58 L237,74 M290,70 L285,85 M336,56 L331,72" />
             </group>
 
             <!-- Tầng mưa gần -->
             <group android:name="rain_near">
                 <path
-                    android:strokeColor="#A6FFFFFF"
-                    android:strokeWidth="1.05"
+                    android:strokeColor="#B3FFFFFF"
+                    android:strokeWidth="1.15"
                     android:strokeLineCap="round"
-                    android:pathData="M50,-36 L42,-16 M118,-20 L110,0 M186,-38 L178,-18 M254,-22 L246,-2 M322,-34 L314,-14 M32,20 L24,40 M100,34 L92,54 M168,16 L160,36 M236,30 L228,50 M304,18 L296,38" />
+                    android:pathData="M54,-38 L47,-18 M124,-22 L117,-2 M194,-40 L187,-20 M264,-24 L257,-4 M334,-36 L327,-16 M34,18 L27,38 M104,32 L97,52 M174,14 L167,34 M244,28 L237,48 M314,16 L307,36 M68,62 L61,82 M138,74 L131,94 M208,58 L201,78 M278,72 L271,92 M342,60 L335,80" />
             </group>
 
-            <!-- Giọt mưa nhóm 1 rơi trúng mép trên dải lịch (Y = 62 -> 98) -->
-            <group android:name="drop_hit_a">
+            <!-- NHÓM VA CHẠM A: Hạt mưa rơi xiên chạm đúng cạnh trên dải lịch (Y = 86) -->
+            <group android:name="oppo_drop_a">
                 <path
-                    android:fillColor="#EBF0F9FF"
-                    android:pathData="M62,62 C63.4,64.8 64,66.2 64,67.5 C64,69.0 63.1,70.0 62,70.0 C60.9,70.0 60,69.0 60,67.5 C60,66.2 60.6,64.8 62,62 Z M184,62 C185.4,64.8 186,66.2 186,67.5 C186,69.0 185.1,70.0 184,70.0 C182.9,70.0 182,69.0 182,67.5 C182,66.2 182.6,64.8 184,62 Z M298,62 C299.4,64.8 300,66.2 300,67.5 C300,69.0 299.1,70.0 298,70.0 C296.9,70.0 296,69.0 296,67.5 C296,66.2 296.6,64.8 298,62 Z" />
+                    android:strokeColor="#E6FFFFFF"
+                    android:strokeWidth="1.2"
+                    android:strokeLineCap="round"
+                    android:pathData="M62,48 L59,57 M176,48 L173,57 M292,48 L289,57" />
             </group>
 
-            <!-- Vết loang nước & vệt nhòe dính trên kính ngay tại vị trí đập vào dải lịch (Y = 98) -->
-            <group android:name="smudge_streak_a">
-                <!-- Quầng nước loang mờ đọng kính -->
+            <!-- Hạt nước bật nảy trái/phải kiểu Oppo khi chạm Y = 86 -->
+            <group android:name="oppo_bounce_left_a">
                 <path
-                    android:name="smudge_blob_a"
-                    android:fillColor="#4DE0F2FE"
+                    android:fillColor="#FFFFFFFF"
                     android:fillAlpha="0.0"
-                    android:pathData="M62,102 m-4.5,0 a4.5,6.5 0 1,0 9.0,0 a4.5,6.5 0 1,0 -9.0,0 M184,102 m-4.5,0 a4.5,6.5 0 1,0 9.0,0 a4.5,6.5 0 1,0 -9.0,0 M298,102 m-4.5,0 a4.5,6.5 0 1,0 9.0,0 a4.5,6.5 0 1,0 -9.0,0" />
-                <!-- Vệt nước chảy nhòe dính trên kính -->
+                    android:pathData="M56,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M170,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M286,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0" />
+            </group>
+            <group android:name="oppo_bounce_right_a">
                 <path
-                    android:name="smudge_tail_a"
-                    android:strokeColor="#66FFFFFF"
-                    android:strokeWidth="2.2"
-                    android:strokeAlpha="0.0"
-                    android:strokeLineCap="round"
-                    android:pathData="M62,98 L62,114 M184,98 L184,114 M298,98 L298,114" />
+                    android:fillColor="#FFFFFFFF"
+                    android:fillAlpha="0.0"
+                    android:pathData="M61,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0 M175,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0 M291,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0" />
             </group>
 
-            <!-- Giọt mưa nhóm 2 lệch pha rơi trúng mép dải lịch (Y = 62 -> 98) -->
-            <group android:name="drop_hit_b">
+            <!-- NHÓM VA CHẠM B: Lệch pha chạm đúng cạnh trên dải lịch (Y = 86) -->
+            <group android:name="oppo_drop_b">
+                <path
+                    android:strokeColor="#DDF0F9FF"
+                    android:strokeWidth="1.15"
+                    android:strokeLineCap="round"
+                    android:pathData="M118,48 L115,57 M234,48 L231,57 M336,48 L333,57" />
+            </group>
+
+            <group android:name="oppo_bounce_left_b">
                 <path
                     android:fillColor="#E0F2FE"
-                    android:pathData="M122,62 C123.4,64.8 124,66.2 124,67.5 C124,69.0 123.1,70.0 122,70.0 C120.9,70.0 120,69.0 120,67.5 C120,66.2 120.6,64.8 122,62 Z M242,62 C243.4,64.8 244,66.2 244,67.5 C244,69.0 243.1,70.0 242,70.0 C240.9,70.0 240,69.0 240,67.5 C240,66.2 240.6,64.8 242,62 Z" />
-            </group>
-
-            <!-- Vết loang nước & vệt nhòe dính kính nhóm 2 -->
-            <group android:name="smudge_streak_b">
-                <path
-                    android:name="smudge_blob_b"
-                    android:fillColor="#4DBAE6FD"
                     android:fillAlpha="0.0"
-                    android:pathData="M122,102 m-4.5,0 a4.5,6.5 0 1,0 9.0,0 a4.5,6.5 0 1,0 -9.0,0 M242,102 m-4.5,0 a4.5,6.5 0 1,0 9.0,0 a4.5,6.5 0 1,0 -9.0,0" />
+                    android:pathData="M112,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M228,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M330,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0" />
+            </group>
+            <group android:name="oppo_bounce_right_b">
                 <path
-                    android:name="smudge_tail_b"
-                    android:strokeColor="#66FFFFFF"
-                    android:strokeWidth="2.2"
-                    android:strokeAlpha="0.0"
-                    android:strokeLineCap="round"
-                    android:pathData="M122,98 L122,114 M242,98 L242,114" />
+                    android:fillColor="#E0F2FE"
+                    android:fillAlpha="0.0"
+                    android:pathData="M117,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0 M233,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0 M335,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0" />
             </group>
         </vector>
     </aapt:attr>
 
+    <!-- Mưa rơi xiên góc ~14 độ giống Oppo Weather -->
     <target android:name="rain_near">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="500" android:valueFrom="-35" android:valueTo="130" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
-                <objectAnimator android:propertyName="translateX" android:duration="500" android:valueFrom="8" android:valueTo="-22" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="520" android:valueFrom="-35" android:valueTo="130" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="520" android:valueFrom="6" android:valueTo="-16" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
             </set>
         </aapt:attr>
     </target>
@@ -97,8 +95,8 @@
     <target android:name="rain_mid">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="680" android:valueFrom="-38" android:valueTo="130" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
-                <objectAnimator android:propertyName="translateX" android:duration="680" android:valueFrom="6" android:valueTo="-18" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="700" android:valueFrom="-38" android:valueTo="130" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="700" android:valueFrom="5" android:valueTo="-13" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
             </set>
         </aapt:attr>
     </target>
@@ -106,74 +104,63 @@
     <target android:name="rain_far">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="920" android:valueFrom="-40" android:valueTo="130" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
-                <objectAnimator android:propertyName="translateX" android:duration="920" android:valueFrom="5" android:valueTo="-14" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="940" android:valueFrom="-40" android:valueTo="130" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="940" android:valueFrom="4" android:valueTo="-10" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
             </set>
         </aapt:attr>
     </target>
 
-    <!-- Nhóm A: Giọt nước rơi đập vào mép dải lịch Y=98 (62+28=90..98) rồi tạo vệt nhòe trượt chậm dính kính -->
-    <target android:name="drop_hit_a">
+    <!-- Hạt A rơi từ Y=48..57 xuống chạm đúng mép dải lịch Y=86 (+29px) -->
+    <target android:name="oppo_drop_a">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="translateY" android:duration="1600" android:valueFrom="0" android:valueTo="28" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
-        </aapt:attr>
-    </target>
-
-    <target android:name="smudge_streak_a">
-        <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="translateY" android:duration="1600" android:valueFrom="0" android:valueTo="16" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-        </aapt:attr>
-    </target>
-
-    <target android:name="smudge_blob_a">
-        <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="140" android:valueFrom="0.0" android:valueTo="0.75" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="840" android:valueFrom="0.75" android:valueTo="0.0" />
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateY" android:duration="780" android:valueFrom="0" android:valueTo="29" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="780" android:valueFrom="0" android:valueTo="-4" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
             </set>
         </aapt:attr>
     </target>
 
-    <target android:name="smudge_tail_a">
+    <!-- Giọt nảy bật lên 4px và văng sang trái/phải ngay tại Y=86 -->
+    <target android:name="oppo_bounce_left_a">
         <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="620" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="140" android:valueFrom="0.0" android:valueTo="0.65" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="840" android:valueFrom="0.65" android:valueTo="0.0" />
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="780" android:valueFrom="0" android:valueTo="-4.5" android:repeatCount="infinite" android:repeatMode="restart" />
+                <objectAnimator android:propertyName="translateY" android:duration="780" android:valueFrom="0" android:valueTo="-4.5" android:repeatCount="infinite" android:repeatMode="restart" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="oppo_bounce_right_a">
+        <aapt:attr name="android:animation">
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="780" android:valueFrom="0" android:valueTo="4.5" android:repeatCount="infinite" android:repeatMode="restart" />
+                <objectAnimator android:propertyName="translateY" android:duration="780" android:valueFrom="0" android:valueTo="-4.0" android:repeatCount="infinite" android:repeatMode="restart" />
             </set>
         </aapt:attr>
     </target>
 
-    <!-- Nhóm B: Lệch pha 2150ms -->
-    <target android:name="drop_hit_b">
+    <!-- Hạt B lệch pha (960ms) -->
+    <target android:name="oppo_drop_b">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="translateY" android:duration="2150" android:valueFrom="0" android:valueTo="28" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
-        </aapt:attr>
-    </target>
-
-    <target android:name="smudge_streak_b">
-        <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="translateY" android:duration="2150" android:valueFrom="0" android:valueTo="16" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-        </aapt:attr>
-    </target>
-
-    <target android:name="smudge_blob_b">
-        <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <objectAnimator android:propertyName="fillAlpha" android:duration="980" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="150" android:valueFrom="0.0" android:valueTo="0.72" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="1020" android:valueFrom="0.72" android:valueTo="0.0" />
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateY" android:duration="960" android:valueFrom="0" android:valueTo="29" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="960" android:valueFrom="0" android:valueTo="-4" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
             </set>
         </aapt:attr>
     </target>
 
-    <target android:name="smudge_tail_b">
+    <target android:name="oppo_bounce_left_b">
         <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="980" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="150" android:valueFrom="0.0" android:valueTo="0.62" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="1020" android:valueFrom="0.62" android:valueTo="0.0" />
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="960" android:valueFrom="0" android:valueTo="-4.5" android:repeatCount="infinite" android:repeatMode="restart" />
+                <objectAnimator android:propertyName="translateY" android:duration="960" android:valueFrom="0" android:valueTo="-4.5" android:repeatCount="infinite" android:repeatMode="restart" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="oppo_bounce_right_b">
+        <aapt:attr name="android:animation">
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="960" android:valueFrom="0" android:valueTo="4.5" android:repeatCount="infinite" android:repeatMode="restart" />
+                <objectAnimator android:propertyName="translateY" android:duration="960" android:valueFrom="0" android:valueTo="-4.0" android:repeatCount="infinite" android:repeatMode="restart" />
             </set>
         </aapt:attr>
     </target>
