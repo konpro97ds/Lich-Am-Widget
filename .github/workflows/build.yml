@@ -13,6 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Python & Generate 3D PNG Assets
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Render 3D Assets
+        run: |
+          pip install pillow
+          python scripts/generate_3d_assets.py
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
