@@ -8,14 +8,12 @@
             android:viewportWidth="360"
             android:viewportHeight="168">
             <group android:name="shimmer_beam">
-                <!-- Quầng sáng mềm bao ngoài -->
                 <path
-                    android:fillColor="#09FFFFFF"
-                    android:pathData="M0,0 L76,0 L32,168 L-44,168 Z" />
-                <!-- Lõi vệt sáng phản quang chính -->
+                    android:fillColor="#08FFFFFF"
+                    android:pathData="M0,2 L72,2 L30,166 L-42,166 Z" />
                 <path
-                    android:fillColor="#16FFFFFF"
-                    android:pathData="M24,0 L52,0 L8,168 L-20,168 Z" />
+                    android:fillColor="#14FFFFFF"
+                    android:pathData="M22,2 L48,2 L6,166 L-20,166 Z" />
             </group>
         </vector>
     </aapt:attr>
