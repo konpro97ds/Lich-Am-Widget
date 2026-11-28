@@ -8,8 +8,10 @@ os.makedirs(OUT_DIR, exist_ok=True)
 
 W, H = 860, 400
 
+
 def new_canvas():
     return Image.new("RGBA", (W, H), (0, 0, 0, 0))
+
 
 def add_soft_glow(base, cx, cy, radius, color, blur=35):
     layer = new_canvas()
@@ -18,7 +20,7 @@ def add_soft_glow(base, cx, cy, radius, color, blur=35):
     layer = layer.filter(ImageFilter.GaussianBlur(blur))
     return Image.alpha_composite(base, layer)
 
-def draw_3d_cloud(base, cx, cy, scale=1.0, dark=False):
+
 def draw_3d_cloud(base, cx, cy, scale=1.0, dark=False):
     shadow_col = (15, 23, 42, 135) if dark else (51, 65, 85, 70)
     body_col = (71, 85, 105, 195) if dark else (226, 232, 240, 195)
@@ -45,7 +47,7 @@ def draw_3d_cloud(base, cx, cy, scale=1.0, dark=False):
     b_layer = b_layer.filter(ImageFilter.GaussianBlur(14))
     base = Image.alpha_composite(base, b_layer)
 
-    # Viền sáng đỉnh mây hòa quyện mềm (blur lớn 18px để không tạo đốm tròn)
+    # Viền sáng đỉnh mây hòa quyện mềm
     h_layer = new_canvas()
     hd = ImageDraw.Draw(h_layer)
     for dx, dy, r in puffs[:3]:
@@ -53,6 +55,7 @@ def draw_3d_cloud(base, cx, cy, scale=1.0, dark=False):
         hd.ellipse((x - rad, y - rad, x + rad, y + rad), fill=top_col)
     h_layer = h_layer.filter(ImageFilter.GaussianBlur(18))
     return Image.alpha_composite(base, h_layer)
+
 
 def draw_3d_sun(base, cx, cy, r=46, soft=False):
     glow_r = r * (1.8 if soft else 2.2)
@@ -64,6 +67,7 @@ def draw_3d_sun(base, cx, cy, r=46, soft=False):
     d.ellipse((cx - r * 0.80, cy - r * 0.80, cx + r * 0.80, cy + r * 0.80), fill=(254, 249, 195, 252))
     sun = sun.filter(ImageFilter.GaussianBlur(1.5))
     return Image.alpha_composite(base, sun)
+
 
 def draw_realistic_moon(base, cx, cy, r=54, illum=1.0, waning=True):
     base = add_soft_glow(base, cx, cy, r * 1.95, (254, 243, 199, int(125 * max(0.45, illum))), blur=24)
@@ -122,13 +126,8 @@ def draw_realistic_moon(base, cx, cy, r=54, illum=1.0, waning=True):
     lit_moon = Image.composite(surf, new_canvas(), mask)
     return Image.alpha_composite(base, lit_moon)
 
+
 def draw_chrysanthemum_firework_3d(base, fx, fy, radius, c_core, c_mid, c_tip):
-    """
-    Pháo hoa hoa cúc đại đóa 3D:
-    - Quầng sáng trung tâm rực rỡ
-    - 36 tia cong mềm theo trọng lực (parabolic droop)
-    - Đầu tia phát sáng đa tầng + bụi kim tuyến lấp lánh
-    """
     base = add_soft_glow(base, fx, fy, radius * 1.35, (*c_mid[:3], 130), blur=28)
     fw = new_canvas()
     d = ImageDraw.Draw(fw)
@@ -140,7 +139,6 @@ def draw_chrysanthemum_firework_3d(base, fx, fy, radius, c_core, c_mid, c_tip):
         scale_len = rng.uniform(0.68, 1.05)
         L = radius * scale_len
 
-        # Vẽ đường cong tia pháo hoa rủ nhẹ theo trọng lực (5 đoạn)
         pts = []
         for step in range(6):
             t = step / 5.0
@@ -151,32 +149,29 @@ def draw_chrysanthemum_firework_3d(base, fx, fy, radius, c_core, c_mid, c_tip):
         col = c_mid if i % 2 == 0 else c_tip
         d.line(pts, fill=col, width=3 if i % 3 == 0 else 2)
 
-        # Hạt đầu tia rực sáng
         ex, ey = pts[-1]
         d.ellipse((ex - 3.5, ey - 3.5, ex + 3.5, ey + 3.5), fill=(255, 255, 255, 255))
         d.ellipse((ex - 5.5, ey - 5.5, ex + 5.5, ey + 5.5), fill=(*col[:3], 140))
 
-    # Tâm nổ trắng chói
     d.ellipse((fx - 9, fy - 9, fx + 9, fy + 9), fill=c_core)
     fw = fw.filter(ImageFilter.GaussianBlur(0.8))
     return Image.alpha_composite(base, fw)
 
+
 def draw_3d_blossom(draw, cx, cy, r, petal_col, inner_col, center_col):
-    # Bóng mờ dưới hoa
     for i in range(5):
         ang = math.radians(i * 72 - 18)
         px = cx + math.cos(ang) * r * 0.56
         py = cy + math.sin(ang) * r * 0.56 + 2
         draw.ellipse((px - r * 0.50, py - r * 0.50, px + r * 0.50, py + r * 0.50), fill=(60, 20, 10, 90))
-    # 5 cánh hoa tròn đầy
     for i in range(5):
         ang = math.radians(i * 72 - 18)
         px = cx + math.cos(ang) * r * 0.56
         py = cy + math.sin(ang) * r * 0.56
         draw.ellipse((px - r * 0.48, py - r * 0.48, px + r * 0.48, py + r * 0.48), fill=petal_col)
         draw.ellipse((px - r * 0.30, py - r * 0.30, px + r * 0.30, py + r * 0.30), fill=inner_col)
-    # Nhụy hoa
     draw.ellipse((cx - r * 0.24, cy - r * 0.24, cx + r * 0.24, cy + r * 0.24), fill=center_col)
+
 
 def draw_star_lantern(base, cx, cy, r=16):
     base = add_soft_glow(base, cx, cy, r * 1.9, (250, 204, 21, 130), blur=12)
@@ -192,6 +187,7 @@ def draw_star_lantern(base, cx, cy, r=16):
     d.ellipse((cx - r * 0.25, cy - r * 0.25, cx + r * 0.25, cy + r * 0.25), fill=(254, 249, 195, 255))
     return Image.alpha_composite(base, lan)
 
+
 def draw_lantern(base, lx, ly, scale=1.0):
     base = add_soft_glow(base, lx, ly, 44 * scale, (239, 68, 68, 125), blur=18)
     lan = new_canvas()
@@ -203,6 +199,7 @@ def draw_lantern(base, lx, ly, scale=1.0):
     d.rectangle((lx - 11 * scale, ly + 17 * scale, lx + 11 * scale, ly + 23 * scale), fill=(250, 204, 21, 255))
     d.line((lx, ly + 23 * scale, lx, ly + 38 * scale), fill=(250, 204, 21, 255), width=2)
     return Image.alpha_composite(base, lan)
+
 
 def build_all():
     # 1. SUN
@@ -216,7 +213,7 @@ def build_all():
     im = draw_3d_cloud(im, 690, 158, scale=0.88, dark=False)
     im.save(f"{OUT_DIR}/art_sun_cloud.png")
 
-    # 3. MOON (To, rõ nét ngay trung tâm vùng thời tiết)
+    # 3. MOON
     im_full = draw_realistic_moon(new_canvas(), 620, 128, r=54, illum=1.0, waning=True)
     im_full.save(f"{OUT_DIR}/art_moon_full.png")
 
@@ -238,7 +235,7 @@ def build_all():
     im = draw_3d_cloud(im, 735, 142, scale=0.98, dark=True)
     im.save(f"{OUT_DIR}/art_cloud.png")
 
-        # 6. RAIN & THUNDER (Đáy mây nằm đúng Y=142px để sấm sét đánh ra từ dưới bụng mây)
+    # 6. RAIN & THUNDER
     for fname in ["art_rain", "art_thunder"]:
         im = draw_3d_cloud(new_canvas(), 460, 92, scale=1.15, dark=True)
         im = draw_3d_cloud(im, 640, 100, scale=1.28, dark=True)
@@ -247,7 +244,7 @@ def build_all():
             d.ellipse((gx - gr, gy - gr, gx + gr, gy + gr), fill=(224, 242, 254, 130), outline=(255, 255, 255, 190))
         im.save(f"{OUT_DIR}/{fname}.png")
 
-    # 7. TET: Pháo hoa hoa cúc 3D rực rỡ + Cành mai vàng & Cành đào hồng rủ ở cả 4 GÓC
+    # 7. TET
     im = add_soft_glow(new_canvas(), 620, 145, 250, (185, 28, 28, 125), blur=45)
     im = draw_chrysanthemum_firework_3d(im, 535, 112, 86, (255, 255, 255, 255), (253, 224, 71, 245), (244, 63, 94, 240))
     im = draw_chrysanthemum_firework_3d(im, 705, 96, 70, (255, 255, 255, 255), (253, 164, 175, 245), (103, 232, 249, 240))
@@ -258,26 +255,26 @@ def build_all():
     bd = ImageDraw.Draw(branches)
     wood_col = (92, 45, 22, 245)
 
-    # Góc Trên Trái: Cành đào hồng rủ xuống
+    # Góc Trên Trái: Cành đào hồng
     bd.line([(0, 18), (68, 36), (125, 58)], fill=wood_col, width=5)
     bd.line([(55, 32), (88, 64)], fill=wood_col, width=3)
     draw_3d_blossom(bd, 125, 58, 14, (253, 164, 175, 255), (254, 205, 211, 255), (225, 29, 72, 255))
     draw_3d_blossom(bd, 88, 64, 12, (251, 113, 133, 255), (253, 164, 175, 255), (253, 224, 71, 255))
     draw_3d_blossom(bd, 42, 34, 13, (253, 164, 175, 255), (255, 228, 230, 255), (225, 29, 72, 255))
 
-    # Góc Trên Phải: Cành mai vàng rủ xuống
+    # Góc Trên Phải: Cành mai vàng
     bd.line([(W, 20), (W - 72, 38), (W - 135, 62)], fill=wood_col, width=5)
     bd.line([(W - 60, 34), (W - 95, 68)], fill=wood_col, width=3)
     draw_3d_blossom(bd, W - 135, 62, 15, (250, 204, 21, 255), (254, 240, 138, 255), (180, 83, 9, 255))
     draw_3d_blossom(bd, W - 95, 68, 13, (253, 224, 71, 255), (254, 249, 195, 255), (217, 119, 6, 255))
     draw_3d_blossom(bd, W - 44, 34, 14, (250, 204, 21, 255), (254, 240, 138, 255), (180, 83, 9, 255))
 
-    # Góc Dưới Trái: Nhánh mai vàng vươn lên nhẹ
+    # Góc Dưới Trái: Nhánh mai vàng
     bd.line([(0, H - 18), (62, H - 36), (112, H - 52)], fill=wood_col, width=4)
     draw_3d_blossom(bd, 112, H - 52, 13, (253, 224, 71, 250), (254, 249, 195, 255), (217, 119, 6, 255))
     draw_3d_blossom(bd, 56, H - 36, 12, (250, 204, 21, 250), (254, 240, 138, 255), (180, 83, 9, 255))
 
-    # Góc Dưới Phải: Nhánh đào hồng vươn lên nhẹ
+    # Góc Dưới Phải: Nhánh đào hồng
     bd.line([(W, H - 18), (W - 66, H - 38), (W - 118, H - 54)], fill=wood_col, width=4)
     draw_3d_blossom(bd, W - 118, H - 54, 13, (253, 164, 175, 250), (255, 228, 230, 255), (225, 29, 72, 255))
     draw_3d_blossom(bd, W - 58, H - 36, 12, (251, 113, 133, 250), (253, 164, 175, 255), (253, 224, 71, 255))
@@ -371,6 +368,7 @@ def build_all():
 
     im = Image.alpha_composite(im, tree)
     im.save(f"{OUT_DIR}/art_xmas.png")
+
 
 if __name__ == "__main__":
     build_all()
