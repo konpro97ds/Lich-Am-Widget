@@ -47,12 +47,14 @@
             <!-- Hạt nước bật nảy trái/phải kiểu Oppo khi chạm Y = 86 -->
             <group android:name="oppo_bounce_left_a">
                 <path
+                    android:name="bounce_dot_la"
                     android:fillColor="#FFFFFFFF"
                     android:fillAlpha="0.0"
                     android:pathData="M56,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M170,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M286,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0" />
             </group>
             <group android:name="oppo_bounce_right_a">
                 <path
+                    android:name="bounce_dot_ra"
                     android:fillColor="#FFFFFFFF"
                     android:fillAlpha="0.0"
                     android:pathData="M61,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0 M175,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0 M291,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0" />
@@ -69,12 +71,14 @@
 
             <group android:name="oppo_bounce_left_b">
                 <path
+                    android:name="bounce_dot_lb"
                     android:fillColor="#E0F2FE"
                     android:fillAlpha="0.0"
                     android:pathData="M112,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M228,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M330,85 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0" />
             </group>
             <group android:name="oppo_bounce_right_b">
                 <path
+                    android:name="bounce_dot_rb"
                     android:fillColor="#E0F2FE"
                     android:fillAlpha="0.0"
                     android:pathData="M117,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0 M233,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0 M335,85 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0" />
@@ -120,7 +124,7 @@
         </aapt:attr>
     </target>
 
-    <!-- Giọt nảy bật lên 4px và văng sang trái/phải ngay tại Y=86 -->
+    <!-- Giọt nảy bật lên và văng sang trái/phải ngay tại Y=86 -->
     <target android:name="oppo_bounce_left_a">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
@@ -129,12 +133,23 @@
             </set>
         </aapt:attr>
     </target>
+    <target android:name="bounce_dot_la">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="fillAlpha" android:duration="390" android:valueFrom="0.0" android:valueTo="0.95" android:repeatCount="infinite" android:repeatMode="reverse" />
+        </aapt:attr>
+    </target>
+
     <target android:name="oppo_bounce_right_a">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
                 <objectAnimator android:propertyName="translateX" android:duration="780" android:valueFrom="0" android:valueTo="4.5" android:repeatCount="infinite" android:repeatMode="restart" />
                 <objectAnimator android:propertyName="translateY" android:duration="780" android:valueFrom="0" android:valueTo="-4.0" android:repeatCount="infinite" android:repeatMode="restart" />
             </set>
+        </aapt:attr>
+    </target>
+    <target android:name="bounce_dot_ra">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="fillAlpha" android:duration="390" android:valueFrom="0.0" android:valueTo="0.95" android:repeatCount="infinite" android:repeatMode="reverse" />
         </aapt:attr>
     </target>
 
@@ -156,12 +171,23 @@
             </set>
         </aapt:attr>
     </target>
+    <target android:name="bounce_dot_lb">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="fillAlpha" android:duration="480" android:valueFrom="0.0" android:valueTo="0.90" android:repeatCount="infinite" android:repeatMode="reverse" />
+        </aapt:attr>
+    </target>
+
     <target android:name="oppo_bounce_right_b">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
                 <objectAnimator android:propertyName="translateX" android:duration="960" android:valueFrom="0" android:valueTo="4.5" android:repeatCount="infinite" android:repeatMode="restart" />
                 <objectAnimator android:propertyName="translateY" android:duration="960" android:valueFrom="0" android:valueTo="-4.0" android:repeatCount="infinite" android:repeatMode="restart" />
             </set>
+        </aapt:attr>
+    </target>
+    <target android:name="bounce_dot_rb">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="fillAlpha" android:duration="480" android:valueFrom="0.0" android:valueTo="0.90" android:repeatCount="infinite" android:repeatMode="reverse" />
         </aapt:attr>
     </target>
 </animated-vector>
