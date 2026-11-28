@@ -8,180 +8,379 @@
             android:viewportWidth="336"
             android:viewportHeight="40">
 
-            <!-- NHÓM 1 (Chu kỳ 790ms - Vị trí X = 42, 168, 286) -->
-            <group android:name="b_left_1">
-                <path android:name="d_l1" android:fillColor="#E0F2FE" android:fillAlpha="0.0"
-                    android:pathData="M42,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M168,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M286,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0" />
+            <!-- ================= NHÓM 1 (X = 48 & X = 228 | Chu kỳ 2390ms) ================= -->
+            <group android:name="sp1_l">
+                <path android:name="p1_l" android:fillColor="#E0F2FE" android:fillAlpha="0.0"
+                    android:pathData="M48,6.0 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 M228,6.0 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0" />
             </group>
-            <group android:name="b_right_1">
-                <path android:name="d_r1" android:fillColor="#FFFFFF" android:fillAlpha="0.0"
-                    android:pathData="M43,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M169,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M287,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0" />
+            <group android:name="sp1_r">
+                <path android:name="p1_r" android:fillColor="#FFFFFF" android:fillAlpha="0.0"
+                    android:pathData="M48,6.0 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0 M228,6.0 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0" />
             </group>
-            <!-- Giọt nước chảy trượt xuyên qua hết dải lịch âm lịch đồng bộ đúng tọa độ X = 42, 168, 286 -->
-            <group android:name="drip_slide_1">
-                <path android:name="drip_dot_1" android:fillColor="#88E0F2FE" android:fillAlpha="0.0"
-                    android:pathData="M42,8 C43.1,10.2 43.5,11.4 43.5,12.4 C43.5,13.5 42.8,14.2 42,14.2 C41.2,14.2 40.5,13.5 40.5,12.4 C40.5,11.4 40.9,10.2 42,8 Z M168,8 C169.1,10.2 169.5,11.4 169.5,12.4 C169.5,13.5 168.8,14.2 168,14.2 C167.2,14.2 166.5,13.5 166.5,12.4 C166.5,11.4 166.9,10.2 168,8 Z M286,8 C287.1,10.2 287.5,11.4 287.5,12.4 C287.5,13.5 286.8,14.2 286,14.2 C285.2,14.2 284.5,13.5 284.5,12.4 C284.5,11.4 284.9,10.2 286,8 Z" />
-            </group>
-
-            <!-- NHÓM 2 (Chu kỳ 1030ms - Vị trí X = 88, 214, 314) -->
-            <group android:name="b_left_2">
-                <path android:name="d_l2" android:fillColor="#BAE6FD" android:fillAlpha="0.0"
-                    android:pathData="M88,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M214,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M314,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0" />
-            </group>
-            <group android:name="b_right_2">
-                <path android:name="d_r2" android:fillColor="#FFFFFF" android:fillAlpha="0.0"
-                    android:pathData="M89,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M215,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M315,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0" />
-            </group>
-            <group android:name="drip_slide_2">
-                <path android:name="drip_dot_2" android:fillColor="#88BAE6FD" android:fillAlpha="0.0"
-                    android:pathData="M88,8 C89.1,10.2 89.5,11.4 89.5,12.4 C89.5,13.5 88.8,14.2 88,14.2 C87.2,14.2 86.5,13.5 86.5,12.4 C86.5,11.4 86.9,10.2 88,8 Z M214,8 C215.1,10.2 215.5,11.4 215.5,12.4 C215.5,13.5 214.8,14.2 214,14.2 C213.2,14.2 212.5,13.5 212.5,12.4 C212.5,11.4 212.9,10.2 214,8 Z M314,8 C315.1,10.2 315.5,11.4 315.5,12.4 C315.5,13.5 314.8,14.2 314,14.2 C313.2,14.2 312.5,13.5 312.5,12.4 C312.5,11.4 312.9,10.2 314,8 Z" />
+            <group android:name="drip1">
+                <path android:name="dp1" android:fillColor="#B3E0F2FE" android:fillAlpha="0.0"
+                    android:pathData="M48,6.0 C49.3,8.5 49.8,10.0 49.8,11.2 C49.8,12.5 49.0,13.4 48,13.4 C47.0,13.4 46.2,12.5 46.2,11.2 C46.2,10.0 46.7,8.5 48,6.0 Z M228,6.0 C229.3,8.5 229.8,10.0 229.8,11.2 C229.8,12.5 229.0,13.4 228,13.4 C227.0,13.4 226.2,12.5 226.2,11.2 C226.2,10.0 226.7,8.5 228,6.0 Z" />
             </group>
 
-            <!-- NHÓM 3 (Chu kỳ 1310ms - Vị trí X = 26, 134, 248) -->
-            <group android:name="b_left_3">
-                <path android:name="d_l3" android:fillColor="#E0F2FE" android:fillAlpha="0.0"
-                    android:pathData="M26,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M134,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M248,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0" />
+            <!-- ================= NHÓM 2 (X = 136 & X = 288 | Chu kỳ 2810ms) ================= -->
+            <group android:name="sp2_l">
+                <path android:name="p2_l" android:fillColor="#BAE6FD" android:fillAlpha="0.0"
+                    android:pathData="M136,6.0 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 M288,6.0 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0" />
             </group>
-            <group android:name="drip_slide_3">
-                <path android:name="drip_dot_3" android:fillColor="#80FFFFFF" android:fillAlpha="0.0"
-                    android:pathData="M26,8 C27.1,10.2 27.5,11.4 27.5,12.4 C27.5,13.5 26.8,14.2 26,14.2 C25.2,14.2 24.5,13.5 24.5,12.4 C24.5,11.4 24.9,10.2 26,8 Z M134,8 C135.1,10.2 135.5,11.4 135.5,12.4 C135.5,13.5 134.8,14.2 134,14.2 C133.2,14.2 132.5,13.5 132.5,12.4 C132.5,11.4 132.9,10.2 134,8 Z M248,8 C249.1,10.2 249.5,11.4 249.5,12.4 C249.5,13.5 248.8,14.2 248,14.2 C247.2,14.2 246.5,13.5 246.5,12.4 C246.5,11.4 246.9,10.2 248,8 Z" />
+            <group android:name="sp2_r">
+                <path android:name="p2_r" android:fillColor="#FFFFFF" android:fillAlpha="0.0"
+                    android:pathData="M136,6.0 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0 M288,6.0 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0" />
+            </group>
+            <group android:name="drip2">
+                <path android:name="dp2" android:fillColor="#B3BAE6FD" android:fillAlpha="0.0"
+                    android:pathData="M136,6.0 C137.3,8.5 137.8,10.0 137.8,11.2 C137.8,12.5 137.0,13.4 136,13.4 C135.0,13.4 134.2,12.5 134.2,11.2 C134.2,10.0 134.7,8.5 136,6.0 Z M288,6.0 C289.3,8.5 289.8,10.0 289.8,11.2 C289.8,12.5 289.0,13.4 288,13.4 C287.0,13.4 286.2,12.5 286.2,11.2 C286.2,10.0 286.7,8.5 288,6.0 Z" />
             </group>
 
-            <!-- NHÓM 4 (Chu kỳ 1670ms - Vị trí X = 64, 192) -->
-            <group android:name="b_left_4">
-                <path android:name="d_l4" android:fillColor="#FFFFFF" android:fillAlpha="0.0"
-                    android:pathData="M64,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M192,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0" />
+            <!-- ================= NHÓM 3 (X = 76 & X = 258 | Chu kỳ 3170ms) ================= -->
+            <group android:name="sp3_l">
+                <path android:name="p3_l" android:fillColor="#E0F2FE" android:fillAlpha="0.0"
+                    android:pathData="M76,6.0 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 M258,6.0 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0" />
             </group>
-            <group android:name="drip_slide_4">
-                <path android:name="drip_dot_4" android:fillColor="#85E0F2FE" android:fillAlpha="0.0"
-                    android:pathData="M64,8 C65.1,10.2 65.5,11.4 65.5,12.4 C65.5,13.5 64.8,14.2 64,14.2 C63.2,14.2 62.5,13.5 62.5,12.4 C62.5,11.4 62.9,10.2 64,8 Z M192,8 C193.1,10.2 193.5,11.4 193.5,12.4 C193.5,13.5 192.8,14.2 192,14.2 C191.2,14.2 190.5,13.5 190.5,12.4 C190.5,11.4 190.9,10.2 192,8 Z" />
+            <group android:name="sp3_r">
+                <path android:name="p3_r" android:fillColor="#FFFFFF" android:fillAlpha="0.0"
+                    android:pathData="M76,6.0 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0 M258,6.0 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0" />
+            </group>
+            <group android:name="drip3">
+                <path android:name="dp3" android:fillColor="#B3FFFFFF" android:fillAlpha="0.0"
+                    android:pathData="M76,6.0 C77.3,8.5 77.8,10.0 77.8,11.2 C77.8,12.5 77.0,13.4 76,13.4 C75.0,13.4 74.2,12.5 74.2,11.2 C74.2,10.0 74.7,8.5 76,6.0 Z M258,6.0 C259.3,8.5 259.8,10.0 259.8,11.2 C259.8,12.5 259.0,13.4 258,13.4 C257.0,13.4 256.2,12.5 256.2,11.2 C256.2,10.0 256.7,8.5 258,6.0 Z" />
+            </group>
+
+            <!-- ================= NHÓM 4 (X = 198 & X = 316 | Chu kỳ 3530ms) ================= -->
+            <group android:name="sp4_l">
+                <path android:name="p4_l" android:fillColor="#BAE6FD" android:fillAlpha="0.0"
+                    android:pathData="M198,6.0 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 M316,6.0 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0" />
+            </group>
+            <group android:name="sp4_r">
+                <path android:name="p4_r" android:fillColor="#FFFFFF" android:fillAlpha="0.0"
+                    android:pathData="M198,6.0 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0 M316,6.0 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0" />
+            </group>
+            <group android:name="drip4">
+                <path android:name="dp4" android:fillColor="#B3E0F2FE" android:fillAlpha="0.0"
+                    android:pathData="M198,6.0 C199.3,8.5 199.8,10.0 199.8,11.2 C199.8,12.5 199.0,13.4 198,13.4 C197.0,13.4 196.2,12.5 196.2,11.2 C196.2,10.0 196.7,8.5 198,6.0 Z M316,6.0 C317.3,8.5 317.8,10.0 317.8,11.2 C317.8,12.5 317.0,13.4 316,13.4 C315.0,13.4 314.2,12.5 314.2,11.2 C314.2,10.0 314.7,8.5 316,6.0 Z" />
+            </group>
+
+            <!-- ================= NHÓM 5 (X = 22 & X = 168 | Chu kỳ 3890ms) ================= -->
+            <group android:name="sp5_l">
+                <path android:name="p5_l" android:fillColor="#E0F2FE" android:fillAlpha="0.0"
+                    android:pathData="M22,6.0 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 M168,6.0 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0" />
+            </group>
+            <group android:name="drip5">
+                <path android:name="dp5" android:fillColor="#B3BAE6FD" android:fillAlpha="0.0"
+                    android:pathData="M22,6.0 C23.3,8.5 23.8,10.0 23.8,11.2 C23.8,12.5 23.0,13.4 22,13.4 C21.0,13.4 20.2,12.5 20.2,11.2 C20.2,10.0 20.7,8.5 22,6.0 Z M168,6.0 C169.3,8.5 169.8,10.0 169.8,11.2 C169.8,12.5 169.0,13.4 168,13.4 C167.0,13.4 166.2,12.5 166.2,11.2 C166.2,10.0 166.7,8.5 168,6.0 Z" />
+            </group>
+
+            <!-- ================= NHÓM 6 (X = 108 | Chu kỳ 4210ms) ================= -->
+            <group android:name="sp6_l">
+                <path android:name="p6_l" android:fillColor="#FFFFFF" android:fillAlpha="0.0"
+                    android:pathData="M108,6.0 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0" />
+            </group>
+            <group android:name="drip6">
+                <path android:name="dp6" android:fillColor="#B3FFFFFF" android:fillAlpha="0.0"
+                    android:pathData="M108,6.0 C109.3,8.5 109.8,10.0 109.8,11.2 C109.8,12.5 109.0,13.4 108,13.4 C107.0,13.4 106.2,12.5 106.2,11.2 C106.2,10.0 106.7,8.5 108,6.0 Z" />
             </group>
         </vector>
     </aapt:attr>
 
-    <!-- NHÓM 1 (790ms) -->
-    <target android:name="b_left_1">
+    <!-- ============ ANIMATION NHÓM 1 (2390ms) ============ -->
+    <target android:name="sp1_l">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateX" android:duration="790" android:valueFrom="0" android:valueTo="-4.2" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateY" android:duration="395" android:valueFrom="0" android:valueTo="-5.0" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="2390" android:valueFrom="0" android:valueTo="-6.5" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="1195" android:valueFrom="0" android:valueTo="-5.2" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
-    <target android:name="d_l1">
+    <target android:name="p1_l">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="395" android:valueFrom="0.95" android:valueTo="0.05" android:repeatCount="infinite" android:repeatMode="reverse" />
-        </aapt:attr>
-    </target>
-    <target android:name="b_right_1">
-        <aapt:attr name="android:animation">
-            <set android:ordering="together">
-                <objectAnimator android:propertyName="translateX" android:duration="790" android:valueFrom="0" android:valueTo="3.8" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateY" android:duration="395" android:valueFrom="0" android:valueTo="-4.3" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.0" android:valueTo="0.95" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.95" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1590" android:valueFrom="0.0" android:valueTo="0.0" />
             </set>
         </aapt:attr>
     </target>
-    <target android:name="d_r1">
+    <target android:name="sp1_r">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="395" android:valueFrom="0.90" android:valueTo="0.05" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="2390" android:valueFrom="0" android:valueTo="6.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="1195" android:valueFrom="0" android:valueTo="-4.6" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+            </set>
         </aapt:attr>
     </target>
-    <target android:name="drip_slide_1">
+    <target android:name="p1_r">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="translateY" android:duration="1580" android:valueFrom="0" android:valueTo="25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.0" android:valueTo="0.90" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.90" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1590" android:valueFrom="0.0" android:valueTo="0.0" />
+            </set>
         </aapt:attr>
     </target>
-    <target android:name="drip_dot_1">
+    <!-- Giọt nước đọng lại 650ms tại mép lịch rồi chảy trượt chậm xuống hết chiều cao lịch (Y=6 -> 34) -->
+    <target android:name="drip1">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="790" android:valueFrom="0.85" android:valueTo="0.05" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="translateY" android:duration="650" android:valueFrom="0" android:valueTo="1.5" />
+                <objectAnimator android:propertyName="translateY" android:duration="1740" android:valueFrom="1.5" android:valueTo="28" android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="dp1">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="220" android:valueFrom="0.0" android:valueTo="0.90" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1550" android:valueFrom="0.90" android:valueTo="0.75" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.75" android:valueTo="0.0" />
+            </set>
         </aapt:attr>
     </target>
 
-    <!-- NHÓM 2 (1030ms) -->
-    <target android:name="b_left_2">
+    <!-- ============ ANIMATION NHÓM 2 (2810ms - trễ pha 700ms) ============ -->
+    <target android:name="sp2_l">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateX" android:duration="1030" android:valueFrom="0" android:valueTo="-4.2" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateY" android:duration="515" android:valueFrom="0" android:valueTo="-5.0" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="2810" android:valueFrom="0" android:valueTo="-6.5" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="1405" android:valueFrom="0" android:valueTo="-5.2" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
-    <target android:name="d_l2">
+    <target android:name="p2_l">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="515" android:valueFrom="0.05" android:valueTo="0.95" android:repeatCount="infinite" android:repeatMode="reverse" />
-        </aapt:attr>
-    </target>
-    <target android:name="b_right_2">
-        <aapt:attr name="android:animation">
-            <set android:ordering="together">
-                <objectAnimator android:propertyName="translateX" android:duration="1030" android:valueFrom="0" android:valueTo="3.8" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateY" android:duration="515" android:valueFrom="0" android:valueTo="-4.3" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="700" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.0" android:valueTo="0.95" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.95" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1310" android:valueFrom="0.0" android:valueTo="0.0" />
             </set>
         </aapt:attr>
     </target>
-    <target android:name="d_r2">
+    <target android:name="sp2_r">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="515" android:valueFrom="0.05" android:valueTo="0.90" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="2810" android:valueFrom="0" android:valueTo="6.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="1405" android:valueFrom="0" android:valueTo="-4.6" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+            </set>
         </aapt:attr>
     </target>
-    <target android:name="drip_slide_2">
+    <target android:name="p2_r">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="translateY" android:duration="2060" android:valueFrom="0" android:valueTo="25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="700" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.0" android:valueTo="0.90" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.90" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1310" android:valueFrom="0.0" android:valueTo="0.0" />
+            </set>
         </aapt:attr>
     </target>
-    <target android:name="drip_dot_2">
+    <target android:name="drip2">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="1030" android:valueFrom="0.05" android:valueTo="0.85" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="translateY" android:duration="1350" android:valueFrom="0" android:valueTo="1.5" />
+                <objectAnimator android:propertyName="translateY" android:duration="1460" android:valueFrom="1.5" android:valueTo="28" android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="dp2">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="700" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="220" android:valueFrom="0.0" android:valueTo="0.90" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1300" android:valueFrom="0.90" android:valueTo="0.72" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="590" android:valueFrom="0.72" android:valueTo="0.0" />
+            </set>
         </aapt:attr>
     </target>
 
-    <!-- NHÓM 3 (1310ms) -->
-    <target android:name="b_left_3">
+    <!-- ============ ANIMATION NHÓM 3 (3170ms - trễ pha 1250ms) ============ -->
+    <target android:name="sp3_l">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateX" android:duration="1310" android:valueFrom="0" android:valueTo="-4.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateY" android:duration="655" android:valueFrom="0" android:valueTo="-4.8" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="3170" android:valueFrom="0" android:valueTo="-6.2" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="1585" android:valueFrom="0" android:valueTo="-5.0" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
-    <target android:name="d_l3">
+    <target android:name="p3_l">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="655" android:valueFrom="0.92" android:valueTo="0.05" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1250" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.0" android:valueTo="0.95" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.95" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1120" android:valueFrom="0.0" android:valueTo="0.0" />
+            </set>
         </aapt:attr>
     </target>
-    <target android:name="drip_slide_3">
+    <target android:name="sp3_r">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="translateY" android:duration="2620" android:valueFrom="0" android:valueTo="25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="3170" android:valueFrom="0" android:valueTo="5.8" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="1585" android:valueFrom="0" android:valueTo="-4.5" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+            </set>
         </aapt:attr>
     </target>
-    <target android:name="drip_dot_3">
+    <target android:name="p3_r">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="1310" android:valueFrom="0.82" android:valueTo="0.05" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1250" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.0" android:valueTo="0.90" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.90" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1120" android:valueFrom="0.0" android:valueTo="0.0" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="drip3">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="translateY" android:duration="1900" android:valueFrom="0" android:valueTo="1.5" />
+                <objectAnimator android:propertyName="translateY" android:duration="1270" android:valueFrom="1.5" android:valueTo="28" android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="dp3">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1250" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="220" android:valueFrom="0.0" android:valueTo="0.90" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1150" android:valueFrom="0.90" android:valueTo="0.72" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="550" android:valueFrom="0.72" android:valueTo="0.0" />
+            </set>
         </aapt:attr>
     </target>
 
-    <!-- NHÓM 4 (1670ms) -->
-    <target android:name="b_left_4">
+    <!-- ============ ANIMATION NHÓM 4 (3530ms - trễ pha 420ms) ============ -->
+    <target android:name="sp4_l">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateX" android:duration="1670" android:valueFrom="0" android:valueTo="3.8" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateY" android:duration="835" android:valueFrom="0" android:valueTo="-4.8" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="3530" android:valueFrom="0" android:valueTo="-6.2" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="1765" android:valueFrom="0" android:valueTo="-5.0" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
-    <target android:name="d_l4">
+    <target android:name="p4_l">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="835" android:valueFrom="0.05" android:valueTo="0.92" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="420" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.0" android:valueTo="0.95" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.95" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="2310" android:valueFrom="0.0" android:valueTo="0.0" />
+            </set>
         </aapt:attr>
     </target>
-    <target android:name="drip_slide_4">
+    <target android:name="sp4_r">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="translateY" android:duration="3340" android:valueFrom="0" android:valueTo="25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="3530" android:valueFrom="0" android:valueTo="5.8" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="1765" android:valueFrom="0" android:valueTo="-4.5" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+            </set>
         </aapt:attr>
     </target>
-    <target android:name="drip_dot_4">
+    <target android:name="p4_r">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="1670" android:valueFrom="0.05" android:valueTo="0.82" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="420" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.0" android:valueTo="0.90" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.90" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="2310" android:valueFrom="0.0" android:valueTo="0.0" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="drip4">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="translateY" android:duration="1070" android:valueFrom="0" android:valueTo="1.5" />
+                <objectAnimator android:propertyName="translateY" android:duration="2460" android:valueFrom="1.5" android:valueTo="28" android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="dp4">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="420" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="220" android:valueFrom="0.0" android:valueTo="0.90" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="2100" android:valueFrom="0.90" android:valueTo="0.72" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="790" android:valueFrom="0.72" android:valueTo="0.0" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <!-- ============ ANIMATION NHÓM 5 (3890ms - trễ pha 1680ms) ============ -->
+    <target android:name="sp5_l">
+        <aapt:attr name="android:animation">
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="3890" android:valueFrom="0" android:valueTo="5.8" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="1945" android:valueFrom="0" android:valueTo="-4.8" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="p5_l">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1680" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.0" android:valueTo="0.95" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.95" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1410" android:valueFrom="0.0" android:valueTo="0.0" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="drip5">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="translateY" android:duration="2330" android:valueFrom="0" android:valueTo="1.5" />
+                <objectAnimator android:propertyName="translateY" android:duration="1560" android:valueFrom="1.5" android:valueTo="28" android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="dp5">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1680" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="220" android:valueFrom="0.0" android:valueTo="0.90" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1390" android:valueFrom="0.90" android:valueTo="0.72" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="600" android:valueFrom="0.72" android:valueTo="0.0" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <!-- ============ ANIMATION NHÓM 6 (4210ms - trễ pha 2150ms) ============ -->
+    <target android:name="sp6_l">
+        <aapt:attr name="android:animation">
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="4210" android:valueFrom="0" android:valueTo="-6.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="2105" android:valueFrom="0" android:valueTo="-4.8" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="p6_l">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="2150" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.0" android:valueTo="0.95" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="620" android:valueFrom="0.95" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1260" android:valueFrom="0.0" android:valueTo="0.0" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="drip6">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="translateY" android:duration="2800" android:valueFrom="0" android:valueTo="1.5" />
+                <objectAnimator android:propertyName="translateY" android:duration="1410" android:valueFrom="1.5" android:valueTo="28" android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="dp6">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="2150" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="220" android:valueFrom="0.0" android:valueTo="0.90" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="1240" android:valueFrom="0.90" android:valueTo="0.72" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="600" android:valueFrom="0.72" android:valueTo="0.0" />
+            </set>
         </aapt:attr>
     </target>
 </animated-vector>
