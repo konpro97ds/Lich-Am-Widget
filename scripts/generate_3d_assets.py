@@ -236,13 +236,24 @@ def build_all():
     im.save(f"{OUT_DIR}/art_cloud.png")
 
     # 6. RAIN & THUNDER
-    for fname in ["art_rain", "art_thunder"]:
-        im = draw_3d_cloud(new_canvas(), 460, 92, scale=1.15, dark=True)
-        im = draw_3d_cloud(im, 640, 100, scale=1.28, dark=True)
-        d = ImageDraw.Draw(im)
-        for gx, gy, gr in [(180, 90, 5), (320, 140, 6), (510, 190, 5), (710, 110, 6), (780, 175, 4)]:
-            d.ellipse((gx - gr, gy - gr, gx + gr, gy + gr), fill=(224, 242, 254, 130), outline=(255, 255, 255, 190))
-        im.save(f"{OUT_DIR}/{fname}.png")
+    im_rain = draw_3d_cloud(new_canvas(), 520, 118, scale=1.15, dark=True)
+    im_rain = draw_3d_cloud(im_rain, 695, 126, scale=1.28, dark=True)
+    im_rain.save(f"{OUT_DIR}/art_rain.png")
+
+    im_th = add_soft_glow(new_canvas(), 635, 145, 165, (56, 189, 248, 95), blur=36)
+    im_th = draw_3d_cloud(im_th, 520, 118, scale=1.18, dark=True)
+    im_th = draw_3d_cloud(im_th, 695, 126, scale=1.30, dark=True)
+    # Tia sét phát sáng 3D tĩnh ẩn hiện dưới lòng mây giông
+    bolt_layer = new_canvas()
+    bd = ImageDraw.Draw(bolt_layer)
+    bolt_pts = [(635, 145), (612, 195), (636, 205), (602, 265), (624, 275), (590, 330)]
+    bd.line(bolt_pts, fill=(56, 189, 248, 170), width=11)
+    bolt_layer = bolt_layer.filter(ImageFilter.GaussianBlur(5))
+    im_th = Image.alpha_composite(im_th, bolt_layer)
+    bd2 = ImageDraw.Draw(im_th)
+    bd2.line(bolt_pts, fill=(254, 249, 195, 225), width=4)
+    bd2.line([(618, 198), (648, 232), (638, 265)], fill=(186, 230, 253, 200), width=3)
+    im_th.save(f"{OUT_DIR}/art_thunder.png")
 
     # 7. TET
     im = add_soft_glow(new_canvas(), 620, 145, 250, (185, 28, 28, 125), blur=45)
