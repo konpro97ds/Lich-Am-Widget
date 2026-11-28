@@ -59,11 +59,12 @@ object WidgetPreviewHelper {
             (root.width.toFloat() / root.height.toFloat()).coerceIn(1.35f, 3.0f)
         } else 2.15f
 
-        // 1. Nền Kính Lỏng thuần túy
+        // 1. Nền Kính Lỏng thuần túy & khóa cắt bo góc
         root.findViewById<ImageView>(R.id.iv_glass_bg)?.setImageBitmap(
-            LiquidWidgetProvider.drawLiquidGlassBaseBitmap(cfg.bgColorHex, cfg.bgAlpha, 48f, aspectRatio)
+            LiquidWidgetProvider.drawLiquidGlassBaseBitmap(cfg.bgColorHex, cfg.bgAlpha, aspectRatio)
         )
         root.findViewById<ProgressBar>(R.id.pb_glass_shimmer)?.visibility = if (cfg.enableEffects) View.VISIBLE else View.GONE
+        root.findViewById<View>(R.id.frame_effects_clip)?.clipToOutline = true
 
         // 2. Nạp ảnh 3D vào iv_weather_art riêng
         val artName = if (cfg.enableEffects) LiquidWidgetProvider.resolveArtResourceName(activeEffect, lunarToday.first) else null
