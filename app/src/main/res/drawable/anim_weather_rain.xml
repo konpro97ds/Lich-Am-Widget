@@ -8,50 +8,55 @@
             android:viewportWidth="360"
             android:viewportHeight="168">
 
-            <!-- Tầng mưa bụi xa (mảnh, mờ nhẹ) -->
+            <!-- Tầng mưa bụi xa -->
             <group android:name="rain_far">
                 <path
-                    android:strokeColor="#40E0F2FE"
+                    android:strokeColor="#48E0F2FE"
                     android:strokeWidth="0.6"
                     android:strokeLineCap="round"
-                    android:pathData="M22,-20 L18,-10 M58,-32 L54,-20 M94,-16 L90,-6 M130,-28 L126,-16 M166,-18 L162,-8 M202,-30 L198,-18 M238,-14 L234,-4 M274,-26 L270,-14 M310,-18 L306,-8 M342,-28 L338,-16 M40,26 L36,36 M76,14 L72,26 M112,30 L108,40 M148,18 L144,30 M184,28 L180,38 M220,16 L216,28 M256,32 L252,42 M292,20 L288,32 M328,28 L324,38 M28,68 L24,78 M64,56 L60,68 M100,72 L96,82 M136,60 L132,72 M172,70 L168,80 M208,58 L204,70 M244,74 L240,84 M280,62 L276,74 M316,70 L312,80" />
+                    android:pathData="M24,-22 L20,-12 M64,-34 L60,-22 M104,-18 L100,-8 M144,-30 L140,-18 M184,-20 L180,-10 M224,-32 L220,-20 M264,-16 L260,-6 M304,-28 L300,-16 M340,-20 L336,-10 M44,24 L40,34 M84,12 L80,24 M124,28 L120,38 M164,16 L160,28 M204,26 L200,36 M244,14 L240,26 M284,30 L280,40 M324,18 L320,30 M32,64 L28,74 M72,52 L68,64 M112,68 L108,78 M152,56 L148,68 M192,66 L188,76 M232,54 L228,66 M272,70 L268,80 M312,58 L308,70" />
             </group>
 
             <!-- Tầng mưa vừa -->
             <group android:name="rain_mid">
                 <path
-                    android:strokeColor="#66E0F2FE"
+                    android:strokeColor="#70E0F2FE"
                     android:strokeWidth="0.85"
                     android:strokeLineCap="round"
-                    android:pathData="M34,-28 L28,-13 M78,-14 L72,1 M122,-32 L116,-16 M166,-18 L160,-3 M210,-30 L204,-14 M254,-16 L248,-1 M298,-28 L292,-12 M338,-18 L332,-3 M20,22 L14,37 M64,34 L58,49 M108,18 L102,34 M152,30 L146,45 M196,20 L190,36 M240,32 L234,47 M284,18 L278,34 M328,28 L322,43 M46,64 L40,79 M90,76 L84,91 M134,60 L128,76 M178,72 L172,87 M222,62 L216,78 M266,74 L260,89 M310,60 L304,76" />
+                    android:pathData="M36,-28 L30,-13 M82,-14 L76,1 M128,-32 L122,-16 M174,-18 L168,-3 M220,-30 L214,-14 M266,-16 L260,-1 M312,-28 L306,-12 M22,22 L16,37 M68,34 L62,49 M114,18 L108,34 M160,30 L154,45 M206,20 L200,36 M252,32 L246,47 M298,18 L292,34 M48,62 L42,77 M94,74 L88,89 M140,58 L134,74 M186,70 L180,85 M232,60 L226,76 M278,72 L272,87 M324,58 L318,74" />
             </group>
 
-            <!-- Tầng mưa gần (dài, rõ nét) -->
+            <!-- Tầng mưa gần -->
             <group android:name="rain_near">
                 <path
-                    android:strokeColor="#8CFFFFFF"
+                    android:strokeColor="#99FFFFFF"
                     android:strokeWidth="1.05"
                     android:strokeLineCap="round"
-                    android:pathData="M48,-36 L40,-16 M114,-20 L106,0 M180,-38 L172,-18 M246,-22 L238,-2 M312,-34 L304,-14 M30,20 L22,40 M96,34 L88,54 M162,16 L154,36 M228,30 L220,50 M294,18 L286,38 M62,66 L54,86 M128,78 L120,98 M194,62 L186,82 M260,76 L252,96 M326,64 L318,84" />
+                    android:pathData="M50,-36 L42,-16 M118,-20 L110,0 M186,-38 L178,-18 M254,-22 L246,-2 M322,-34 L314,-14 M32,20 L24,40 M100,34 L92,54 M168,16 L160,36 M236,30 L228,50 M304,18 L296,38 M64,64 L56,84 M132,76 L124,96 M200,60 L192,80 M268,74 L260,94 M332,62 L324,82" />
             </group>
 
-            <!-- Vệt nước mưa trượt chậm trên mặt kính -->
-            <group android:name="glass_water_streaks">
+            <!-- Giọt nước nhỏ từ đáy mây rơi xuống chạm dải lịch tuần (Y = 66 -> 96) -->
+            <group android:name="cloud_drops_fall">
                 <path
-                    android:strokeColor="#38FFFFFF"
-                    android:strokeWidth="1.4"
-                    android:strokeLineCap="round"
-                    android:pathData="M86,18 L86,34 M192,14 L192,32 M288,22 L288,40 M144,48 L144,64 M248,44 L248,62" />
+                    android:fillColor="#DDF0F9FF"
+                    android:pathData="M148,66 C149.2,68.4 149.7,69.6 149.7,70.8 C149.7,72.1 148.9,73.0 148,73.0 C147.1,73.0 146.3,72.1 146.3,70.8 C146.3,69.6 146.8,68.4 148,66 Z M228,68 C229.2,70.4 229.7,71.6 229.7,72.8 C229.7,74.1 228.9,75.0 228,75.0 C227.1,75.0 226.3,74.1 226.3,72.8 C226.3,71.6 226.8,70.4 228,68 Z M296,67 C297.2,69.4 297.7,70.6 297.7,71.8 C297.7,73.1 296.9,74.0 296,74.0 C295.1,74.0 294.3,73.1 294.3,71.8 C294.3,70.6 294.8,69.4 296,67 Z" />
             </group>
 
-            <!-- Màng nước loang mỏng ngay đúng mép trên dải lịch tuần (Y = 97) -->
+            <!-- Tia nước bắn tung tóe hình chữ V ngay đúng mép trên dải lịch tuần (Y = 96) -->
             <path
-                android:name="week_bar_ripple"
-                android:strokeColor="#BAE6FD"
-                android:strokeWidth="1.1"
+                android:name="splash_v_jets"
+                android:strokeColor="#E0F2FE"
+                android:strokeWidth="1.0"
                 android:strokeAlpha="0.0"
                 android:strokeLineCap="round"
-                android:pathData="M46,97 L62,97 M124,97 L142,97 M212,97 L228,97 M294,97 L310,97" />
+                android:pathData="M148,96 L143,91 M148,96 L153,91 M228,96 L223,91 M228,96 L233,91 M296,96 L291,91 M296,96 L301,91" />
+
+            <!-- Giọt nước đọng trên kính trượt chậm xuống -->
+            <group android:name="glass_sliding_drops">
+                <path
+                    android:fillColor="#66FFFFFF"
+                    android:pathData="M96,24 m-1.8,0 a1.8,2.4 0 1,0 3.6,0 a1.8,2.4 0 1,0 -3.6,0 M176,18 m-1.6,0 a1.6,2.2 0 1,0 3.2,0 a1.6,2.2 0 1,0 -3.2,0 M264,22 m-1.9,0 a1.9,2.5 0 1,0 3.8,0 a1.9,2.5 0 1,0 -3.8,0" />
+            </group>
         </vector>
     </aapt:attr>
 
@@ -82,15 +87,25 @@
         </aapt:attr>
     </target>
 
-    <target android:name="glass_water_streaks">
+    <target android:name="cloud_drops_fall">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="translateY" android:duration="2600" android:valueFrom="0" android:valueTo="52" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+            <objectAnimator android:propertyName="translateY" android:duration="760" android:valueFrom="0" android:valueTo="26" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
         </aapt:attr>
     </target>
 
-    <target android:name="week_bar_ripple">
+    <target android:name="splash_v_jets">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="strokeAlpha" android:duration="520" android:valueFrom="0.0" android:valueTo="0.55" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="strokeAlpha" android:duration="560" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="strokeAlpha" android:duration="100" android:valueFrom="0.0" android:valueTo="0.85" />
+                <objectAnimator android:propertyName="strokeAlpha" android:duration="100" android:valueFrom="0.85" android:valueTo="0.0" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <target android:name="glass_sliding_drops">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="translateY" android:duration="3200" android:valueFrom="0" android:valueTo="56" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
         </aapt:attr>
     </target>
 </animated-vector>
