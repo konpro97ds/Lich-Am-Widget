@@ -52,15 +52,19 @@ object WidgetPreviewHelper {
         else if (holiday.themeType != "NONE") holiday.themeType
         else LiquidWidgetProvider.detectWeatherEffect(descStr, isNight)
 
+        val aspectRatio = if (root.width > 0 && root.height > 0) {
+            (root.width.toFloat() / root.height.toFloat()).coerceIn(1.6f, 2.8f)
+        } else 2.15f
+
         root.findViewById<ImageView>(R.id.iv_glass_bg)?.setImageBitmap(
-            LiquidWidgetProvider.drawLiquidGlassBitmap(cfg.bgColorHex, cfg.bgAlpha, 56f, activeEffect, isNight, lunarToday.first)
+            LiquidWidgetProvider.drawLiquidGlassBitmap(cfg.bgColorHex, cfg.bgAlpha, 52f, activeEffect, isNight, lunarToday.first, aspectRatio)
         )
         root.findViewById<ProgressBar>(R.id.pb_glass_shimmer)?.visibility = if (cfg.enableEffects) View.VISIBLE else View.GONE
 
         val showRain = cfg.enableEffects && (activeEffect == "RAIN" || activeEffect == "THUNDER")
-        val showSun = cfg.enableEffects && (activeEffect == "SUN" || activeEffect == "SUN_CLOUD" || activeEffect == "MID_AUTUMN")
-        val showMoon = cfg.enableEffects && (activeEffect == "MOON" || activeEffect == "MOON_CLOUD")
-        val showCloud = cfg.enableEffects && (activeEffect == "CLOUD" || activeEffect == "SUN" || activeEffect == "SUN_CLOUD" || activeEffect == "MOON_CLOUD" || activeEffect == "RAIN" || activeEffect == "THUNDER")
+        val showSun = cfg.enableEffects && (activeEffect == "SUN" || activeEffect == "SUN_CLOUD")
+        val showMoon = cfg.enableEffects && (activeEffect == "MOON" || activeEffect == "MOON_CLOUD" || activeEffect == "MID_AUTUMN")
+        val showCloud = cfg.enableEffects && (activeEffect == "CLOUD" || activeEffect == "SUN_CLOUD" || activeEffect == "MOON_CLOUD" || activeEffect == "RAIN" || activeEffect == "THUNDER")
         val showThunder = cfg.enableEffects && (activeEffect == "THUNDER")
         val showTet = cfg.enableEffects && (activeEffect == "TET" || activeEffect == "NATIONAL")
         val showXmas = cfg.enableEffects && (activeEffect == "XMAS")
@@ -77,6 +81,13 @@ object WidgetPreviewHelper {
             root.findViewById<TextClock>(id)?.apply {
                 setTextColor(mainColor)
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, cfg.clockSize)
+                this.typeface = typeface
+            }
+        }
+        intArrayOf(R.id.tv_colon, R.id.tv_colon_c, R.id.tv_colon_r).forEach { id ->
+            root.findViewById<TextView>(id)?.apply {
+                setTextColor(mainColor)
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, cfg.clockSize * 0.92f)
                 this.typeface = typeface
             }
         }
