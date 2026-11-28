@@ -84,13 +84,10 @@ object WidgetPreviewHelper {
                 this.typeface = typeface
             }
         }
-        intArrayOf(R.id.tv_colon, R.id.tv_colon_c, R.id.tv_colon_r).forEach { id ->
-            root.findViewById<TextView>(id)?.apply {
-                setTextColor(mainColor)
-                setTextSize(TypedValue.COMPLEX_UNIT_SP, cfg.clockSize * 0.92f)
-                this.typeface = typeface
-            }
-        }
+
+        root.findViewById<View>(R.id.pb_colon)?.visibility = View.VISIBLE
+        root.findViewById<View>(R.id.pb_colon_c)?.visibility = View.VISIBLE
+        root.findViewById<View>(R.id.pb_colon_r)?.visibility = View.VISIBLE
 
         root.findViewById<View>(R.id.layout_header_left)?.visibility = if (cfg.layoutMode == 0) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.layout_header_center)?.visibility = if (cfg.layoutMode == 1) View.VISIBLE else View.GONE
