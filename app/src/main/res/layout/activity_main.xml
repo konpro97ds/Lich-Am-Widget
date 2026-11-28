@@ -1,3 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#090D16"
+    android:orientation="vertical"
+    android:padding="14dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lịch Âm Widget · Ken Phúc"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:text="Xem trước 1:1 trực tiếp &amp; tùy chỉnh Kính Lỏng"
+        android:textColor="#94A3B8"
+        android:textSize="12sp" />
+
+    <!-- KHUNG XEM TRƯỚC 1:1 DÙNG CHUNG LAYOUT THẬT CỦA WIDGET -->
     <FrameLayout
         android:id="@+id/preview_wrapper"
         android:layout_width="match_parent"
@@ -10,3 +36,173 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
+
+    <!-- BẢNG TÙY CHỈNH CUỘN DỌC -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- NHÓM 1: VỊ TRÍ & THỜI TIẾT -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_liquid_glass"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="📍 Khu vực &amp; Thời tiết"
+                    android:textColor="#FFD54F"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/sp_city_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#1E293B" />
+
+                <Button
+                    android:id="@+id/btn_sync_weather"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lấy định vị GPS / Cập nhật thời tiết ngay" />
+            </LinearLayout>
+
+            <!-- NHÓM 2: FONT CHỮ & KÍCH THƯỚC -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_liquid_glass"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="🔤 Phông chữ &amp; Kích thước"
+                    android:textColor="#FFD54F"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kiểu phông chữ"
+                    android:textColor="#CBD5E1"
+                    android:textSize="12sp" />
+
+                <Spinner
+                    android:id="@+id/sp_font_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#1E293B" />
+
+                <Button
+                    android:id="@+id/btn_pick_font"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="Nạp file phông chữ riêng (.ttf / .otf)" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Kích thước số đồng hồ" android:textColor="#FFFFFF" />
+                    <TextView android:id="@+id/tv_clock_size_val" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="36sp" android:textColor="#FFD54F" android:textStyle="bold" />
+                </LinearLayout>
+                <SeekBar android:id="@+id/sb_clock_size" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:max="36" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Tỷ lệ cỡ chữ nội dung" android:textColor="#FFFFFF" />
+                    <TextView android:id="@+id/tv_text_scale_val" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="95%" android:textColor="#FFD54F" android:textStyle="bold" />
+                </LinearLayout>
+                <SeekBar android:id="@+id/sb_text_scale" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="60" />
+            </LinearLayout>
+
+            <!-- NHÓM 3: GIAO DIỆN KÍNH LỎNG & HIỆU ỨNG -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_liquid_glass"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="✨ Giao diện Kính &amp; Hiệu ứng"
+                    android:textColor="#FFD54F"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Độ đục nền kính" android:textColor="#FFFFFF" />
+                    <TextView android:id="@+id/tv_bg_alpha_val" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="48%" android:textColor="#FFD54F" android:textStyle="bold" />
+                </LinearLayout>
+                <SeekBar android:id="@+id/sb_bg_alpha" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="10dp" android:max="100" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bố cục đồng hồ" android:textColor="#CBD5E1" android:textSize="12sp" />
+                <Spinner android:id="@+id/sp_layout_mode" android:layout_width="match_parent" android:layout_height="44dp" android:layout_marginBottom="10dp" android:background="#1E293B" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tông màu nền kính" android:textColor="#CBD5E1" android:textSize="12sp" />
+                <Spinner android:id="@+id/sp_bg_color" android:layout_width="match_parent" android:layout_height="44dp" android:layout_marginBottom="10dp" android:background="#1E293B" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Màu nhấn Âm lịch &amp; Hôm nay" android:textColor="#CBD5E1" android:textSize="12sp" />
+                <Spinner android:id="@+id/sp_accent_color" android:layout_width="match_parent" android:layout_height="44dp" android:layout_marginBottom="10dp" android:background="#1E293B" />
+
+                <Switch
+                    android:id="@+id/sw_enable_effects"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:checked="true"
+                    android:text="Bật hiệu ứng chuyển động thời tiết &amp; lễ hội"
+                    android:textColor="#FFFFFF" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chế độ xem hiệu ứng" android:textColor="#CBD5E1" android:textSize="12sp" />
+                <Spinner android:id="@+id/sp_test_effect" android:layout_width="match_parent" android:layout_height="44dp" android:background="#1E293B" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_pin_widget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ghim Widget ra màn hình chính" />
+
+            <Button
+                android:id="@+id/btn_apply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#2563EB"
+                android:text="Lưu &amp; Áp dụng lên Widget"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
