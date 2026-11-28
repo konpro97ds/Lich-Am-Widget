@@ -193,13 +193,24 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             else if (holiday.themeType != "NONE") holiday.themeType
             else weatherEff
 
-            // Bán kính bo góc 48f khớp với bg_glass_clip_mask.xml (24dp)
+            // 1. Vẽ nền Kính Lỏng thuần túy (tự động giãn theo tỷ lệ widget)
             views.setImageViewBitmap(
                 R.id.iv_glass_bg,
-                drawLiquidGlassBitmap(context, bgColorHex, bgAlpha, 48f, activeEffect, lunarDay, aspectRatio, isRealRain)
+                drawLiquidGlassBaseBitmap(bgColorHex, bgAlpha, 48f, aspectRatio)
             )
             views.setViewVisibility(R.id.pb_glass_shimmer, if (enableEffects) View.VISIBLE else View.GONE)
 
+            // 2. Nạp ảnh 3D vào iv_weather_art riêng (giữ nguyên tỷ lệ gốc 1:1, neo góc trên phải)
+            val artName = if (enableEffects) resolveArtResourceName(activeEffect, lunarDay) else null
+            val artBmp = if (artName != null) load3DArtBitmap(context, artName) else null
+            if (artBmp != null) {
+                views.setImageViewBitmap(R.id.iv_weather_art, artBmp)
+                views.setViewVisibility(R.id.iv_weather_art, View.VISIBLE)
+            } else {
+                views.setViewVisibility(R.id.iv_weather_art, View.GONE)
+            }
+
+            // 3. Bật/tắt các lớp hiệu ứng động
             val showRain = enableEffects && (activeEffect == "RAIN" || activeEffect == "THUNDER" || ((activeEffect == "TET" || activeEffect == "NATIONAL" || activeEffect == "MID_AUTUMN") && isRealRain))
             val showThunder = enableEffects && (activeEffect == "THUNDER" || ((activeEffect == "TET" || activeEffect == "NATIONAL") && weatherEff == "THUNDER"))
             val showTet = enableEffects && (activeEffect == "TET" || activeEffect == "NATIONAL")
@@ -208,13 +219,12 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             val showMoonStars = enableEffects && (activeEffect == "MOON" || activeEffect == "MOON_CLOUD")
 
             views.setViewVisibility(R.id.pb_weather_rain, if (showRain) View.VISIBLE else View.GONE)
+            views.setViewVisibility(R.id.pb_week_rain_splash, if (showRain) View.VISIBLE else View.GONE)
             views.setViewVisibility(R.id.pb_weather_thunder, if (showThunder) View.VISIBLE else View.GONE)
             views.setViewVisibility(R.id.pb_weather_tet, if (showTet) View.VISIBLE else View.GONE)
             views.setViewVisibility(R.id.pb_weather_mid_autumn, if (showMidAutumn) View.VISIBLE else View.GONE)
             views.setViewVisibility(R.id.pb_weather_xmas, if (showXmas) View.VISIBLE else View.GONE)
             views.setViewVisibility(R.id.pb_weather_moon, if (showMoonStars) View.VISIBLE else View.GONE)
-            views.setViewVisibility(R.id.pb_weather_sun, View.GONE)
-            views.setViewVisibility(R.id.pb_weather_cloud, View.GONE)
 
             val hourIds = intArrayOf(R.id.tc_hour, R.id.tc_hour_c, R.id.tc_hour_r)
             val minIds = intArrayOf(R.id.tc_minute, R.id.tc_minute_c, R.id.tc_minute_r)
@@ -424,7 +434,7 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             return bmp
         }
 
-        private fun load3DArtBitmap(context: Context, resName: String): Bitmap? {
+        fun load3DArtBitmap(context: Context, resName: String): Bitmap? {
             val resId = context.resources.getIdentifier(resName, "drawable", context.packageName)
             if (resId == 0) return null
             return try {
@@ -434,7 +444,7 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             }
         }
 
-        private fun resolveArtResourceName(effectType: String, lunarDay: Int): String? {
+        fun resolveArtResourceName(effectType: String, lunarDay: Int): String? {
             return when (effectType) {
                 "SUN" -> "art_sun"
                 "SUN_CLOUD" -> "art_sun_cloud"
@@ -455,26 +465,15 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             }
         }
 
-        private fun drawArtFitRightPreservingRatio(canvas: Canvas, artBmp: Bitmap, w: Float, h: Float, alphaVal: Int) {
-            val artPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG).apply {
-                this.alpha = alphaVal
-            }
-            val srcRatio = artBmp.width.toFloat() / artBmp.height.toFloat()
-            val scaledW = h * srcRatio
-            val left = (w - scaledW).coerceAtMost(0f)
-            val dstRect = RectF(left, 0f, left + scaledW, h)
-            canvas.drawBitmap(artBmp, null, dstRect, artPaint)
-        }
-
-        fun drawLiquidGlassBitmap(
-            context: Context,
+        /**
+         * Vẽ lớp nền Kính Lỏng (Liquid Glass) thuần túy:
+         * - Không nhúng ảnh minh họa vào bitmap nền nên không bao giờ bị kéo méo khi resize widget
+         */
+        fun drawLiquidGlassBaseBitmap(
             hexColor: String,
             alphaPercent: Int,
             radius: Float,
-            effectType: String = "NONE",
-            lunarDay: Int = 15,
-            aspectRatio: Float = 2.15f,
-            isRealRain: Boolean = false
+            aspectRatio: Float = 2.15f
         ): Bitmap {
             val h = 360
             val w = (h * aspectRatio).toInt().coerceIn(540, 1020)
@@ -486,7 +485,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             canvas.save()
             canvas.clipPath(clipPath)
 
-            // 1. Lớp nền kính chuyển sắc sâu
             val baseColor = Color.parseColor(hexColor)
             val alpha = (alphaPercent * 255 / 100).coerceIn(0, 255)
             val r = Color.red(baseColor)
@@ -507,20 +505,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             }
             canvas.drawRect(rect, glassBasePaint)
 
-            // 2. Ghép ảnh 3D giữ nguyên tỷ lệ gốc 1:1 (Fit-Height & neo cạnh phải)
-            val artName = resolveArtResourceName(effectType, lunarDay)
-            val artBmp = if (artName != null) load3DArtBitmap(context, artName) else null
-            if (artBmp != null) {
-                drawArtFitRightPreservingRatio(canvas, artBmp, w.toFloat(), h.toFloat(), 242)
-            }
-
-            if (isRealRain && (effectType == "TET" || effectType == "NATIONAL" || effectType == "MID_AUTUMN")) {
-                load3DArtBitmap(context, "art_rain")?.let { rainBmp ->
-                    drawArtFitRightPreservingRatio(canvas, rainBmp, w.toFloat(), h.toFloat(), 135)
-                }
-            }
-
-            // 3. Lớp phản quang bề mặt kính lỏng
             val sheenPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 shader = LinearGradient(
                     0f, 0f, w * 0.85f, h * 0.85f,
@@ -536,7 +520,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             }
             canvas.drawRect(rect, sheenPaint)
 
-            // 4. Viền sáng trong
             val innerRimPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 style = Paint.Style.STROKE
                 strokeWidth = 4f
@@ -550,7 +533,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
 
             canvas.restore()
 
-            // 5. Viền ngoài sắc nét
             val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 style = Paint.Style.STROKE
                 strokeWidth = 2.6f
