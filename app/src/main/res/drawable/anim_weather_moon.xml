@@ -2,16 +2,27 @@
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt">
     <aapt:attr name="android:drawable">
-        <vector android:width="300dp" android:height="160dp" android:viewportWidth="300" android:viewportHeight="160">
-            <group android:name="stars_twinkle">
-                <path android:fillColor="#CCFEF9C3"
-                    android:pathData="M165,28 m-1.3,0 a1.3,1.3 0 1,0 2.6,0 a1.3,1.3 0 1,0 -2.6,0 M248,34 m-1.5,0 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 M190,68 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M265,64 m-1.3,0 a1.3,1.3 0 1,0 2.6,0 a1.3,1.3 0 1,0 -2.6,0" />
-            </group>
+        <vector android:width="360dp" android:height="168dp" android:viewportWidth="360" android:viewportHeight="168">
+            <path
+                android:name="stars_group_a"
+                android:fillColor="#FFFFFFFF"
+                android:fillAlpha="0.95"
+                android:pathData="M168,24 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0 M222,18 m-1.5,0 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 M308,28 m-1.6,0 a1.6,1.6 0 1,0 3.2,0 a1.6,1.6 0 1,0 -3.2,0 M205,66 m-1.2,0 a1.2,1.2 0 1,0 2.4,0 a1.2,1.2 0 1,0 -2.4,0" />
+            <path
+                android:name="stars_group_b"
+                android:fillColor="#FEF9C3"
+                android:fillAlpha="0.25"
+                android:pathData="M188,38 m-1.3,0 a1.3,1.3 0 1,0 2.6,0 a1.3,1.3 0 1,0 -2.6,0 M292,52 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0 M332,36 m-1.2,0 a1.2,1.2 0 1,0 2.4,0 a1.2,1.2 0 1,0 -2.4,0 M152,58 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0" />
         </vector>
     </aapt:attr>
-    <target android:name="stars_twinkle">
+    <target android:name="stars_group_a">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="translateY" android:duration="2600" android:valueFrom="-2" android:valueTo="2" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            <objectAnimator android:propertyName="fillAlpha" android:duration="1800" android:valueFrom="0.95" android:valueTo="0.20" android:repeatCount="infinite" android:repeatMode="reverse" />
+        </aapt:attr>
+    </target>
+    <target android:name="stars_group_b">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="fillAlpha" android:duration="2200" android:valueFrom="0.20" android:valueTo="0.95" android:repeatCount="infinite" android:repeatMode="reverse" />
         </aapt:attr>
     </target>
 </animated-vector>
