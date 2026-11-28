@@ -235,14 +235,14 @@ def build_all():
     im = draw_3d_cloud(im, 735, 142, scale=0.98, dark=True)
     im.save(f"{OUT_DIR}/art_cloud.png")
 
-    # 6. RAIN & THUNDER
+        # 6. RAIN & THUNDER
     im_rain = draw_3d_cloud(new_canvas(), 520, 118, scale=1.15, dark=True)
     im_rain = draw_3d_cloud(im_rain, 695, 126, scale=1.28, dark=True)
     im_rain.save(f"{OUT_DIR}/art_rain.png")
 
-    im_th = add_soft_glow(new_canvas(), 635, 145, 165, (56, 189, 248, 95), blur=36)
-    im_th = draw_3d_cloud(im_th, 520, 118, scale=1.18, dark=True)
+    im_th = draw_3d_cloud(new_canvas(), 520, 118, scale=1.18, dark=True)
     im_th = draw_3d_cloud(im_th, 695, 126, scale=1.30, dark=True)
+    im_th.save(f"{OUT_DIR}/art_thunder.png")
     # Tia sét phát sáng 3D tĩnh ẩn hiện dưới lòng mây giông
     bolt_layer = new_canvas()
     bd = ImageDraw.Draw(bolt_layer)
