@@ -2,25 +2,50 @@
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt">
     <aapt:attr name="android:drawable">
-        <vector android:width="300dp" android:height="160dp" android:viewportWidth="300" android:viewportHeight="160">
-            <group android:name="bolt_main">
-                <path android:fillColor="#F5FEF08A"
-                    android:pathData="M188,36 L174,64 L186,64 L178,92 L202,58 L189,58 Z" />
+        <vector android:width="360dp" android:height="168dp" android:viewportWidth="360" android:viewportHeight="168">
+            <!-- Tia sét chính rẽ nhánh sắc nét -->
+            <group android:name="lightning_bolt_1" android:pivotX="218" android:pivotY="48">
+                <path
+                    android:strokeColor="#FFFFFFFF"
+                    android:strokeWidth="2.4"
+                    android:strokeLineCap="round"
+                    android:strokeLineJoin="round"
+                    android:pathData="M218,46 L208,64 L217,67 L204,88 L213,91 L199,114" />
+                <path
+                    android:strokeColor="#CCBAE6FD"
+                    android:strokeWidth="1.2"
+                    android:strokeLineCap="round"
+                    android:strokeLineJoin="round"
+                    android:pathData="M214,67 L225,79 L221,91 M207,85 L195,97" />
             </group>
-            <group android:name="bolt_branch">
-                <path android:fillColor="#CCE0F2FE"
-                    android:pathData="M232,42 L222,62 L231,62 L225,82 L242,56 L232,56 Z" />
+
+            <!-- Tia sét phụ phía xa -->
+            <group android:name="lightning_bolt_2" android:pivotX="268" android:pivotY="52">
+                <path
+                    android:strokeColor="#E6FEF08A"
+                    android:strokeWidth="1.7"
+                    android:strokeLineCap="round"
+                    android:strokeLineJoin="round"
+                    android:pathData="M268,50 L261,66 L268,69 L258,88 L264,91 L254,108" />
             </group>
         </vector>
     </aapt:attr>
-    <target android:name="bolt_main">
+
+    <target android:name="lightning_bolt_1">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="scaleX" android:duration="1650" android:valueFrom="1.0" android:valueTo="0.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="scaleY" android:duration="1400" android:valueFrom="0.0" android:valueTo="1.05" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+                <objectAnimator android:propertyName="scaleX" android:duration="1400" android:valueFrom="1.15" android:valueTo="0.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
         </aapt:attr>
     </target>
-    <target android:name="bolt_branch">
+
+    <target android:name="lightning_bolt_2">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="scaleX" android:duration="2350" android:valueFrom="1.0" android:valueTo="0.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="scaleY" android:duration="2150" android:valueFrom="0.0" android:valueTo="1.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+                <objectAnimator android:propertyName="scaleX" android:duration="2150" android:valueFrom="1.1" android:valueTo="0.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+            </set>
         </aapt:attr>
     </target>
 </animated-vector>
