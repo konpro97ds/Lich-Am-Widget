@@ -235,13 +235,13 @@ def build_all():
     im = draw_3d_cloud(im, 735, 142, scale=0.98, dark=True)
     im.save(f"{OUT_DIR}/art_cloud.png")
 
-        # 6. RAIN & THUNDER
-    im_rain = draw_3d_cloud(new_canvas(), 520, 118, scale=1.15, dark=True)
-    im_rain = draw_3d_cloud(im_rain, 695, 126, scale=1.28, dark=True)
+            # 6. RAIN & THUNDER (Đặt cụm mây giông gọn ở góc phải khớp 100% vị trí tia sét)
+    im_rain = draw_3d_cloud(new_canvas(), 635, 114, scale=1.08, dark=True)
+    im_rain = draw_3d_cloud(im_rain, 745, 122, scale=1.18, dark=True)
     im_rain.save(f"{OUT_DIR}/art_rain.png")
 
-    im_th = draw_3d_cloud(new_canvas(), 520, 118, scale=1.18, dark=True)
-    im_th = draw_3d_cloud(im_th, 695, 126, scale=1.30, dark=True)
+    im_th = draw_3d_cloud(new_canvas(), 635, 114, scale=1.10, dark=True)
+    im_th = draw_3d_cloud(im_th, 745, 122, scale=1.20, dark=True)
     im_th.save(f"{OUT_DIR}/art_thunder.png")
     # Tia sét phát sáng 3D tĩnh ẩn hiện dưới lòng mây giông
     bolt_layer = new_canvas()
