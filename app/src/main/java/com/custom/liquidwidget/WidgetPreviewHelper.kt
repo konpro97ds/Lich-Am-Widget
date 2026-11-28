@@ -47,31 +47,36 @@ object WidgetPreviewHelper {
         val holiday = LunarCalendar.getVietnameseHoliday(dd, mm, yy)
         val descStr = prefs.getString("last_desc", "Ít mây") ?: "Ít mây"
 
+        val weatherEff = LiquidWidgetProvider.detectWeatherEffect(descStr, isNight)
+        val isRealRain = (weatherEff == "RAIN" || weatherEff == "THUNDER")
+
         val activeEffect = if (!cfg.enableEffects) "NONE"
         else if (cfg.testEffectMode != "AUTO") cfg.testEffectMode
         else if (holiday.themeType != "NONE") holiday.themeType
-        else LiquidWidgetProvider.detectWeatherEffect(descStr, isNight)
+        else weatherEff
 
         val aspectRatio = if (root.width > 0 && root.height > 0) {
             (root.width.toFloat() / root.height.toFloat()).coerceIn(1.6f, 2.8f)
         } else 2.15f
 
         root.findViewById<ImageView>(R.id.iv_glass_bg)?.setImageBitmap(
-            LiquidWidgetProvider.drawLiquidGlassBitmap(cfg.bgColorHex, cfg.bgAlpha, 52f, activeEffect, isNight, lunarToday.first, aspectRatio)
+            LiquidWidgetProvider.drawLiquidGlassBitmap(cfg.bgColorHex, cfg.bgAlpha, 52f, activeEffect, isNight, lunarToday.first, aspectRatio, isRealRain)
         )
         root.findViewById<ProgressBar>(R.id.pb_glass_shimmer)?.visibility = if (cfg.enableEffects) View.VISIBLE else View.GONE
 
-        val showRain = cfg.enableEffects && (activeEffect == "RAIN" || activeEffect == "THUNDER")
+        val showRain = cfg.enableEffects && (activeEffect == "RAIN" || activeEffect == "THUNDER" || ((activeEffect == "TET" || activeEffect == "NATIONAL" || activeEffect == "MID_AUTUMN") && isRealRain))
         val showSun = cfg.enableEffects && (activeEffect == "SUN" || activeEffect == "SUN_CLOUD")
-        val showMoon = cfg.enableEffects && (activeEffect == "MOON" || activeEffect == "MOON_CLOUD" || activeEffect == "MID_AUTUMN")
-        val showCloud = cfg.enableEffects && (activeEffect == "CLOUD" || activeEffect == "SUN_CLOUD" || activeEffect == "MOON_CLOUD" || activeEffect == "RAIN" || activeEffect == "THUNDER")
-        val showThunder = cfg.enableEffects && (activeEffect == "THUNDER")
+        val showMoon = cfg.enableEffects && (activeEffect == "MOON" || activeEffect == "MOON_CLOUD")
+        val showMidAutumn = cfg.enableEffects && (activeEffect == "MID_AUTUMN")
+        val showCloud = cfg.enableEffects && (activeEffect == "CLOUD" || activeEffect == "SUN" || activeEffect == "SUN_CLOUD" || activeEffect == "MOON_CLOUD" || activeEffect == "RAIN" || activeEffect == "THUNDER")
+        val showThunder = cfg.enableEffects && (activeEffect == "THUNDER" || ((activeEffect == "TET" || activeEffect == "NATIONAL") && weatherEff == "THUNDER"))
         val showTet = cfg.enableEffects && (activeEffect == "TET" || activeEffect == "NATIONAL")
         val showXmas = cfg.enableEffects && (activeEffect == "XMAS")
 
         root.findViewById<View>(R.id.pb_weather_rain)?.visibility = if (showRain) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_sun)?.visibility = if (showSun) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_moon)?.visibility = if (showMoon) View.VISIBLE else View.GONE
+        root.findViewById<View>(R.id.pb_weather_mid_autumn)?.visibility = if (showMidAutumn) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_cloud)?.visibility = if (showCloud) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_thunder)?.visibility = if (showThunder) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_tet)?.visibility = if (showTet) View.VISIBLE else View.GONE
