@@ -368,13 +368,13 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- DẢI TIA NƯỚC BẮN LÊN GẮN CHẶT NGAY MÉP TRÊN KHUNG LỊCH TUẦN -->
+                <!-- DẢI TIA NƯỚC BẮN LÊN + GIỌT NƯỚC CHẢY XUYÊN HẾT KHUNG LỊCH ÂM LỊCH -->
         <ProgressBar
             android:id="@+id/pb_week_rain_splash"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:layout_marginBottom="-2dp"
+            android:layout_height="38dp"
+            android:layout_marginBottom="-32dp"
             android:indeterminate="true"
             android:indeterminateDrawable="@drawable/anim_week_rain_splash"
             android:visibility="gone" />
