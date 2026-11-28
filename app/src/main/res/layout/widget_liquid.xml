@@ -71,6 +71,14 @@
         android:visibility="gone" />
 
     <ProgressBar
+        android:id="@+id/pb_weather_mid_autumn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/anim_weather_mid_autumn"
+        android:visibility="gone" />
+
+    <ProgressBar
         android:id="@+id/pb_weather_xmas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
