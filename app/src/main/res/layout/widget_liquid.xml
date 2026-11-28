@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="4dp">
 
-    <!-- 1. Lớp nền Kính Lỏng thuần túy (không bị kéo méo hình minh họa) -->
+    <!-- 1. Lớp nền Kính Lỏng thuần túy -->
     <ImageView
         android:id="@+id/iv_glass_bg"
         android:layout_width="match_parent"
@@ -59,8 +59,7 @@
             android:id="@+id/pb_weather_thunder"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="112dp"
-            android:layout_gravity="top"
+            android:layout_height="match_parent"
             android:indeterminate="true"
             android:indeterminateDrawable="@drawable/anim_weather_thunder"
             android:visibility="gone" />
