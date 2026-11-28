@@ -60,27 +60,25 @@ object WidgetPreviewHelper {
         } else 2.15f
 
         root.findViewById<ImageView>(R.id.iv_glass_bg)?.setImageBitmap(
-            LiquidWidgetProvider.drawLiquidGlassBitmap(cfg.bgColorHex, cfg.bgAlpha, 52f, activeEffect, isNight, lunarToday.first, aspectRatio, isRealRain)
+            LiquidWidgetProvider.drawLiquidGlassBitmap(context, cfg.bgColorHex, cfg.bgAlpha, 52f, activeEffect, lunarToday.first, aspectRatio, isRealRain)
         )
         root.findViewById<ProgressBar>(R.id.pb_glass_shimmer)?.visibility = if (cfg.enableEffects) View.VISIBLE else View.GONE
 
         val showRain = cfg.enableEffects && (activeEffect == "RAIN" || activeEffect == "THUNDER" || ((activeEffect == "TET" || activeEffect == "NATIONAL" || activeEffect == "MID_AUTUMN") && isRealRain))
-        val showSun = cfg.enableEffects && (activeEffect == "SUN" || activeEffect == "SUN_CLOUD")
-        val showMoon = cfg.enableEffects && (activeEffect == "MOON" || activeEffect == "MOON_CLOUD")
-        val showMidAutumn = cfg.enableEffects && (activeEffect == "MID_AUTUMN")
-        val showCloud = cfg.enableEffects && (activeEffect == "CLOUD" || activeEffect == "SUN" || activeEffect == "SUN_CLOUD" || activeEffect == "MOON_CLOUD" || activeEffect == "RAIN" || activeEffect == "THUNDER")
         val showThunder = cfg.enableEffects && (activeEffect == "THUNDER" || ((activeEffect == "TET" || activeEffect == "NATIONAL") && weatherEff == "THUNDER"))
         val showTet = cfg.enableEffects && (activeEffect == "TET" || activeEffect == "NATIONAL")
+        val showMidAutumn = cfg.enableEffects && (activeEffect == "MID_AUTUMN")
         val showXmas = cfg.enableEffects && (activeEffect == "XMAS")
+        val showMoonStars = cfg.enableEffects && (activeEffect == "MOON" || activeEffect == "MOON_CLOUD")
 
         root.findViewById<View>(R.id.pb_weather_rain)?.visibility = if (showRain) View.VISIBLE else View.GONE
-        root.findViewById<View>(R.id.pb_weather_sun)?.visibility = if (showSun) View.VISIBLE else View.GONE
-        root.findViewById<View>(R.id.pb_weather_moon)?.visibility = if (showMoon) View.VISIBLE else View.GONE
-        root.findViewById<View>(R.id.pb_weather_mid_autumn)?.visibility = if (showMidAutumn) View.VISIBLE else View.GONE
-        root.findViewById<View>(R.id.pb_weather_cloud)?.visibility = if (showCloud) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_thunder)?.visibility = if (showThunder) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_tet)?.visibility = if (showTet) View.VISIBLE else View.GONE
+        root.findViewById<View>(R.id.pb_weather_mid_autumn)?.visibility = if (showMidAutumn) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_xmas)?.visibility = if (showXmas) View.VISIBLE else View.GONE
+        root.findViewById<View>(R.id.pb_weather_moon)?.visibility = if (showMoonStars) View.VISIBLE else View.GONE
+        root.findViewById<View>(R.id.pb_weather_sun)?.visibility = View.GONE
+        root.findViewById<View>(R.id.pb_weather_cloud)?.visibility = View.GONE
 
         intArrayOf(R.id.tc_hour, R.id.tc_hour_c, R.id.tc_hour_r, R.id.tc_minute, R.id.tc_minute_c, R.id.tc_minute_r).forEach { id ->
             root.findViewById<TextClock>(id)?.apply {
