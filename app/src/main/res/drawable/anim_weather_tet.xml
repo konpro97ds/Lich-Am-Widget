@@ -3,37 +3,71 @@
     xmlns:aapt="http://schemas.android.com/aapt">
     <aapt:attr name="android:drawable">
         <vector android:width="360dp" android:height="168dp" android:viewportWidth="360" android:viewportHeight="168">
-            <!-- Cánh hoa mai vàng rơi lớp 1 -->
+            <!-- Chớp sáng ấm nhẹ trên bầu trời khi pháo hoa bung nở -->
+            <path
+                android:name="fw_ambient_glow"
+                android:fillColor="#FDE047"
+                android:fillAlpha="0.0"
+                android:pathData="M0,0 L360,0 L360,168 L0,168 Z" />
+
+            <!-- Cánh hoa mai vàng rơi -->
             <group android:name="mai_petals_layer" android:pivotX="210" android:pivotY="60">
                 <path
                     android:fillColor="#F5FDE047"
-                    android:pathData="M152,14 C155,11 159,14 156,18 C153,21 149,18 152,14 Z M208,8 C211,5 215,8 212,12 C209,15 205,12 208,8 Z M265,18 C268,15 272,18 269,22 C266,25 262,22 265,18 Z M312,12 C315,9 319,12 316,16 C313,19 309,16 312,12 Z M182,36 C185,33 189,36 186,40 C183,43 179,40 182,36 Z M242,42 C245,39 249,42 246,46 C243,49 239,46 242,42 Z M292,38 C295,35 299,38 296,42 C293,45 289,42 292,38 Z" />
+                    android:pathData="M148,14 C151,11 155,14 152,18 C149,21 145,18 148,14 Z M206,8 C209,5 213,8 210,12 C207,15 203,12 206,8 Z M264,18 C267,15 271,18 268,22 C265,25 261,22 264,18 Z M314,12 C317,9 321,12 318,16 C315,19 311,16 314,12 Z M180,38 C183,35 187,38 184,42 C181,45 177,42 180,38 Z M242,44 C245,41 249,44 246,48 C243,51 239,48 242,44 Z M294,40 C297,37 301,40 298,44 C295,47 291,44 294,40 Z" />
             </group>
 
-            <!-- Cánh hoa đào hồng rơi lớp 2 -->
+            <!-- Cánh hoa đào hồng rơi -->
             <group android:name="dao_petals_layer" android:pivotX="230" android:pivotY="70">
                 <path
                     android:fillColor="#EBFDA4AF"
-                    android:pathData="M168,24 C171,21 175,24 172,28 C169,31 165,28 168,24 Z M224,18 C227,15 231,18 228,22 C225,25 221,22 224,18 Z M280,26 C283,23 287,26 284,30 C281,33 277,30 280,26 Z M330,22 C333,19 337,22 334,26 C331,29 327,26 330,22 Z M198,50 C201,47 205,50 202,54 C199,57 195,54 198,50 Z M258,54 C261,51 265,54 262,58 C259,61 255,58 258,54 Z" />
+                    android:pathData="M166,24 C169,21 173,24 170,28 C167,31 163,28 166,24 Z M222,18 C225,15 229,18 226,22 C223,25 219,22 222,18 Z M278,26 C281,23 285,26 282,30 C279,33 275,30 278,26 Z M328,22 C331,19 335,22 332,26 C329,29 325,26 328,22 Z M196,52 C199,49 203,52 200,56 C197,59 193,56 196,52 Z M256,56 C259,53 263,56 260,60 C257,63 253,60 256,56 Z" />
             </group>
 
-            <!-- Tia pháo hoa bung nở nhẹ -->
-            <group android:name="firework_burst" android:pivotX="236" android:pivotY="54">
+            <!-- Chùm pháo hoa 1 (Tâm vàng cam rực rỡ) -->
+            <group android:name="fw_cluster_1" android:pivotX="186" android:pivotY="44">
                 <path
-                    android:strokeColor="#CCFEF08A"
-                    android:strokeWidth="1.3"
+                    android:strokeColor="#FEF08A"
+                    android:strokeWidth="1.5"
                     android:strokeLineCap="round"
-                    android:pathData="M236,36 L236,44 M236,64 L236,72 M218,54 L226,54 M246,54 L254,54 M223,41 L229,47 M243,61 L249,67 M249,41 L243,47 M229,61 L223,67" />
+                    android:pathData="M186,24 L186,33 M186,55 L186,64 M166,44 L175,44 M197,44 L206,44 M172,30 L178,36 M194,52 L200,58 M200,30 L194,36 M178,52 L172,58" />
+                <path
+                    android:fillColor="#FB923C"
+                    android:pathData="M186,21 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0 M186,67 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0 M163,44 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0 M209,44 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0" />
+            </group>
+
+            <!-- Chùm pháo hoa 2 (Lệch phải, ánh hồng vàng) -->
+            <group android:name="fw_cluster_2" android:pivotX="268" android:pivotY="38">
+                <path
+                    android:strokeColor="#FDA4AF"
+                    android:strokeWidth="1.4"
+                    android:strokeLineCap="round"
+                    android:pathData="M268,20 L268,28 M268,48 L268,56 M250,38 L258,38 M278,38 L286,38 M255,25 L261,31 M275,45 L281,51 M281,25 L275,31 M261,45 L255,51" />
+                <path
+                    android:fillColor="#FDE047"
+                    android:pathData="M268,17 m-1.3,0 a1.3,1.3 0 1,0 2.6,0 a1.3,1.3 0 1,0 -2.6,0 M268,59 m-1.3,0 a1.3,1.3 0 1,0 2.6,0 a1.3,1.3 0 1,0 -2.6,0 M247,38 m-1.3,0 a1.3,1.3 0 1,0 2.6,0 a1.3,1.3 0 1,0 -2.6,0 M289,38 m-1.3,0 a1.3,1.3 0 1,0 2.6,0 a1.3,1.3 0 1,0 -2.6,0" />
             </group>
         </vector>
     </aapt:attr>
+
+    <target android:name="fw_ambient_glow">
+        <aapt:attr name="android:animation">
+            <set android:ordering="sequentially">
+                <objectAnimator android:propertyName="fillAlpha" android:duration="550" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="140" android:valueFrom="0.0" android:valueTo="0.14" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="380" android:valueFrom="0.14" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="750" android:valueFrom="0.0" android:valueTo="0.0" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="140" android:valueFrom="0.0" android:valueTo="0.12" />
+                <objectAnimator android:propertyName="fillAlpha" android:duration="440" android:valueFrom="0.12" android:valueTo="0.0" />
+            </set>
+        </aapt:attr>
+    </target>
 
     <target android:name="mai_petals_layer">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
                 <objectAnimator android:propertyName="translateY" android:duration="3100" android:valueFrom="-12" android:valueTo="115" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
                 <objectAnimator android:propertyName="translateX" android:duration="1550" android:valueFrom="-8" android:valueTo="8" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
-                <objectAnimator android:propertyName="rotation" android:duration="3100" android:valueFrom="-10" android:valueTo="14" android:repeatCount="infinite" android:repeatMode="reverse" />
             </set>
         </aapt:attr>
     </target>
@@ -47,11 +81,20 @@
         </aapt:attr>
     </target>
 
-    <target android:name="firework_burst">
+    <target android:name="fw_cluster_1">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="scaleX" android:duration="1600" android:valueFrom="0.15" android:valueTo="1.25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="scaleY" android:duration="1600" android:valueFrom="0.15" android:valueTo="1.25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="scaleX" android:duration="1500" android:valueFrom="0.1" android:valueTo="1.25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="scaleY" android:duration="1500" android:valueFrom="0.1" android:valueTo="1.25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+
+    <target android:name="fw_cluster_2">
+        <aapt:attr name="android:animation">
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="scaleX" android:duration="2150" android:valueFrom="0.1" android:valueTo="1.2" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="scaleY" android:duration="2150" android:valueFrom="0.1" android:valueTo="1.2" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
