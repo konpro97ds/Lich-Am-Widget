@@ -50,7 +50,7 @@ def draw_3d_cloud(base, cx, cy, scale=1.0, dark=False):
     h_layer = h_layer.filter(ImageFilter.GaussianBlur(8))
     return Image.alpha_composite(base, h_layer)
 
-def draw_3d_sun(base, cx, cy, r=44, soft=False):
+def draw_3d_sun(base, cx, cy, r=46, soft=False):
     glow_r = r * (1.8 if soft else 2.2)
     glow_alpha = 85 if soft else 140
     base = add_soft_glow(base, cx, cy, glow_r, (253, 224, 71, glow_alpha), blur=26)
@@ -61,31 +61,23 @@ def draw_3d_sun(base, cx, cy, r=44, soft=False):
     sun = sun.filter(ImageFilter.GaussianBlur(1.5))
     return Image.alpha_composite(base, sun)
 
-def draw_realistic_moon(base, cx, cy, r=48, illum=1.0, waning=True):
-    """
-    Vẽ mặt trăng thiên văn thực tế theo tỷ lệ chiếu sáng (0.0 -> 1.0)
-    Không dùng các chấm đối xứng gây cảm giác mặt người
-    """
-    base = add_soft_glow(base, cx, cy, r * 2.0, (254, 243, 199, int(115 * max(0.35, illum))), blur=24)
+def draw_realistic_moon(base, cx, cy, r=54, illum=1.0, waning=True):
+    base = add_soft_glow(base, cx, cy, r * 1.95, (254, 243, 199, int(125 * max(0.45, illum))), blur=24)
 
-    # 1. Đĩa trăng nền (phần tối ánh đất mờ tự nhiên)
     dark_disc = new_canvas()
     dd = ImageDraw.Draw(dark_disc)
-    dd.ellipse((cx - r, cy - r, cx + r, cy + r), fill=(51, 65, 85, 85))
+    dd.ellipse((cx - r, cy - r, cx + r, cy + r), fill=(51, 65, 85, 95))
     base = Image.alpha_composite(base, dark_disc)
 
-    # 2. Mặt nạ chiếu sáng chuẩn hình học thiên văn
     mask = Image.new("L", (W, H), 0)
     md = ImageDraw.Draw(mask)
     if illum >= 0.96:
         md.ellipse((cx - r, cy - r, cx + r, cy + r), fill=255)
     else:
-        # Tạo polygon theo đường phân giới elip thực tế
         pts = []
-        steps = 80
+        steps = 90
         rx = (2.0 * illum - 1.0) * r
         if not waning:
-            # Trăng đầu tháng: sáng bên phải
             for i in range(steps + 1):
                 ang = -math.pi / 2 + math.pi * i / steps
                 pts.append((cx + r * math.cos(ang), cy + r * math.sin(ang)))
@@ -93,7 +85,6 @@ def draw_realistic_moon(base, cx, cy, r=48, illum=1.0, waning=True):
                 ang = -math.pi / 2 + math.pi * i / steps
                 pts.append((cx - rx * math.cos(ang), cy + r * math.sin(ang)))
         else:
-            # Trăng cuối tháng (như 20/10 Âm): sáng bên trái
             for i in range(steps + 1):
                 ang = math.pi / 2 + math.pi * i / steps
                 pts.append((cx + r * math.cos(ang), cy + r * math.sin(ang)))
@@ -104,7 +95,6 @@ def draw_realistic_moon(base, cx, cy, r=48, illum=1.0, waning=True):
 
     mask = mask.filter(ImageFilter.GaussianBlur(1.8))
 
-    # 3. Bề mặt trăng thật với các biển trăng (Maria) bất đối xứng tự nhiên
     surf = new_canvas()
     sd = ImageDraw.Draw(surf)
     sd.ellipse((cx - r, cy - r, cx + r, cy + r), fill=(254, 249, 195, 255))
@@ -121,12 +111,68 @@ def draw_realistic_moon(base, cx, cy, r=48, illum=1.0, waning=True):
     ]
     for dx, dy, rw, rh in maria_blobs:
         bx, by = cx + dx * r, cy + dy * r
-        mard.ellipse((bx - rw * r, by - rh * r, bx + rw * r, by + rh * r), fill=(180, 175, 155, 68))
+        mard.ellipse((bx - rw * r, by - rh * r, bx + rw * r, by + rh * r), fill=(180, 175, 155, 72))
     maria_layer = maria_layer.filter(ImageFilter.GaussianBlur(4))
     surf = Image.alpha_composite(surf, maria_layer)
 
     lit_moon = Image.composite(surf, new_canvas(), mask)
     return Image.alpha_composite(base, lit_moon)
+
+def draw_chrysanthemum_firework_3d(base, fx, fy, radius, c_core, c_mid, c_tip):
+    """
+    Pháo hoa hoa cúc đại đóa 3D:
+    - Quầng sáng trung tâm rực rỡ
+    - 36 tia cong mềm theo trọng lực (parabolic droop)
+    - Đầu tia phát sáng đa tầng + bụi kim tuyến lấp lánh
+    """
+    base = add_soft_glow(base, fx, fy, radius * 1.35, (*c_mid[:3], 130), blur=28)
+    fw = new_canvas()
+    d = ImageDraw.Draw(fw)
+
+    rng = random.Random(int(fx * 100 + fy))
+    for i in range(36):
+        deg = i * 10 + rng.uniform(-2.5, 2.5)
+        rad = math.radians(deg)
+        scale_len = rng.uniform(0.68, 1.05)
+        L = radius * scale_len
+
+        # Vẽ đường cong tia pháo hoa rủ nhẹ theo trọng lực (5 đoạn)
+        pts = []
+        for step in range(6):
+            t = step / 5.0
+            px = fx + math.cos(rad) * (L * t)
+            py = fy + math.sin(rad) * (L * t) + (t * t) * (radius * 0.18)
+            pts.append((px, py))
+
+        col = c_mid if i % 2 == 0 else c_tip
+        d.line(pts, fill=col, width=3 if i % 3 == 0 else 2)
+
+        # Hạt đầu tia rực sáng
+        ex, ey = pts[-1]
+        d.ellipse((ex - 3.5, ey - 3.5, ex + 3.5, ey + 3.5), fill=(255, 255, 255, 255))
+        d.ellipse((ex - 5.5, ey - 5.5, ex + 5.5, ey + 5.5), fill=(*col[:3], 140))
+
+    # Tâm nổ trắng chói
+    d.ellipse((fx - 9, fy - 9, fx + 9, fy + 9), fill=c_core)
+    fw = fw.filter(ImageFilter.GaussianBlur(0.8))
+    return Image.alpha_composite(base, fw)
+
+def draw_3d_blossom(draw, cx, cy, r, petal_col, inner_col, center_col):
+    # Bóng mờ dưới hoa
+    for i in range(5):
+        ang = math.radians(i * 72 - 18)
+        px = cx + math.cos(ang) * r * 0.56
+        py = cy + math.sin(ang) * r * 0.56 + 2
+        draw.ellipse((px - r * 0.50, py - r * 0.50, px + r * 0.50, py + r * 0.50), fill=(60, 20, 10, 90))
+    # 5 cánh hoa tròn đầy
+    for i in range(5):
+        ang = math.radians(i * 72 - 18)
+        px = cx + math.cos(ang) * r * 0.56
+        py = cy + math.sin(ang) * r * 0.56
+        draw.ellipse((px - r * 0.48, py - r * 0.48, px + r * 0.48, py + r * 0.48), fill=petal_col)
+        draw.ellipse((px - r * 0.30, py - r * 0.30, px + r * 0.30, py + r * 0.30), fill=inner_col)
+    # Nhụy hoa
+    draw.ellipse((cx - r * 0.24, cy - r * 0.24, cx + r * 0.24, cy + r * 0.24), fill=center_col)
 
 def draw_star_lantern(base, cx, cy, r=16):
     base = add_soft_glow(base, cx, cy, r * 1.9, (250, 204, 21, 130), blur=12)
@@ -154,33 +200,9 @@ def draw_lantern(base, lx, ly, scale=1.0):
     d.line((lx, ly + 23 * scale, lx, ly + 38 * scale), fill=(250, 204, 21, 255), width=2)
     return Image.alpha_composite(base, lan)
 
-def draw_rich_firework(base, fx, fy, radius, col1, col2, col3):
-    base = add_soft_glow(base, fx, fy, radius * 1.25, (*col1[:3], 115), blur=26)
-    fw = new_canvas()
-    d = ImageDraw.Draw(fw)
-    for deg in range(0, 360, 15):
-        rad = math.radians(deg)
-        length = radius if deg % 30 == 0 else radius * 0.76
-        x1, y1 = fx + math.cos(rad) * 8, fy + math.sin(rad) * 8
-        x2, y2 = fx + math.cos(rad) * length, fy + math.sin(rad) * length
-        c = col1 if deg % 45 == 0 else (col2 if deg % 30 == 0 else col3)
-        d.line((x1, y1, x2, y2), fill=c, width=3 if deg % 30 == 0 else 2)
-        d.ellipse((x2 - 3.5, y2 - 3.5, x2 + 3.5, y2 + 3.5), fill=(255, 255, 255, 250))
-        d.ellipse((x2 - 2, y2 + 5, x2 + 2, y2 + 9), fill=c)
-    d.ellipse((fx - 7, fy - 7, fx + 7, fy + 7), fill=(255, 255, 255, 255))
-    return Image.alpha_composite(base, fw)
-
-def draw_blossom(draw, cx, cy, r, petal_col, center_col):
-    for i in range(5):
-        ang = math.radians(i * 72 - 18)
-        px = cx + math.cos(ang) * r * 0.58
-        py = cy + math.sin(ang) * r * 0.58
-        draw.ellipse((px - r * 0.48, py - r * 0.48, px + r * 0.48, py + r * 0.48), fill=petal_col)
-    draw.ellipse((cx - r * 0.25, cy - r * 0.25, cx + r * 0.25, cy + r * 0.25), fill=center_col)
-
 def build_all():
     # 1. SUN
-    im = draw_3d_sun(new_canvas(), 630, 125, r=46, soft=False)
+    im = draw_3d_sun(new_canvas(), 625, 126, r=46, soft=False)
     im = draw_3d_cloud(im, 480, 155, scale=0.78, dark=False)
     im.save(f"{OUT_DIR}/art_sun.png")
 
@@ -190,18 +212,18 @@ def build_all():
     im = draw_3d_cloud(im, 690, 158, scale=0.88, dark=False)
     im.save(f"{OUT_DIR}/art_sun_cloud.png")
 
-    # 3. MOON (Chu kỳ mặt trăng tự nhiên: trăng tròn, bán nguyệt, lưỡi liềm)
-    im_full = draw_realistic_moon(new_canvas(), 635, 124, r=48, illum=1.0, waning=True)
+    # 3. MOON (To, rõ nét ngay trung tâm vùng thời tiết)
+    im_full = draw_realistic_moon(new_canvas(), 620, 128, r=54, illum=1.0, waning=True)
     im_full.save(f"{OUT_DIR}/art_moon_full.png")
 
-    im_half = draw_realistic_moon(new_canvas(), 635, 124, r=48, illum=0.52, waning=True)
+    im_half = draw_realistic_moon(new_canvas(), 620, 128, r=54, illum=0.52, waning=True)
     im_half.save(f"{OUT_DIR}/art_moon_half.png")
 
-    im_cres = draw_realistic_moon(new_canvas(), 635, 124, r=48, illum=0.22, waning=True)
+    im_cres = draw_realistic_moon(new_canvas(), 620, 128, r=54, illum=0.24, waning=True)
     im_cres.save(f"{OUT_DIR}/art_moon_crescent.png")
 
     # 4. MOON_CLOUD
-    im = draw_realistic_moon(new_canvas(), 645, 114, r=45, illum=0.55, waning=True)
+    im = draw_realistic_moon(new_canvas(), 640, 118, r=50, illum=0.55, waning=True)
     im = draw_3d_cloud(im, 540, 148, scale=1.0, dark=True)
     im = draw_3d_cloud(im, 695, 160, scale=0.85, dark=True)
     im.save(f"{OUT_DIR}/art_moon_cloud.png")
@@ -221,25 +243,47 @@ def build_all():
             d.ellipse((gx - gr, gy - gr, gx + gr, gy + gr), fill=(224, 242, 254, 130), outline=(255, 255, 255, 190))
         im.save(f"{OUT_DIR}/{fname}.png")
 
-    # 7. TET
-    im = add_soft_glow(new_canvas(), 630, 145, 240, (185, 28, 28, 120), blur=45)
-    im = draw_rich_firework(im, 510, 112, 82, (253, 224, 71, 245), (251, 146, 60, 235), (244, 63, 94, 235))
-    im = draw_rich_firework(im, 685, 96, 68, (253, 164, 175, 245), (103, 232, 249, 235), (253, 224, 71, 235))
-    im = draw_rich_firework(im, 780, 138, 52, (254, 240, 138, 240), (251, 113, 133, 230), (167, 243, 208, 230))
-    im = draw_lantern(im, 425, 56, scale=0.82)
-    im = draw_lantern(im, 815, 54, scale=0.78)
-    branch_layer = new_canvas()
-    bd = ImageDraw.Draw(branch_layer)
-    bd.line([(845, 220), (740, 185), (645, 168)], fill=(92, 45, 22, 240), width=5)
-    draw_blossom(bd, 645, 168, 15, (253, 224, 71, 250), (217, 119, 6, 255))
-    draw_blossom(bd, 705, 152, 13, (254, 240, 138, 250), (217, 119, 6, 255))
-    draw_blossom(bd, 765, 172, 14, (253, 164, 175, 250), (225, 29, 72, 255))
-    im = Image.alpha_composite(im, branch_layer)
+    # 7. TET: Pháo hoa hoa cúc 3D rực rỡ + Cành mai vàng & Cành đào hồng rủ ở cả 4 GÓC
+    im = add_soft_glow(new_canvas(), 620, 145, 250, (185, 28, 28, 125), blur=45)
+    im = draw_chrysanthemum_firework_3d(im, 535, 112, 86, (255, 255, 255, 255), (253, 224, 71, 245), (244, 63, 94, 240))
+    im = draw_chrysanthemum_firework_3d(im, 705, 96, 70, (255, 255, 255, 255), (253, 164, 175, 245), (103, 232, 249, 240))
+    im = draw_lantern(im, 420, 54, scale=0.78)
+    im = draw_lantern(im, 805, 54, scale=0.76)
+
+    branches = new_canvas()
+    bd = ImageDraw.Draw(branches)
+    wood_col = (92, 45, 22, 245)
+
+    # Góc Trên Trái: Cành đào hồng rủ xuống
+    bd.line([(0, 18), (68, 36), (125, 58)], fill=wood_col, width=5)
+    bd.line([(55, 32), (88, 64)], fill=wood_col, width=3)
+    draw_3d_blossom(bd, 125, 58, 14, (253, 164, 175, 255), (254, 205, 211, 255), (225, 29, 72, 255))
+    draw_3d_blossom(bd, 88, 64, 12, (251, 113, 133, 255), (253, 164, 175, 255), (253, 224, 71, 255))
+    draw_3d_blossom(bd, 42, 34, 13, (253, 164, 175, 255), (255, 228, 230, 255), (225, 29, 72, 255))
+
+    # Góc Trên Phải: Cành mai vàng rủ xuống
+    bd.line([(W, 20), (W - 72, 38), (W - 135, 62)], fill=wood_col, width=5)
+    bd.line([(W - 60, 34), (W - 95, 68)], fill=wood_col, width=3)
+    draw_3d_blossom(bd, W - 135, 62, 15, (250, 204, 21, 255), (254, 240, 138, 255), (180, 83, 9, 255))
+    draw_3d_blossom(bd, W - 95, 68, 13, (253, 224, 71, 255), (254, 249, 195, 255), (217, 119, 6, 255))
+    draw_3d_blossom(bd, W - 44, 34, 14, (250, 204, 21, 255), (254, 240, 138, 255), (180, 83, 9, 255))
+
+    # Góc Dưới Trái: Nhánh mai vàng vươn lên nhẹ
+    bd.line([(0, H - 18), (62, H - 36), (112, H - 52)], fill=wood_col, width=4)
+    draw_3d_blossom(bd, 112, H - 52, 13, (253, 224, 71, 250), (254, 249, 195, 255), (217, 119, 6, 255))
+    draw_3d_blossom(bd, 56, H - 36, 12, (250, 204, 21, 250), (254, 240, 138, 255), (180, 83, 9, 255))
+
+    # Góc Dưới Phải: Nhánh đào hồng vươn lên nhẹ
+    bd.line([(W, H - 18), (W - 66, H - 38), (W - 118, H - 54)], fill=wood_col, width=4)
+    draw_3d_blossom(bd, W - 118, H - 54, 13, (253, 164, 175, 250), (255, 228, 230, 255), (225, 29, 72, 255))
+    draw_3d_blossom(bd, W - 58, H - 36, 12, (251, 113, 133, 250), (253, 164, 175, 255), (253, 224, 71, 255))
+
+    im = Image.alpha_composite(im, branches)
     im.save(f"{OUT_DIR}/art_tet.png")
 
     # 8. NATIONAL
     im = add_soft_glow(new_canvas(), 620, 145, 200, (185, 28, 28, 115), blur=40)
-    im = draw_rich_firework(im, 465, 102, 72, (253, 224, 71, 245), (251, 146, 60, 235), (255, 255, 255, 235))
+    im = draw_chrysanthemum_firework_3d(im, 465, 102, 74, (255, 255, 255, 255), (253, 224, 71, 245), (251, 146, 60, 240))
     d = ImageDraw.Draw(im)
     fx, fy, fw, fh = 550, 82, 175, 116
     d.rounded_rectangle((fx, fy, fx + fw, fy + fh), radius=10, fill=(220, 38, 38, 245))
@@ -252,25 +296,20 @@ def build_all():
     d.polygon(pts, fill=(250, 204, 21, 255))
     im.save(f"{OUT_DIR}/art_national.png")
 
-    # 9. MID_AUTUMN: Trăng rằm có bóng cây đa + Chú Cuội ngồi gốc đa + Chị Hằng bay + Đèn ông sao & Đèn lồng
-    mcx, mcy, mr = 640, 116, 56
+    # 9. MID_AUTUMN
+    mcx, mcy, mr = 625, 120, 56
     im = draw_realistic_moon(new_canvas(), mcx, mcy, r=mr, illum=1.0, waning=True)
 
-    # Bóng nghệ thuật cây đa, Chú Cuội ngồi gốc đa & Chị Hằng in mềm bên trong đĩa trăng
     sil = new_canvas()
     sd = ImageDraw.Draw(sil)
     sil_col = (146, 64, 14, 135)
-    # Gò đất & thân cây đa bên phải trăng
     sd.pieslice((mcx - mr, mcy - mr, mcx + mr, mcy + mr), 15, 165, fill=sil_col)
     sd.line([(mcx + 22, mcy + 36), (mcx + 18, mcy + 8), (mcx + 6, mcy - 8)], fill=sil_col, width=5)
     sd.line([(mcx + 18, mcy + 14), (mcx + 34, mcy + 2)], fill=sil_col, width=4)
-    # Tán lá đa xum xuê
     for bx, by, br in [(mcx + 8, mcy - 12, 16), (mcx + 24, mcy - 10, 15), (mcx + 36, mcy - 2, 13), (mcx - 4, mcy - 4, 12)]:
         sd.ellipse((bx - br, by - br, bx + br, by + br), fill=sil_col)
-    # Chú Cuội ngồi tựa gốc đa
     sd.ellipse((mcx + 2, mcy + 18, mcx + 10, mcy + 26), fill=sil_col)
     sd.rounded_rectangle((mcx + 1, mcy + 26, mcx + 12, mcy + 38), radius=3, fill=sil_col)
-    # Chị Hằng uyển chuyển bay bên trái trăng kèm dải lụa mềm
     sd.ellipse((mcx - 28, mcy - 18, mcx - 21, mcy - 11), fill=sil_col)
     sd.polygon([(mcx - 25, mcy - 10), (mcx - 32, mcy + 8), (mcx - 18, mcy + 6)], fill=sil_col)
     sd.arc((mcx - 42, mcy - 22, mcx - 12, mcy + 4), 160, 340, fill=sil_col, width=2)
@@ -278,33 +317,27 @@ def build_all():
     sil = sil.filter(ImageFilter.GaussianBlur(1.0))
     im = Image.alpha_composite(im, sil)
 
-    # Đèn ông sao 5 cánh & đèn lồng dọc mép trên dải lịch
     im = draw_star_lantern(im, 205, 224, r=16)
     im = draw_lantern(im, 372, 224, scale=0.58)
     im = draw_star_lantern(im, 540, 224, r=16)
     im = draw_lantern(im, 708, 224, scale=0.58)
     im.save(f"{OUT_DIR}/art_mid_autumn.png")
 
-    # 10. XMAS: Cây thông Noel 3D phủ tuyết + Ngôi sao + Dây kim tuyến + Quả châu + Hộp quà
+    # 10. XMAS
     im = add_soft_glow(new_canvas(), 665, 135, 190, (6, 95, 70, 125), blur=40)
     tree = new_canvas()
     d = ImageDraw.Draw(tree)
     tx, by = 668, 214
-    # Thân gỗ
     d.rectangle((tx - 11, by - 14, tx + 11, by + 18), fill=(120, 53, 15, 245))
-    # 4 tầng tán thông xanh đậm + lớp tuyết trắng viền mép dưới tán
     tiers = [(by - 12, 72, 50), (by - 42, 58, 46), (by - 70, 44, 42), (by - 96, 30, 36)]
     for ty, hw, th in tiers:
         d.polygon([(tx, ty - th), (tx - hw, ty), (tx + hw, ty)], fill=(6, 95, 70, 245))
         d.polygon([(tx, ty - th), (tx - hw * 0.85, ty - 4), (tx + hw * 0.85, ty - 4)], fill=(16, 185, 129, 235))
-        # Tuyết phủ đầu tán lá
         d.polygon([(tx, ty - th), (tx - hw * 0.36, ty - th * 0.58), (tx + hw * 0.36, ty - th * 0.58)], fill=(255, 255, 255, 220))
 
-    # Dây kim tuyến vàng uốn lượn
     d.arc((tx - 46, by - 82, tx + 46, by - 54), 15, 165, fill=(253, 224, 71, 235), width=3)
     d.arc((tx - 60, by - 52, tx + 60, by - 22), 15, 165, fill=(253, 224, 71, 235), width=3)
 
-    # Quả châu trang trí nhiều màu (Đỏ, Vàng, Xanh dương)
     ornaments = [
         (tx - 18, by - 84, (239, 68, 68, 255)),
         (tx + 16, by - 76, (250, 204, 21, 255)),
@@ -319,7 +352,6 @@ def build_all():
     for ox, oy, ocol in ornaments:
         d.ellipse((ox - 5, oy - 5, ox + 5, oy + 5), fill=ocol, outline=(255, 255, 255, 200))
 
-    # Ngôi sao vàng đỉnh cây thông
     sy = by - 134
     s_pts = []
     for i in range(10):
@@ -328,7 +360,6 @@ def build_all():
         s_pts.append((tx + math.cos(ang) * sr, sy + math.sin(ang) * sr))
     d.polygon(s_pts, fill=(254, 240, 138, 255), outline=(245, 158, 11, 255))
 
-    # Hộp quà Giáng sinh dưới gốc cây
     d.rounded_rectangle((tx - 46, by + 2, tx - 22, by + 20), radius=3, fill=(220, 38, 38, 245))
     d.line([(tx - 34, by + 2), (tx - 34, by + 20)], fill=(253, 224, 71, 255), width=3)
     d.rounded_rectangle((tx + 22, by + 4, tx + 44, by + 20), radius=3, fill=(37, 99, 235, 245))
