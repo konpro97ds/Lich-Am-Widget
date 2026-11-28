@@ -193,12 +193,13 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             else if (holiday.themeType != "NONE") holiday.themeType
             else weatherEff
 
-            // 1. Vẽ nền Kính Lỏng thuần túy (tự động giãn theo tỷ lệ widget)
+            // 1. Vẽ nền Kính Lỏng thuần túy với bán kính bo góc đồng bộ 24dp
             views.setImageViewBitmap(
                 R.id.iv_glass_bg,
-                drawLiquidGlassBaseBitmap(bgColorHex, bgAlpha, 48f, aspectRatio)
+                drawLiquidGlassBaseBitmap(bgColorHex, bgAlpha, aspectRatio)
             )
             views.setViewVisibility(R.id.pb_glass_shimmer, if (enableEffects) View.VISIBLE else View.GONE)
+            views.setBoolean(R.id.frame_effects_clip, "setClipToOutline", true)
 
             // 2. Nạp ảnh 3D vào iv_weather_art riêng (giữ nguyên tỷ lệ gốc 1:1, neo góc trên phải)
             val artName = if (enableEffects) resolveArtResourceName(activeEffect, lunarDay) else null
@@ -466,17 +467,16 @@ class LiquidWidgetProvider : AppWidgetProvider() {
         }
 
         /**
-         * Vẽ lớp nền Kính Lỏng (Liquid Glass) thuần túy:
-         * - Không nhúng ảnh minh họa vào bitmap nền nên không bao giờ bị kéo méo khi resize widget
+         * Vẽ lớp nền Kính Lỏng (Liquid Glass) thuần túy với bán kính bo góc đồng bộ 24dp
          */
         fun drawLiquidGlassBaseBitmap(
             hexColor: String,
             alphaPercent: Int,
-            radius: Float,
             aspectRatio: Float = 2.15f
         ): Bitmap {
             val h = 360
             val w = (h * aspectRatio).toInt().coerceIn(540, 1020)
+            val radius = (h * 0.142f)
             val bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bmp)
             val rect = RectF(2f, 2f, w - 2f, h - 2f)
