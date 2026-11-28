@@ -19,35 +19,39 @@ def add_soft_glow(base, cx, cy, radius, color, blur=35):
     return Image.alpha_composite(base, layer)
 
 def draw_3d_cloud(base, cx, cy, scale=1.0, dark=False):
-    shadow_col = (15, 23, 42, 165) if dark else (30, 41, 59, 95)
-    body_col = (71, 85, 105, 238) if dark else (226, 232, 240, 235)
-    top_col = (148, 163, 184, 245) if dark else (255, 255, 255, 250)
+def draw_3d_cloud(base, cx, cy, scale=1.0, dark=False):
+    shadow_col = (15, 23, 42, 135) if dark else (51, 65, 85, 70)
+    body_col = (71, 85, 105, 195) if dark else (226, 232, 240, 195)
+    top_col = (148, 163, 184, 145) if dark else (255, 255, 255, 190)
 
     puffs = [
-        (-75, 12, 46), (-32, -18, 62), (24, -12, 54), (72, 10, 42), (0, 18, 48)
+        (-82, 14, 48), (-36, -16, 64), (26, -10, 56), (78, 12, 44), (0, 18, 52)
     ]
+    # Bóng mây mềm
     s_layer = new_canvas()
     sd = ImageDraw.Draw(s_layer)
     for dx, dy, r in puffs:
-        x, y, rad = cx + dx * scale, cy + (dy + 12) * scale, r * scale
+        x, y, rad = cx + dx * scale, cy + (dy + 14) * scale, r * scale
         sd.ellipse((x - rad, y - rad, x + rad, y + rad), fill=shadow_col)
-    s_layer = s_layer.filter(ImageFilter.GaussianBlur(14))
+    s_layer = s_layer.filter(ImageFilter.GaussianBlur(22))
     base = Image.alpha_composite(base, s_layer)
 
+    # Thân mây tán mịn
     b_layer = new_canvas()
     bd = ImageDraw.Draw(b_layer)
     for dx, dy, r in puffs:
         x, y, rad = cx + dx * scale, cy + dy * scale, r * scale
         bd.ellipse((x - rad, y - rad, x + rad, y + rad), fill=body_col)
-    b_layer = b_layer.filter(ImageFilter.GaussianBlur(3))
+    b_layer = b_layer.filter(ImageFilter.GaussianBlur(14))
     base = Image.alpha_composite(base, b_layer)
 
+    # Viền sáng đỉnh mây hòa quyện mềm (blur lớn 18px để không tạo đốm tròn)
     h_layer = new_canvas()
     hd = ImageDraw.Draw(h_layer)
     for dx, dy, r in puffs[:3]:
-        x, y, rad = cx + dx * scale, cy + (dy - 8) * scale, r * 0.78 * scale
+        x, y, rad = cx + dx * scale, cy + (dy - 10) * scale, r * 0.85 * scale
         hd.ellipse((x - rad, y - rad, x + rad, y + rad), fill=top_col)
-    h_layer = h_layer.filter(ImageFilter.GaussianBlur(8))
+    h_layer = h_layer.filter(ImageFilter.GaussianBlur(18))
     return Image.alpha_composite(base, h_layer)
 
 def draw_3d_sun(base, cx, cy, r=46, soft=False):
