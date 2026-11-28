@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="4dp">
 
-    <!-- Lớp nền Kính Lỏng vẽ đúng tỷ lệ khung hình thực tế -->
+    <!-- Lớp nền Kính Lỏng + Ảnh 3D vẽ đúng tỷ lệ thực tế khi kéo giãn -->
     <ImageView
         android:id="@+id/iv_glass_bg"
         android:layout_width="match_parent"
@@ -13,33 +13,18 @@
         android:scaleType="fitXY"
         android:src="@drawable/bg_liquid_glass" />
 
-    <!-- Lớp ánh sáng quét mặt kính -->
+    <!-- Các lớp hiệu ứng chuyển động giãn tràn 100% khung widget -->
     <ProgressBar
         android:id="@+id/pb_glass_shimmer"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/anim_glass_shimmer" />
 
-    <!-- Các lớp hiệu ứng chuyển động -->
-    <ProgressBar
-        android:id="@+id/pb_weather_cloud"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/anim_weather_cloud"
-        android:visibility="gone" />
-
-    <ProgressBar
-        android:id="@+id/pb_weather_sun"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/anim_weather_sun"
-        android:visibility="gone" />
-
     <ProgressBar
         android:id="@+id/pb_weather_moon"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:indeterminate="true"
@@ -48,6 +33,7 @@
 
     <ProgressBar
         android:id="@+id/pb_weather_rain"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:indeterminate="true"
@@ -56,6 +42,7 @@
 
     <ProgressBar
         android:id="@+id/pb_weather_thunder"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:indeterminate="true"
@@ -64,6 +51,7 @@
 
     <ProgressBar
         android:id="@+id/pb_weather_tet"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:indeterminate="true"
@@ -72,6 +60,7 @@
 
     <ProgressBar
         android:id="@+id/pb_weather_mid_autumn"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:indeterminate="true"
@@ -80,10 +69,29 @@
 
     <ProgressBar
         android:id="@+id/pb_weather_xmas"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/anim_weather_xmas"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/pb_weather_sun"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/anim_weather_sun"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/pb_weather_cloud"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/anim_weather_cloud"
         android:visibility="gone" />
 
     <!-- Nội dung chính -->
