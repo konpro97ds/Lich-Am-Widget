@@ -56,11 +56,12 @@ object WidgetPreviewHelper {
         else weatherEff
 
         val aspectRatio = if (root.width > 0 && root.height > 0) {
-            (root.width.toFloat() / root.height.toFloat()).coerceIn(1.6f, 2.8f)
+            (root.width.toFloat() / root.height.toFloat()).coerceIn(1.35f, 3.0f)
         } else 2.15f
 
+        // Bán kính bo góc 48f khớp tuyệt đối với bg_glass_clip_mask.xml (24dp)
         root.findViewById<ImageView>(R.id.iv_glass_bg)?.setImageBitmap(
-            LiquidWidgetProvider.drawLiquidGlassBitmap(context, cfg.bgColorHex, cfg.bgAlpha, 52f, activeEffect, lunarToday.first, aspectRatio, isRealRain)
+            LiquidWidgetProvider.drawLiquidGlassBitmap(context, cfg.bgColorHex, cfg.bgAlpha, 48f, activeEffect, lunarToday.first, aspectRatio, isRealRain)
         )
         root.findViewById<ProgressBar>(R.id.pb_glass_shimmer)?.visibility = if (cfg.enableEffects) View.VISIBLE else View.GONE
 
