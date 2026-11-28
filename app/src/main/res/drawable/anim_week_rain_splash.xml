@@ -4,118 +4,184 @@
     <aapt:attr name="android:drawable">
         <vector
             android:width="336dp"
-            android:height="12dp"
+            android:height="40dp"
             android:viewportWidth="336"
-            android:viewportHeight="12">
+            android:viewportHeight="40">
 
-            <!-- Màng nước loang mỏng sát mép trên dải lịch (Y = 11.2) -->
-            <path
-                android:name="water_film_a"
-                android:strokeColor="#66E0F2FE"
-                android:strokeWidth="0.7"
-                android:strokeAlpha="0.0"
-                android:strokeLineCap="round"
-                android:pathData="M38,11.2 L46,11.2 M132,11.2 L141,11.2 M228,11.2 L237,11.2 M296,11.2 L304,11.2" />
-
-            <!-- Hạt nước bật nảy sang trái - Đợt A -->
-            <group android:name="bounce_left_a">
-                <path
-                    android:name="dot_la"
-                    android:fillColor="#E0F2FE"
-                    android:fillAlpha="0.0"
-                    android:pathData="M42,10.5 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M136,10.5 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M232,10.5 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M300,10.5 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0" />
+            <!-- NHÓM 1 (Chu kỳ 790ms - Vị trí X = 42, 168, 286) -->
+            <group android:name="b_left_1">
+                <path android:name="d_l1" android:fillColor="#E0F2FE" android:fillAlpha="0.0"
+                    android:pathData="M42,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M168,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M286,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0" />
+            </group>
+            <group android:name="b_right_1">
+                <path android:name="d_r1" android:fillColor="#FFFFFF" android:fillAlpha="0.0"
+                    android:pathData="M43,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M169,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M287,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0" />
+            </group>
+            <!-- Giọt nước chảy trượt xuyên qua hết dải lịch âm lịch đồng bộ đúng tọa độ X = 42, 168, 286 -->
+            <group android:name="drip_slide_1">
+                <path android:name="drip_dot_1" android:fillColor="#88E0F2FE" android:fillAlpha="0.0"
+                    android:pathData="M42,8 C43.1,10.2 43.5,11.4 43.5,12.4 C43.5,13.5 42.8,14.2 42,14.2 C41.2,14.2 40.5,13.5 40.5,12.4 C40.5,11.4 40.9,10.2 42,8 Z M168,8 C169.1,10.2 169.5,11.4 169.5,12.4 C169.5,13.5 168.8,14.2 168,14.2 C167.2,14.2 166.5,13.5 166.5,12.4 C166.5,11.4 166.9,10.2 168,8 Z M286,8 C287.1,10.2 287.5,11.4 287.5,12.4 C287.5,13.5 286.8,14.2 286,14.2 C285.2,14.2 284.5,13.5 284.5,12.4 C284.5,11.4 284.9,10.2 286,8 Z" />
             </group>
 
-            <!-- Hạt nước bật nảy sang phải - Đợt A -->
-            <group android:name="bounce_right_a">
-                <path
-                    android:name="dot_ra"
-                    android:fillColor="#FFFFFF"
-                    android:fillAlpha="0.0"
-                    android:pathData="M43,10.5 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M137,10.5 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M233,10.5 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M301,10.5 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0" />
+            <!-- NHÓM 2 (Chu kỳ 1030ms - Vị trí X = 88, 214, 314) -->
+            <group android:name="b_left_2">
+                <path android:name="d_l2" android:fillColor="#BAE6FD" android:fillAlpha="0.0"
+                    android:pathData="M88,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M214,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M314,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0" />
+            </group>
+            <group android:name="b_right_2">
+                <path android:name="d_r2" android:fillColor="#FFFFFF" android:fillAlpha="0.0"
+                    android:pathData="M89,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M215,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M315,7 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0" />
+            </group>
+            <group android:name="drip_slide_2">
+                <path android:name="drip_dot_2" android:fillColor="#88BAE6FD" android:fillAlpha="0.0"
+                    android:pathData="M88,8 C89.1,10.2 89.5,11.4 89.5,12.4 C89.5,13.5 88.8,14.2 88,14.2 C87.2,14.2 86.5,13.5 86.5,12.4 C86.5,11.4 86.9,10.2 88,8 Z M214,8 C215.1,10.2 215.5,11.4 215.5,12.4 C215.5,13.5 214.8,14.2 214,14.2 C213.2,14.2 212.5,13.5 212.5,12.4 C212.5,11.4 212.9,10.2 214,8 Z M314,8 C315.1,10.2 315.5,11.4 315.5,12.4 C315.5,13.5 314.8,14.2 314,14.2 C313.2,14.2 312.5,13.5 312.5,12.4 C312.5,11.4 312.9,10.2 314,8 Z" />
             </group>
 
-            <!-- Hạt nước bật nảy sang trái - Đợt B lệch nhịp -->
-            <group android:name="bounce_left_b">
-                <path
-                    android:name="dot_lb"
-                    android:fillColor="#BAE6FD"
-                    android:fillAlpha="0.0"
-                    android:pathData="M86,10.5 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M184,10.5 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M268,10.5 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0" />
+            <!-- NHÓM 3 (Chu kỳ 1310ms - Vị trí X = 26, 134, 248) -->
+            <group android:name="b_left_3">
+                <path android:name="d_l3" android:fillColor="#E0F2FE" android:fillAlpha="0.0"
+                    android:pathData="M26,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M134,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M248,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0" />
+            </group>
+            <group android:name="drip_slide_3">
+                <path android:name="drip_dot_3" android:fillColor="#80FFFFFF" android:fillAlpha="0.0"
+                    android:pathData="M26,8 C27.1,10.2 27.5,11.4 27.5,12.4 C27.5,13.5 26.8,14.2 26,14.2 C25.2,14.2 24.5,13.5 24.5,12.4 C24.5,11.4 24.9,10.2 26,8 Z M134,8 C135.1,10.2 135.5,11.4 135.5,12.4 C135.5,13.5 134.8,14.2 134,14.2 C133.2,14.2 132.5,13.5 132.5,12.4 C132.5,11.4 132.9,10.2 134,8 Z M248,8 C249.1,10.2 249.5,11.4 249.5,12.4 C249.5,13.5 248.8,14.2 248,14.2 C247.2,14.2 246.5,13.5 246.5,12.4 C246.5,11.4 246.9,10.2 248,8 Z" />
             </group>
 
-            <!-- Hạt nước bật nảy sang phải - Đợt B lệch nhịp -->
-            <group android:name="bounce_right_b">
-                <path
-                    android:name="dot_rb"
-                    android:fillColor="#FFFFFF"
-                    android:fillAlpha="0.0"
-                    android:pathData="M87,10.5 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M185,10.5 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0 M269,10.5 m-0.75,0 a0.75,0.75 0 1,0 1.5,0 a0.75,0.75 0 1,0 -1.5,0" />
+            <!-- NHÓM 4 (Chu kỳ 1670ms - Vị trí X = 64, 192) -->
+            <group android:name="b_left_4">
+                <path android:name="d_l4" android:fillColor="#FFFFFF" android:fillAlpha="0.0"
+                    android:pathData="M64,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0 M192,7 m-0.85,0 a0.85,0.85 0 1,0 1.7,0 a0.85,0.85 0 1,0 -1.7,0" />
+            </group>
+            <group android:name="drip_slide_4">
+                <path android:name="drip_dot_4" android:fillColor="#85E0F2FE" android:fillAlpha="0.0"
+                    android:pathData="M64,8 C65.1,10.2 65.5,11.4 65.5,12.4 C65.5,13.5 64.8,14.2 64,14.2 C63.2,14.2 62.5,13.5 62.5,12.4 C62.5,11.4 62.9,10.2 64,8 Z M192,8 C193.1,10.2 193.5,11.4 193.5,12.4 C193.5,13.5 192.8,14.2 192,14.2 C191.2,14.2 190.5,13.5 190.5,12.4 C190.5,11.4 190.9,10.2 192,8 Z" />
             </group>
         </vector>
     </aapt:attr>
 
-    <target android:name="water_film_a">
-        <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="strokeAlpha" android:duration="420" android:valueFrom="0.0" android:valueTo="0.75" android:repeatCount="infinite" android:repeatMode="reverse" />
-        </aapt:attr>
-    </target>
-
-    <!-- Quỹ đạo bật nảy parabol (bật lên -5.5 rồi rơi lại 0) -->
-    <target android:name="bounce_left_a">
+    <!-- NHÓM 1 (790ms) -->
+    <target android:name="b_left_1">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateX" android:duration="840" android:valueFrom="0" android:valueTo="-4.2" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateY" android:duration="420" android:valueFrom="0" android:valueTo="-5.2" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="790" android:valueFrom="0" android:valueTo="-4.2" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="395" android:valueFrom="0" android:valueTo="-5.0" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
-    <target android:name="dot_la">
+    <target android:name="d_l1">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="420" android:valueFrom="0.95" android:valueTo="0.1" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <objectAnimator android:propertyName="fillAlpha" android:duration="395" android:valueFrom="0.95" android:valueTo="0.05" android:repeatCount="infinite" android:repeatMode="reverse" />
         </aapt:attr>
     </target>
-
-    <target android:name="bounce_right_a">
+    <target android:name="b_right_1">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateX" android:duration="840" android:valueFrom="0" android:valueTo="3.8" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateY" android:duration="420" android:valueFrom="0" android:valueTo="-4.5" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="790" android:valueFrom="0" android:valueTo="3.8" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="395" android:valueFrom="0" android:valueTo="-4.3" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
-    <target android:name="dot_ra">
+    <target android:name="d_r1">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="420" android:valueFrom="0.90" android:valueTo="0.1" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <objectAnimator android:propertyName="fillAlpha" android:duration="395" android:valueFrom="0.90" android:valueTo="0.05" android:repeatCount="infinite" android:repeatMode="reverse" />
+        </aapt:attr>
+    </target>
+    <target android:name="drip_slide_1">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="translateY" android:duration="1580" android:valueFrom="0" android:valueTo="25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+        </aapt:attr>
+    </target>
+    <target android:name="drip_dot_1">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="fillAlpha" android:duration="790" android:valueFrom="0.85" android:valueTo="0.05" android:repeatCount="infinite" android:repeatMode="reverse" />
         </aapt:attr>
     </target>
 
-    <!-- Đợt B lệch nhịp 1060ms -->
-    <target android:name="bounce_left_b">
+    <!-- NHÓM 2 (1030ms) -->
+    <target android:name="b_left_2">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateX" android:duration="1060" android:valueFrom="0" android:valueTo="-4.2" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateY" android:duration="530" android:valueFrom="0" android:valueTo="-5.0" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="1030" android:valueFrom="0" android:valueTo="-4.2" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="515" android:valueFrom="0" android:valueTo="-5.0" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
-    <target android:name="dot_lb">
+    <target android:name="d_l2">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="530" android:valueFrom="0.1" android:valueTo="0.95" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <objectAnimator android:propertyName="fillAlpha" android:duration="515" android:valueFrom="0.05" android:valueTo="0.95" android:repeatCount="infinite" android:repeatMode="reverse" />
+        </aapt:attr>
+    </target>
+    <target android:name="b_right_2">
+        <aapt:attr name="android:animation">
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="1030" android:valueFrom="0" android:valueTo="3.8" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="515" android:valueFrom="0" android:valueTo="-4.3" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="d_r2">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="fillAlpha" android:duration="515" android:valueFrom="0.05" android:valueTo="0.90" android:repeatCount="infinite" android:repeatMode="reverse" />
+        </aapt:attr>
+    </target>
+    <target android:name="drip_slide_2">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="translateY" android:duration="2060" android:valueFrom="0" android:valueTo="25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+        </aapt:attr>
+    </target>
+    <target android:name="drip_dot_2">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="fillAlpha" android:duration="1030" android:valueFrom="0.05" android:valueTo="0.85" android:repeatCount="infinite" android:repeatMode="reverse" />
         </aapt:attr>
     </target>
 
-    <target android:name="bounce_right_b">
+    <!-- NHÓM 3 (1310ms) -->
+    <target android:name="b_left_3">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateX" android:duration="1060" android:valueFrom="0" android:valueTo="3.8" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateY" android:duration="530" android:valueFrom="0" android:valueTo="-4.4" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="1310" android:valueFrom="0" android:valueTo="-4.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="655" android:valueFrom="0" android:valueTo="-4.8" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
             </set>
         </aapt:attr>
     </target>
-    <target android:name="dot_rb">
+    <target android:name="d_l3">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="530" android:valueFrom="0.1" android:valueTo="0.90" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <objectAnimator android:propertyName="fillAlpha" android:duration="655" android:valueFrom="0.92" android:valueTo="0.05" android:repeatCount="infinite" android:repeatMode="reverse" />
+        </aapt:attr>
+    </target>
+    <target android:name="drip_slide_3">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="translateY" android:duration="2620" android:valueFrom="0" android:valueTo="25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+        </aapt:attr>
+    </target>
+    <target android:name="drip_dot_3">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="fillAlpha" android:duration="1310" android:valueFrom="0.82" android:valueTo="0.05" android:repeatCount="infinite" android:repeatMode="reverse" />
+        </aapt:attr>
+    </target>
+
+    <!-- NHÓM 4 (1670ms) -->
+    <target android:name="b_left_4">
+        <aapt:attr name="android:animation">
+            <set android:ordering="together">
+                <objectAnimator android:propertyName="translateX" android:duration="1670" android:valueFrom="0" android:valueTo="3.8" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/decelerate_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="835" android:valueFrom="0" android:valueTo="-4.8" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="d_l4">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="fillAlpha" android:duration="835" android:valueFrom="0.05" android:valueTo="0.92" android:repeatCount="infinite" android:repeatMode="reverse" />
+        </aapt:attr>
+    </target>
+    <target android:name="drip_slide_4">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="translateY" android:duration="3340" android:valueFrom="0" android:valueTo="25" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
+        </aapt:attr>
+    </target>
+    <target android:name="drip_dot_4">
+        <aapt:attr name="android:animation">
+            <objectAnimator android:propertyName="fillAlpha" android:duration="1670" android:valueFrom="0.05" android:valueTo="0.82" android:repeatCount="infinite" android:repeatMode="reverse" />
         </aapt:attr>
     </target>
 </animated-vector>
