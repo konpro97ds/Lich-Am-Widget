@@ -126,15 +126,13 @@
                         android:textSize="36sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tv_colon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="2dp"
-                        android:text=":"
-                        android:textColor="#FFFFFF"
-                        android:textSize="34sp"
-                        android:textStyle="bold" />
+                    <ProgressBar
+                        android:id="@+id/pb_colon"
+                        android:layout_width="10dp"
+                        android:layout_height="30dp"
+                        android:layout_marginHorizontal="2dp"
+                        android:indeterminate="true"
+                        android:indeterminateDrawable="@drawable/anim_colon_pulse" />
 
                     <TextClock
                         android:id="@+id/tc_minute"
@@ -236,15 +234,13 @@
                     android:textSize="36sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_colon_c"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="2dp"
-                    android:text=":"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
+                <ProgressBar
+                    android:id="@+id/pb_colon_c"
+                    android:layout_width="10dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="2dp"
+                    android:indeterminate="true"
+                    android:indeterminateDrawable="@drawable/anim_colon_pulse" />
 
                 <TextClock
                     android:id="@+id/tc_minute_c"
@@ -330,15 +326,13 @@
                         android:textSize="36sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tv_colon_r"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="2dp"
-                        android:text=":"
-                        android:textColor="#FFFFFF"
-                        android:textSize="34sp"
-                        android:textStyle="bold" />
+                    <ProgressBar
+                        android:id="@+id/pb_colon_r"
+                        android:layout_width="10dp"
+                        android:layout_height="30dp"
+                        android:layout_marginHorizontal="2dp"
+                        android:indeterminate="true"
+                        android:indeterminateDrawable="@drawable/anim_colon_pulse" />
 
                     <TextClock
                         android:id="@+id/tc_minute_r"
