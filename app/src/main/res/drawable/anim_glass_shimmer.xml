@@ -8,9 +8,14 @@
             android:viewportWidth="360"
             android:viewportHeight="168">
             <group android:name="shimmer_beam">
+                <!-- Quầng sáng mềm bao ngoài -->
                 <path
-                    android:fillColor="#0EFFFFFF"
-                    android:pathData="M24,10 L54,10 L26,158 L-4,158 Z" />
+                    android:fillColor="#09FFFFFF"
+                    android:pathData="M0,0 L76,0 L32,168 L-44,168 Z" />
+                <!-- Lõi vệt sáng phản quang chính -->
+                <path
+                    android:fillColor="#16FFFFFF"
+                    android:pathData="M24,0 L52,0 L8,168 L-20,168 Z" />
             </group>
         </vector>
     </aapt:attr>
@@ -18,9 +23,9 @@
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="translateX"
-                android:duration="4600"
-                android:valueFrom="0"
-                android:valueTo="310"
+                android:duration="4800"
+                android:valueFrom="-80"
+                android:valueTo="440"
                 android:repeatCount="infinite"
                 android:repeatMode="restart"
                 android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
