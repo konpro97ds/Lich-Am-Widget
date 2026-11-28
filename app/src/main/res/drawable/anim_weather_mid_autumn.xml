@@ -8,80 +8,50 @@
             android:viewportWidth="360"
             android:viewportHeight="168">
 
-            <!-- Sao đêm lấp lánh tại chỗ (không di chuyển) -->
+            <!-- Sao & đom đóm ánh vàng lấp lánh tại chỗ -->
             <path
-                android:name="autumn_stars"
+                android:name="autumn_stars_a"
                 android:fillColor="#FEF08A"
-                android:fillAlpha="0.9"
-                android:pathData="M150,24 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0 M196,18 m-1.6,0 a1.6,1.6 0 1,0 3.2,0 a1.6,1.6 0 1,0 -3.2,0 M228,68 m-1.3,0 a1.3,1.3 0 1,0 2.6,0 a1.3,1.3 0 1,0 -2.6,0 M308,26 m-1.5,0 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 M332,62 m-1.3,0 a1.3,1.3 0 1,0 2.6,0 a1.3,1.3 0 1,0 -2.6,0" />
+                android:fillAlpha="0.95"
+                android:pathData="M148,22 m-1.5,0 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 M198,16 m-1.7,0 a1.7,1.7 0 1,0 3.4,0 a1.7,1.7 0 1,0 -3.4,0 M226,68 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0 M312,24 m-1.6,0 a1.6,1.6 0 1,0 3.2,0 a1.6,1.6 0 1,0 -3.2,0 M334,60 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0" />
 
-            <!-- Chị Hằng bay lượn mềm mại bên trái trăng rằm -->
-            <group android:name="chi_hang_group" android:pivotX="232" android:pivotY="52">
-                <!-- Dải lụa bay -->
-                <path
-                    android:strokeColor="#FDE047"
-                    android:strokeWidth="1.6"
-                    android:strokeLineCap="round"
-                    android:fillColor="#00000000"
-                    android:pathData="M220,56 Q226,46 234,50 Q241,54 246,47" />
-                <!-- Dáng Chị Hằng -->
-                <path
-                    android:fillColor="#FEF9C3"
-                    android:pathData="M233,44 m-2.3,0 a2.3,2.3 0 1,0 4.6,0 a2.3,2.3 0 1,0 -4.6,0 M230,48 L236,48 L239,58 L227,58 Z" />
-            </group>
+            <path
+                android:name="autumn_stars_b"
+                android:fillColor="#FDE047"
+                android:fillAlpha="0.2"
+                android:pathData="M172,42 m-1.3,0 a1.3,1.3 0 1,0 2.6,0 a1.3,1.3 0 1,0 -2.6,0 M210,32 m-1.5,0 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 M302,46 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0 M325,38 m-1.2,0 a1.2,1.2 0 1,0 2.4,0 a1.2,1.2 0 1,0 -2.4,0" />
 
-            <!-- Chú Cuội tinh nghịch nhún nhảy bên phải trăng rằm -->
-            <group android:name="chu_cuoi_group" android:pivotX="284" android:pivotY="56">
+            <!-- Dây treo & đèn lồng Trung Thu đung đưa dọc mép dải lịch (Y = 93) -->
+            <group android:name="lantern_swing" android:pivotX="180" android:pivotY="90">
                 <path
-                    android:fillColor="#FDE68A"
-                    android:pathData="M284,48 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M281,52 L287,52 L288,60 L280,60 Z" />
-                <!-- Cành đa nhỏ -->
+                    android:strokeColor="#FACC15"
+                    android:strokeWidth="0.9"
+                    android:pathData="M92,89 L92,93 M162,89 L162,93 M232,89 L232,93 M302,89 L302,93" />
                 <path
-                    android:strokeColor="#FDE047"
-                    android:strokeWidth="1.3"
-                    android:strokeLineCap="round"
-                    android:pathData="M287,54 L293,49 M290,51 L294,52" />
-            </group>
-
-            <!-- Đèn lồng Trung Thu đung đưa dọc mép dải lịch -->
-            <group android:name="lantern_swing" android:pivotX="180" android:pivotY="92">
+                    android:fillColor="#DC2626"
+                    android:pathData="M92,95 m-3.6,0 a3.6,4.2 0 1,0 7.2,0 a3.6,4.2 0 1,0 -7.2,0 M162,95 m-3.6,0 a3.6,4.2 0 1,0 7.2,0 a3.6,4.2 0 1,0 -7.2,0 M232,95 m-3.6,0 a3.6,4.2 0 1,0 7.2,0 a3.6,4.2 0 1,0 -7.2,0 M302,95 m-3.6,0 a3.6,4.2 0 1,0 7.2,0 a3.6,4.2 0 1,0 -7.2,0" />
                 <path
-                    android:fillColor="#EF4444"
-                    android:pathData="M72,94 m-3.5,0 a3.5,4.2 0 1,0 7.0,0 a3.5,4.2 0 1,0 -7.0,0 M144,94 m-3.5,0 a3.5,4.2 0 1,0 7.0,0 a3.5,4.2 0 1,0 -7.0,0 M216,94 m-3.5,0 a3.5,4.2 0 1,0 7.0,0 a3.5,4.2 0 1,0 -7.0,0 M288,94 m-3.5,0 a3.5,4.2 0 1,0 7.0,0 a3.5,4.2 0 1,0 -7.0,0" />
-                <path
-                    android:fillColor="#FACC15"
-                    android:pathData="M72,94 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0 M144,94 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0 M216,94 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0 M288,94 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0" />
+                    android:fillColor="#FEF08A"
+                    android:pathData="M92,95 m-1.5,0 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 M162,95 m-1.5,0 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 M232,95 m-1.5,0 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0 M302,95 m-1.5,0 a1.5,1.5 0 1,0 3.0,0 a1.5,1.5 0 1,0 -3.0,0" />
             </group>
         </vector>
     </aapt:attr>
 
-    <target android:name="autumn_stars">
+    <target android:name="autumn_stars_a">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="fillAlpha" android:duration="1600" android:valueFrom="0.95" android:valueTo="0.25" android:repeatCount="infinite" android:repeatMode="reverse" />
+            <objectAnimator android:propertyName="fillAlpha" android:duration="1600" android:valueFrom="0.95" android:valueTo="0.20" android:repeatCount="infinite" android:repeatMode="reverse" />
         </aapt:attr>
     </target>
 
-    <target android:name="chi_hang_group">
+    <target android:name="autumn_stars_b">
         <aapt:attr name="android:animation">
-            <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="1800" android:valueFrom="-3" android:valueTo="4" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateX" android:duration="2400" android:valueFrom="-2" android:valueTo="5" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
-            </set>
-        </aapt:attr>
-    </target>
-
-    <target android:name="chu_cuoi_group">
-        <aapt:attr name="android:animation">
-            <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="1300" android:valueFrom="3" android:valueTo="-4" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateX" android:duration="2400" android:valueFrom="3" android:valueTo="-4" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
-            </set>
+            <objectAnimator android:propertyName="fillAlpha" android:duration="2100" android:valueFrom="0.20" android:valueTo="0.95" android:repeatCount="infinite" android:repeatMode="reverse" />
         </aapt:attr>
     </target>
 
     <target android:name="lantern_swing">
         <aapt:attr name="android:animation">
-            <objectAnimator android:propertyName="translateX" android:duration="1700" android:valueFrom="-2.5" android:valueTo="2.5" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+            <objectAnimator android:propertyName="translateX" android:duration="1800" android:valueFrom="-2.5" android:valueTo="2.5" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
         </aapt:attr>
     </target>
 </animated-vector>
