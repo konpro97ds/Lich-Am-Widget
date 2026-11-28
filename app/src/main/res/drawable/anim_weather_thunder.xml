@@ -8,266 +8,214 @@
             android:viewportWidth="360"
             android:viewportHeight="168">
 
-            <!-- Màn chớp ánh sáng bầu trời tự nhiên -->
+            <!-- Màn chớp sáng bầu trời (đồng bộ 100% keyframe với tia sét) -->
             <path
                 android:name="sky_flash"
                 android:fillColor="#E0F2FE"
                 android:fillAlpha="0.0"
                 android:pathData="M0,0 L360,0 L360,168 L0,168 Z" />
 
-            <!-- Tia sét A (Trục chính giữa mây giông X=278: gân sét zig-zag sắc + 3 nhánh phụ) -->
+            <!-- Tia sét 1: Giữa bụng mây giông góc phải (X = 312, Y = 40 -> 84) -->
             <path
-                android:name="bolt_a_glow"
+                android:name="bolt_1_glow"
                 android:strokeColor="#38BDF8"
-                android:strokeWidth="4.2"
+                android:strokeWidth="3.2"
                 android:strokeAlpha="0.0"
                 android:strokeLineCap="round"
                 android:strokeLineJoin="round"
-                android:pathData="M278,42 L271,52 L277,55 L267,67 L273,70 L261,83 L266,85 L256,96 M273,54 L283,63 L280,71 M269,68 L260,76 M264,81 L272,89" />
+                android:pathData="M312,40 L306,49 L311,51 L303,61 L308,63 L299,74 L303,76 L295,85 M308,50 L316,58 L314,64 M305,62 L298,69 M301,72 L308,79" />
             <path
-                android:name="bolt_a_core"
+                android:name="bolt_1_core"
                 android:strokeColor="#FFFFFF"
-                android:strokeWidth="1.4"
-                android:strokeAlpha="0.0"
-                android:strokeLineCap="round"
-                android:strokeLineJoin="round"
-                android:pathData="M278,42 L271,52 L277,55 L267,67 L273,70 L261,83 L266,85 L256,96 M273,54 L283,63 L280,71 M269,68 L260,76 M264,81 L272,89" />
-
-            <!-- Tia sét B (Bên trái cụm mây X=242: rẽ nhánh mảnh) -->
-            <path
-                android:name="bolt_b_glow"
-                android:strokeColor="#7DD3FC"
-                android:strokeWidth="3.6"
-                android:strokeAlpha="0.0"
-                android:strokeLineCap="round"
-                android:strokeLineJoin="round"
-                android:pathData="M242,45 L236,55 L242,58 L233,70 L238,73 L228,86 L232,88 L224,96 M238,57 L247,65 M235,71 L226,79" />
-            <path
-                android:name="bolt_b_core"
-                android:strokeColor="#FEF9C3"
-                android:strokeWidth="1.25"
-                android:strokeAlpha="0.0"
-                android:strokeLineCap="round"
-                android:strokeLineJoin="round"
-                android:pathData="M242,45 L236,55 L242,58 L233,70 L238,73 L228,86 L232,88 L224,96 M238,57 L247,65 M235,71 L226,79" />
-
-            <!-- Tia sét C (Bên phải cụm mây X=312: rẽ nhánh nhanh) -->
-            <path
-                android:name="bolt_c_glow"
-                android:strokeColor="#38BDF8"
-                android:strokeWidth="3.6"
-                android:strokeAlpha="0.0"
-                android:strokeLineCap="round"
-                android:strokeLineJoin="round"
-                android:pathData="M312,43 L306,54 L312,57 L303,69 L308,72 L299,85 L303,87 L295,95 M308,56 L317,64 L314,72 M305,70 L297,78" />
-            <path
-                android:name="bolt_c_core"
-                android:strokeColor="#FFFFFF"
-                android:strokeWidth="1.25"
-                android:strokeAlpha="0.0"
-                android:strokeLineCap="round"
-                android:strokeLineJoin="round"
-                android:pathData="M312,43 L306,54 L312,57 L303,69 L308,72 L299,85 L303,87 L295,95 M308,56 L317,64 L314,72 M305,70 L297,78" />
-
-            <!-- Tia sét D (Sét ngầm rìa mây X=260: chớp ngắn) -->
-            <path
-                android:name="bolt_d_core"
-                android:strokeColor="#E0F2FE"
                 android:strokeWidth="1.15"
                 android:strokeAlpha="0.0"
                 android:strokeLineCap="round"
                 android:strokeLineJoin="round"
-                android:pathData="M260,46 L254,56 L260,59 L251,71 L256,74 L248,85 M256,58 L264,66" />
+                android:pathData="M312,40 L306,49 L311,51 L303,61 L308,63 L299,74 L303,76 L295,85 M308,50 L316,58 L314,64 M305,62 L298,69 M301,72 L308,79" />
+
+            <!-- Tia sét 2: Rìa trái cụm mây giông (X = 282, Y = 42 -> 82) -->
+            <path
+                android:name="bolt_2_glow"
+                android:strokeColor="#7DD3FC"
+                android:strokeWidth="2.8"
+                android:strokeAlpha="0.0"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
+                android:pathData="M282,42 L277,51 L282,53 L274,63 L279,65 L271,76 L275,78 L268,85 M279,52 L286,59 M276,64 L269,71" />
+            <path
+                android:name="bolt_2_core"
+                android:strokeColor="#FEF9C3"
+                android:strokeWidth="1.05"
+                android:strokeAlpha="0.0"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
+                android:pathData="M282,42 L277,51 L282,53 L274,63 L279,65 L271,76 L275,78 L268,85 M279,52 L286,59 M276,64 L269,71" />
+
+            <!-- Tia sét 3: Mép phải cụm mây giông (X = 336, Y = 40 -> 82) -->
+            <path
+                android:name="bolt_3_glow"
+                android:strokeColor="#38BDF8"
+                android:strokeWidth="2.8"
+                android:strokeAlpha="0.0"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
+                android:pathData="M336,40 L331,49 L336,51 L329,61 L333,63 L326,74 L329,76 L323,83 M333,50 L340,57 L338,63 M330,62 L324,69" />
+            <path
+                android:name="bolt_3_core"
+                android:strokeColor="#FFFFFF"
+                android:strokeWidth="1.05"
+                android:strokeAlpha="0.0"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
+                android:pathData="M336,40 L331,49 L336,51 L329,61 L333,63 L326,74 L329,76 L323,83 M333,50 L340,57 L338,63 M330,62 L324,69" />
         </vector>
     </aapt:attr>
 
-    <!-- Chu kỳ 35.000ms (35 giây) với 14 đợt chớp giật bất đối xứng -->
+    <!-- Ánh chớp bầu trời đồng bộ tuyệt đối 100% cùng thời điểm với từng tia sét -->
     <target android:name="sky_flash">
         <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <!-- 0.08s: Chớp kép mở màn -->
-                <objectAnimator android:propertyName="fillAlpha" android:duration="80" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="50" android:valueFrom="0.0" android:valueTo="0.42" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="55" android:valueFrom="0.42" android:valueTo="0.06" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="50" android:valueFrom="0.06" android:valueTo="0.48" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="160" android:valueFrom="0.48" android:valueTo="0.0" />
-                <!-- 1.8s -->
-                <objectAnimator android:propertyName="fillAlpha" android:duration="1800" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="55" android:valueFrom="0.0" android:valueTo="0.36" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="150" android:valueFrom="0.36" android:valueTo="0.0" />
-                <!-- 3.4s -->
-                <objectAnimator android:propertyName="fillAlpha" android:duration="3400" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="45" android:valueFrom="0.0" android:valueTo="0.46" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="50" android:valueFrom="0.46" android:valueTo="0.08" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="45" android:valueFrom="0.08" android:valueTo="0.50" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="55" android:valueFrom="0.50" android:valueTo="0.10" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="50" android:valueFrom="0.10" android:valueTo="0.40" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.40" android:valueTo="0.0" />
-                <!-- 2.3s -->
-                <objectAnimator android:propertyName="fillAlpha" android:duration="2300" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="55" android:valueFrom="0.0" android:valueTo="0.38" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="160" android:valueFrom="0.38" android:valueTo="0.0" />
-                <!-- 4.7s -->
-                <objectAnimator android:propertyName="fillAlpha" android:duration="4700" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="50" android:valueFrom="0.0" android:valueTo="0.45" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="60" android:valueFrom="0.45" android:valueTo="0.06" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="50" android:valueFrom="0.06" android:valueTo="0.42" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="170" android:valueFrom="0.42" android:valueTo="0.0" />
-                <!-- 3.1s -->
-                <objectAnimator android:propertyName="fillAlpha" android:duration="3100" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="50" android:valueFrom="0.0" android:valueTo="0.34" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="140" android:valueFrom="0.34" android:valueTo="0.0" />
-                <!-- 5.5s -->
-                <objectAnimator android:propertyName="fillAlpha" android:duration="5500" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="45" android:valueFrom="0.0" android:valueTo="0.48" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="55" android:valueFrom="0.48" android:valueTo="0.08" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="50" android:valueFrom="0.08" android:valueTo="0.44" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="180" android:valueFrom="0.44" android:valueTo="0.0" />
-                <!-- 4.2s -->
-                <objectAnimator android:propertyName="fillAlpha" android:duration="4200" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="55" android:valueFrom="0.0" android:valueTo="0.40" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="160" android:valueFrom="0.40" android:valueTo="0.0" />
-                <!-- 3.9s -->
-                <objectAnimator android:propertyName="fillAlpha" android:duration="3900" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="50" android:valueFrom="0.0" android:valueTo="0.46" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="55" android:valueFrom="0.46" android:valueTo="0.06" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="50" android:valueFrom="0.06" android:valueTo="0.42" />
-                <objectAnimator android:propertyName="fillAlpha" android:duration="170" android:valueFrom="0.42" android:valueTo="0.0" />
-                <!-- Phần còn lại của 35.000ms -->
-                <objectAnimator android:propertyName="fillAlpha" android:duration="3145" android:valueFrom="0.0" android:valueTo="0.0" />
-            </set>
+            <objectAnimator android:duration="16000" android:repeatCount="infinite" android:repeatMode="restart">
+                <propertyValuesHolder android:propertyName="fillAlpha">
+                    <!-- Đợt 1 (Tia 1 chớp kép: 0.02 -> 0.05) -->
+                    <keyframe android:fraction="0.000" android:value="0.0" />
+                    <keyframe android:fraction="0.015" android:value="0.0" />
+                    <keyframe android:fraction="0.020" android:value="0.42" />
+                    <keyframe android:fraction="0.026" android:value="0.06" />
+                    <keyframe android:fraction="0.032" android:value="0.48" />
+                    <keyframe android:fraction="0.052" android:value="0.0" />
+                    <!-- Đợt 2 (Tia 2 chớp đơn: 0.22 -> 0.245) -->
+                    <keyframe android:fraction="0.215" android:value="0.0" />
+                    <keyframe android:fraction="0.220" android:value="0.36" />
+                    <keyframe android:fraction="0.245" android:value="0.0" />
+                    <!-- Đợt 3 (Tia 1 + Tia 3 giật liên hoàn 3 nhịp: 0.48 -> 0.53) -->
+                    <keyframe android:fraction="0.475" android:value="0.0" />
+                    <keyframe android:fraction="0.480" android:value="0.45" />
+                    <keyframe android:fraction="0.486" android:value="0.08" />
+                    <keyframe android:fraction="0.492" android:value="0.52" />
+                    <keyframe android:fraction="0.498" android:value="0.10" />
+                    <keyframe android:fraction="0.504" android:value="0.40" />
+                    <keyframe android:fraction="0.528" android:value="0.0" />
+                    <!-- Đợt 4 (Tia 3 chớp kép: 0.76 -> 0.79) -->
+                    <keyframe android:fraction="0.755" android:value="0.0" />
+                    <keyframe android:fraction="0.760" android:value="0.42" />
+                    <keyframe android:fraction="0.766" android:value="0.06" />
+                    <keyframe android:fraction="0.772" android:value="0.44" />
+                    <keyframe android:fraction="0.792" android:value="0.0" />
+                    <keyframe android:fraction="1.000" android:value="0.0" />
+                </propertyValuesHolder>
+            </objectAnimator>
         </aapt:attr>
     </target>
 
-    <!-- Tia sét A (0.08s, 5.8s, 23.1s, 31.5s) -->
-    <target android:name="bolt_a_glow">
+    <!-- Tia sét 1 (Khớp 100% mốc 0.020 và 0.480 với sky_flash) -->
+    <target android:name="bolt_1_glow">
         <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="80" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.0" android:valueTo="0.85" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="0.85" android:valueTo="0.2" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.2" android:valueTo="0.95" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="160" android:valueFrom="0.95" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="5405" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="45" android:valueFrom="0.0" android:valueTo="0.85" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.85" android:valueTo="0.2" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="45" android:valueFrom="0.2" android:valueTo="0.95" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="0.95" android:valueTo="0.2" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.2" android:valueTo="0.85" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="180" android:valueFrom="0.85" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="16875" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="45" android:valueFrom="0.0" android:valueTo="0.90" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="0.90" android:valueTo="0.2" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.2" android:valueTo="0.90" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="180" android:valueFrom="0.90" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="8095" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.0" android:valueTo="0.90" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="0.90" android:valueTo="0.2" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.2" android:valueTo="0.85" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="170" android:valueFrom="0.85" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="3145" android:valueFrom="0.0" android:valueTo="0.0" />
-            </set>
+            <objectAnimator android:duration="16000" android:repeatCount="infinite" android:repeatMode="restart">
+                <propertyValuesHolder android:propertyName="strokeAlpha">
+                    <keyframe android:fraction="0.000" android:value="0.0" />
+                    <keyframe android:fraction="0.015" android:value="0.0" />
+                    <keyframe android:fraction="0.020" android:value="0.85" />
+                    <keyframe android:fraction="0.026" android:value="0.20" />
+                    <keyframe android:fraction="0.032" android:value="0.95" />
+                    <keyframe android:fraction="0.052" android:value="0.0" />
+                    <keyframe android:fraction="0.475" android:value="0.0" />
+                    <keyframe android:fraction="0.480" android:value="0.85" />
+                    <keyframe android:fraction="0.486" android:value="0.20" />
+                    <keyframe android:fraction="0.492" android:value="0.95" />
+                    <keyframe android:fraction="0.498" android:value="0.20" />
+                    <keyframe android:fraction="0.504" android:value="0.85" />
+                    <keyframe android:fraction="0.528" android:value="0.0" />
+                    <keyframe android:fraction="1.000" android:value="0.0" />
+                </propertyValuesHolder>
+            </objectAnimator>
         </aapt:attr>
     </target>
-    <target android:name="bolt_a_core">
+    <target android:name="bolt_1_core">
         <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="80" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.0" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="1.0" android:valueTo="0.3" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.3" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="160" android:valueFrom="1.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="5405" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="45" android:valueFrom="0.0" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="1.0" android:valueTo="0.3" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="45" android:valueFrom="0.3" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="1.0" android:valueTo="0.3" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.3" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="180" android:valueFrom="1.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="16875" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="45" android:valueFrom="0.0" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="1.0" android:valueTo="0.3" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.3" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="180" android:valueFrom="1.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="8095" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.0" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="1.0" android:valueTo="0.3" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.3" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="170" android:valueFrom="1.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="3145" android:valueFrom="0.0" android:valueTo="0.0" />
-            </set>
+            <objectAnimator android:duration="16000" android:repeatCount="infinite" android:repeatMode="restart">
+                <propertyValuesHolder android:propertyName="strokeAlpha">
+                    <keyframe android:fraction="0.000" android:value="0.0" />
+                    <keyframe android:fraction="0.015" android:value="0.0" />
+                    <keyframe android:fraction="0.020" android:value="1.0" />
+                    <keyframe android:fraction="0.026" android:value="0.30" />
+                    <keyframe android:fraction="0.032" android:value="1.0" />
+                    <keyframe android:fraction="0.052" android:value="0.0" />
+                    <keyframe android:fraction="0.475" android:value="0.0" />
+                    <keyframe android:fraction="0.480" android:value="1.0" />
+                    <keyframe android:fraction="0.486" android:value="0.30" />
+                    <keyframe android:fraction="0.492" android:value="1.0" />
+                    <keyframe android:fraction="0.498" android:value="0.30" />
+                    <keyframe android:fraction="0.504" android:value="1.0" />
+                    <keyframe android:fraction="0.528" android:value="0.0" />
+                    <keyframe android:fraction="1.000" android:value="0.0" />
+                </propertyValuesHolder>
+            </objectAnimator>
         </aapt:attr>
     </target>
 
-    <!-- Tia sét B (2.195s & 13.435s) -->
-    <target android:name="bolt_b_glow">
+    <!-- Tia sét 2 (Khớp 100% mốc 0.220 với sky_flash) -->
+    <target android:name="bolt_2_glow">
         <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="2195" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="0.0" android:valueTo="0.85" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="150" android:valueFrom="0.85" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="11035" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.0" android:valueTo="0.85" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="60" android:valueFrom="0.85" android:valueTo="0.2" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.2" android:valueTo="0.90" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="170" android:valueFrom="0.90" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="21235" android:valueFrom="0.0" android:valueTo="0.0" />
-            </set>
+            <objectAnimator android:duration="16000" android:repeatCount="infinite" android:repeatMode="restart">
+                <propertyValuesHolder android:propertyName="strokeAlpha">
+                    <keyframe android:fraction="0.000" android:value="0.0" />
+                    <keyframe android:fraction="0.215" android:value="0.0" />
+                    <keyframe android:fraction="0.220" android:value="0.88" />
+                    <keyframe android:fraction="0.245" android:value="0.0" />
+                    <keyframe android:fraction="1.000" android:value="0.0" />
+                </propertyValuesHolder>
+            </objectAnimator>
         </aapt:attr>
     </target>
-    <target android:name="bolt_b_core">
+    <target android:name="bolt_2_core">
         <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="2195" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="0.0" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="150" android:valueFrom="1.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="11035" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.0" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="60" android:valueFrom="1.0" android:valueTo="0.3" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.3" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="170" android:valueFrom="1.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="21235" android:valueFrom="0.0" android:valueTo="0.0" />
-            </set>
+            <objectAnimator android:duration="16000" android:repeatCount="infinite" android:repeatMode="restart">
+                <propertyValuesHolder android:propertyName="strokeAlpha">
+                    <keyframe android:fraction="0.000" android:value="0.0" />
+                    <keyframe android:fraction="0.215" android:value="0.0" />
+                    <keyframe android:fraction="0.220" android:value="1.0" />
+                    <keyframe android:fraction="0.245" android:value="0.0" />
+                    <keyframe android:fraction="1.000" android:value="0.0" />
+                </propertyValuesHolder>
+            </objectAnimator>
         </aapt:attr>
     </target>
 
-    <!-- Tia sét C (8.52s & 27.63s) -->
-    <target android:name="bolt_c_glow">
+    <!-- Tia sét 3 (Khớp 100% mốc 0.492 và 0.760 với sky_flash) -->
+    <target android:name="bolt_3_glow">
         <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="8520" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="0.0" android:valueTo="0.85" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="160" android:valueFrom="0.85" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="18895" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="0.0" android:valueTo="0.85" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="160" android:valueFrom="0.85" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="7155" android:valueFrom="0.0" android:valueTo="0.0" />
-            </set>
+            <objectAnimator android:duration="16000" android:repeatCount="infinite" android:repeatMode="restart">
+                <propertyValuesHolder android:propertyName="strokeAlpha">
+                    <keyframe android:fraction="0.000" android:value="0.0" />
+                    <keyframe android:fraction="0.488" android:value="0.0" />
+                    <keyframe android:fraction="0.492" android:value="0.85" />
+                    <keyframe android:fraction="0.520" android:value="0.0" />
+                    <keyframe android:fraction="0.755" android:value="0.0" />
+                    <keyframe android:fraction="0.760" android:value="0.85" />
+                    <keyframe android:fraction="0.766" android:value="0.20" />
+                    <keyframe android:fraction="0.772" android:value="0.90" />
+                    <keyframe android:fraction="0.792" android:value="0.0" />
+                    <keyframe android:fraction="1.000" android:value="0.0" />
+                </propertyValuesHolder>
+            </objectAnimator>
         </aapt:attr>
     </target>
-    <target android:name="bolt_c_core">
+    <target android:name="bolt_3_core">
         <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="8520" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="0.0" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="160" android:valueFrom="1.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="18895" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="55" android:valueFrom="0.0" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="160" android:valueFrom="1.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="7155" android:valueFrom="0.0" android:valueTo="0.0" />
-            </set>
-        </aapt:attr>
-    </target>
-
-    <!-- Tia sét D (16.865s) -->
-    <target android:name="bolt_d_core">
-        <aapt:attr name="android:animation">
-            <set android:ordering="sequentially">
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="16865" android:valueFrom="0.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="50" android:valueFrom="0.0" android:valueTo="1.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="140" android:valueFrom="1.0" android:valueTo="0.0" />
-                <objectAnimator android:propertyName="strokeAlpha" android:duration="17945" android:valueFrom="0.0" android:valueTo="0.0" />
-            </set>
+            <objectAnimator android:duration="16000" android:repeatCount="infinite" android:repeatMode="restart">
+                <propertyValuesHolder android:propertyName="strokeAlpha">
+                    <keyframe android:fraction="0.000" android:value="0.0" />
+                    <keyframe android:fraction="0.488" android:value="0.0" />
+                    <keyframe android:fraction="0.492" android:value="1.0" />
+                    <keyframe android:fraction="0.520" android:value="0.0" />
+                    <keyframe android:fraction="0.755" android:value="0.0" />
+                    <keyframe android:fraction="0.760" android:value="1.0" />
+                    <keyframe android:fraction="0.766" android:value="0.30" />
+                    <keyframe android:fraction="0.772" android:value="1.0" />
+                    <keyframe android:fraction="0.792" android:value="0.0" />
+                    <keyframe android:fraction="1.000" android:value="0.0" />
+                </propertyValuesHolder>
+            </objectAnimator>
         </aapt:attr>
     </target>
 </animated-vector>
