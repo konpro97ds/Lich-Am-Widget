@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="4dp">
 
-    <!-- Lớp nền Kính Lỏng + Ảnh 3D vẽ đúng tỷ lệ thực tế khi kéo giãn -->
+    <!-- Lớp nền Kính Lỏng + Ảnh 3D -->
     <ImageView
         android:id="@+id/iv_glass_bg"
         android:layout_width="match_parent"
@@ -13,88 +13,96 @@
         android:scaleType="fitXY"
         android:src="@drawable/bg_liquid_glass" />
 
-    <!-- Các lớp hiệu ứng chuyển động giãn tràn 100% khung widget -->
-    <ProgressBar
-        android:id="@+id/pb_glass_shimmer"
-        style="?android:attr/progressBarStyleHorizontal"
+    <!-- Khung hiệu ứng động được cắt bo tròn 4 góc trùng khớp viền kính -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/anim_glass_shimmer" />
+        android:background="@drawable/bg_glass_clip_mask"
+        android:backgroundTint="#00000000"
+        android:clipToOutline="true">
 
-    <ProgressBar
-        android:id="@+id/pb_weather_moon"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/anim_weather_moon"
-        android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/pb_glass_shimmer"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/anim_glass_shimmer" />
 
-    <ProgressBar
-        android:id="@+id/pb_weather_rain"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/anim_weather_rain"
-        android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/pb_weather_moon"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/anim_weather_moon"
+            android:visibility="gone" />
 
-    <ProgressBar
-        android:id="@+id/pb_weather_thunder"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/anim_weather_thunder"
-        android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/pb_weather_rain"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/anim_weather_rain"
+            android:visibility="gone" />
 
-    <ProgressBar
-        android:id="@+id/pb_weather_tet"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/anim_weather_tet"
-        android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/pb_weather_thunder"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/anim_weather_thunder"
+            android:visibility="gone" />
 
-    <ProgressBar
-        android:id="@+id/pb_weather_mid_autumn"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/anim_weather_mid_autumn"
-        android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/pb_weather_tet"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/anim_weather_tet"
+            android:visibility="gone" />
 
-    <ProgressBar
-        android:id="@+id/pb_weather_xmas"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/anim_weather_xmas"
-        android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/pb_weather_mid_autumn"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/anim_weather_mid_autumn"
+            android:visibility="gone" />
 
-    <ProgressBar
-        android:id="@+id/pb_weather_sun"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/anim_weather_sun"
-        android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/pb_weather_xmas"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/anim_weather_xmas"
+            android:visibility="gone" />
 
-    <ProgressBar
-        android:id="@+id/pb_weather_cloud"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/anim_weather_cloud"
-        android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/pb_weather_sun"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/anim_weather_sun"
+            android:visibility="gone" />
 
-    <!-- Nội dung chính -->
+        <ProgressBar
+            android:id="@+id/pb_weather_cloud"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/anim_weather_cloud"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!-- Nội dung chính giữ nguyên như cũ -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
