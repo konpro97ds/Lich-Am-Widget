@@ -154,9 +154,9 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             val prefs = context.getSharedPreferences("widget_prefs", Context.MODE_PRIVATE)
 
             val opts = appWidgetManager.getAppWidgetOptions(appWidgetId)
-            val minW = opts.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 320).coerceAtLeast(240)
-            val minH = opts.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 150).coerceAtLeast(120)
-            val aspectRatio = (minW.toFloat() / minH.toFloat()).coerceIn(1.6f, 2.8f)
+            val minW = opts.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 320).coerceAtLeast(220)
+            val minH = opts.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 150).coerceAtLeast(110)
+            val aspectRatio = (minW.toFloat() / minH.toFloat()).coerceIn(1.35f, 3.0f)
 
             val clockSize = prefs.getInt("clock_size", 36).toFloat()
             val textScale = prefs.getInt("text_scale", 95) / 100f
@@ -193,14 +193,13 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             else if (holiday.themeType != "NONE") holiday.themeType
             else weatherEff
 
-            // Vẽ nền Kính Lỏng kết hợp ảnh 3D PNG/WebP render sẵn từ res/drawable-nodpi/
+            // Bán kính bo góc 48f khớp với bg_glass_clip_mask.xml (24dp)
             views.setImageViewBitmap(
                 R.id.iv_glass_bg,
-                drawLiquidGlassBitmap(context, bgColorHex, bgAlpha, 52f, activeEffect, lunarDay, aspectRatio, isRealRain)
+                drawLiquidGlassBitmap(context, bgColorHex, bgAlpha, 48f, activeEffect, lunarDay, aspectRatio, isRealRain)
             )
             views.setViewVisibility(R.id.pb_glass_shimmer, if (enableEffects) View.VISIBLE else View.GONE)
 
-            // Chỉ giữ lại các hạt động tinh tế (mưa, chớp, hoa rơi, tuyết) bổ trợ cho ảnh 3D
             val showRain = enableEffects && (activeEffect == "RAIN" || activeEffect == "THUNDER" || ((activeEffect == "TET" || activeEffect == "NATIONAL" || activeEffect == "MID_AUTUMN") && isRealRain))
             val showThunder = enableEffects && (activeEffect == "THUNDER" || ((activeEffect == "TET" || activeEffect == "NATIONAL") && weatherEff == "THUNDER"))
             val showTet = enableEffects && (activeEffect == "TET" || activeEffect == "NATIONAL")
@@ -248,11 +247,11 @@ class LiquidWidgetProvider : AppWidgetProvider() {
                 else -> "Chào buổi tối ⚙"
             }
             val dayOfWeek = arrayOf("", "Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy")[cal.get(Calendar.DAY_OF_WEEK)]
-            val solarStr = "$dayOfWeek,$dd Thg $mm,$yy"
+            val solarStr = "$dayOfWeek, $dd Thg $mm, $yy"
             val baseLunarStr = lunarToday.third
             val upcomingStr = LunarCalendar.getNextUpcomingHoliday(dd, mm, yy)
             val displayLunarOrHoliday = when {
-                holiday.name.isNotEmpty() -> "${holiday.name} ·$baseLunarStr"
+                holiday.name.isNotEmpty() -> "${holiday.name} · $baseLunarStr"
                 upcomingStr.isNotEmpty() -> "$baseLunarStr · $upcomingStr"
                 else -> baseLunarStr
             }
@@ -277,7 +276,7 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             views.setTextColor(R.id.tv_city, mainColor)
             views.setTextColor(R.id.tv_temp_range, mainColor)
 
-            views.setTextViewText(R.id.tv_sub_center, "$solarStr · $displayLunarOrHoliday · $tempStr$descStr")
+            views.setTextViewText(R.id.tv_sub_center, "$solarStr · $displayLunarOrHoliday · $tempStr $descStr")
             views.setTextViewTextSize(R.id.tv_sub_center, TypedValue.COMPLEX_UNIT_SP, 11.5f * textScale)
             views.setTextColor(R.id.tv_sub_center, mainColor)
 
@@ -425,10 +424,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             return bmp
         }
 
-        /**
-         * Nạp file ảnh 3D PNG/WebP từ res/drawable-nodpi/ theo tên tài nguyên
-         * Tự động tìm kiếm động (getIdentifier) nên không bao giờ lỗi biên dịch dù thiếu file nào
-         */
         private fun load3DArtBitmap(context: Context, resName: String): Bitmap? {
             val resId = context.resources.getIdentifier(resName, "drawable", context.packageName)
             if (resId == 0) return null
@@ -460,9 +455,17 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             }
         }
 
-        /**
-         * Dựng nền Kính Lỏng (Liquid Glass) cao cấp + ghép ảnh 3D render sẵn vào đúng vị trí
-         */
+        private fun drawArtFitRightPreservingRatio(canvas: Canvas, artBmp: Bitmap, w: Float, h: Float, alphaVal: Int) {
+            val artPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG).apply {
+                this.alpha = alphaVal
+            }
+            val srcRatio = artBmp.width.toFloat() / artBmp.height.toFloat()
+            val scaledW = h * srcRatio
+            val left = (w - scaledW).coerceAtMost(0f)
+            val dstRect = RectF(left, 0f, left + scaledW, h)
+            canvas.drawBitmap(artBmp, null, dstRect, artPaint)
+        }
+
         fun drawLiquidGlassBitmap(
             context: Context,
             hexColor: String,
@@ -474,7 +477,7 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             isRealRain: Boolean = false
         ): Bitmap {
             val h = 360
-            val w = (h * aspectRatio).toInt().coerceIn(600, 960)
+            val w = (h * aspectRatio).toInt().coerceIn(540, 1020)
             val bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bmp)
             val rect = RectF(2f, 2f, w - 2f, h - 2f)
@@ -483,7 +486,7 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             canvas.save()
             canvas.clipPath(clipPath)
 
-            // 1. Lớp nền kính chuyển sắc sâu (Liquid Glass Base)
+            // 1. Lớp nền kính chuyển sắc sâu
             val baseColor = Color.parseColor(hexColor)
             val alpha = (alphaPercent * 255 / 100).coerceIn(0, 255)
             val r = Color.red(baseColor)
@@ -504,39 +507,20 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             }
             canvas.drawRect(rect, glassBasePaint)
 
-            // 2. Ghép ảnh 3D render sẵn từ res/drawable-nodpi/ (nếu có)
+            // 2. Ghép ảnh 3D giữ nguyên tỷ lệ gốc 1:1 (Fit-Height & neo cạnh phải)
             val artName = resolveArtResourceName(effectType, lunarDay)
             val artBmp = if (artName != null) load3DArtBitmap(context, artName) else null
             if (artBmp != null) {
-                val artPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG).apply {
-                    this.alpha = 235
-                }
-                // Vẽ ảnh 3D giữ nguyên tỷ lệ gốc (Center-Crop) để không bao giờ bị kéo giãn méo hình
-                val srcRatio = artBmp.width.toFloat() / artBmp.height.toFloat()
-                val dstRatio = w.toFloat() / h.toFloat()
-                val dstRect = if (srcRatio > dstRatio) {
-                    val scaledW = h * srcRatio
-                    val left = (w - scaledW) / 2f
-                    RectF(left, 0f, left + scaledW, h.toFloat())
-                } else {
-                    val scaledH = w / srcRatio
-                    val top = (h - scaledH) / 2f
-                    RectF(0f, top, w.toFloat(), top + scaledH)
-                }
-                canvas.drawBitmap(artBmp, null, dstRect, artPaint)
+                drawArtFitRightPreservingRatio(canvas, artBmp, w.toFloat(), h.toFloat(), 242)
             }
 
-            // Nếu lễ Tết trùng trời mưa thật, phủ thêm lớp ảnh mưa 3D bán trong suốt
             if (isRealRain && (effectType == "TET" || effectType == "NATIONAL" || effectType == "MID_AUTUMN")) {
                 load3DArtBitmap(context, "art_rain")?.let { rainBmp ->
-                    val rainPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG).apply {
-                        this.alpha = 145
-                    }
-                    canvas.drawBitmap(rainBmp, null, rect, rainPaint)
+                    drawArtFitRightPreservingRatio(canvas, rainBmp, w.toFloat(), h.toFloat(), 135)
                 }
             }
 
-            // 3. Lớp phản quang bề mặt kính lỏng (Specular Liquid Sheen)
+            // 3. Lớp phản quang bề mặt kính lỏng
             val sheenPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 shader = LinearGradient(
                     0f, 0f, w * 0.85f, h * 0.85f,
@@ -552,7 +536,7 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             }
             canvas.drawRect(rect, sheenPaint)
 
-            // 4. Viền sáng trong (Inner Rim Highlight) tạo độ dày mép kính 3D
+            // 4. Viền sáng trong
             val innerRimPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 style = Paint.Style.STROKE
                 strokeWidth = 4f
@@ -566,7 +550,7 @@ class LiquidWidgetProvider : AppWidgetProvider() {
 
             canvas.restore()
 
-            // 5. Viền ngoài sắc nét phản chiếu ánh sáng góc chéo
+            // 5. Viền ngoài sắc nét
             val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 style = Paint.Style.STROKE
                 strokeWidth = 2.6f
