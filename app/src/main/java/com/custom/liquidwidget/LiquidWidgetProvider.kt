@@ -73,9 +73,10 @@ class LiquidWidgetProvider : AppWidgetProvider() {
         private fun buildClockPendingIntent(context: Context): PendingIntent {
             val clockPackages = listOf(
                 "com.coloros.alarmclock",
+                "com.oplus.alarmclock",
                 "com.oneplus.deskclock",
-                "com.android.deskclock",
                 "com.google.android.deskclock",
+                "com.android.deskclock",
                 "com.sec.android.app.clockpackage"
             )
             for (pkg in clockPackages) {
@@ -92,6 +93,26 @@ class LiquidWidgetProvider : AppWidgetProvider() {
         }
 
         private fun buildCalendarPendingIntent(context: Context): PendingIntent {
+            val calPackages = listOf(
+                "com.coloros.calendar",
+                "com.oplus.calendar",
+                "com.google.android.calendar",
+                "com.samsung.android.calendar",
+                "com.android.calendar"
+            )
+            for (pkg in calPackages) {
+                val launch = context.packageManager.getLaunchIntentForPackage(pkg)
+                if (launch != null) {
+                    launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    return PendingIntent.getActivity(context, 12, launch, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                }
+            }
+            val catIntent = Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_CALENDAR).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            if (catIntent.resolveActivity(context.packageManager) != null) {
+                return PendingIntent.getActivity(context, 12, catIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            }
             val builder = CalendarContract.CONTENT_URI.buildUpon().appendPath("time")
             ContentUris.appendId(builder, System.currentTimeMillis())
             val calIntent = Intent(Intent.ACTION_VIEW).setData(builder.build()).apply {
@@ -103,10 +124,12 @@ class LiquidWidgetProvider : AppWidgetProvider() {
         private fun buildWeatherPendingIntent(context: Context): PendingIntent {
             val weatherPackages = listOf(
                 "com.coloros.weather2",
+                "com.coloros.weather",
                 "com.oplus.weather",
+                "com.heytap.weather",
+                "com.google.android.apps.weather",
                 "com.miui.weather2",
-                "com.sec.android.daemonapp",
-                "com.google.android.apps.weather"
+                "com.sec.android.daemonapp"
             )
             for (pkg in weatherPackages) {
                 val launch = context.packageManager.getLaunchIntentForPackage(pkg)
@@ -114,6 +137,12 @@ class LiquidWidgetProvider : AppWidgetProvider() {
                     launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     return PendingIntent.getActivity(context, 13, launch, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
                 }
+            }
+            val catIntent = Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_WEATHER).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            if (catIntent.resolveActivity(context.packageManager) != null) {
+                return PendingIntent.getActivity(context, 13, catIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             }
             val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=thoi+tiet")).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -125,7 +154,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.widget_liquid)
             val prefs = context.getSharedPreferences("widget_prefs", Context.MODE_PRIVATE)
 
-            // Lấy kích thước thực tế của widget trên launcher để vẽ đúng tỷ lệ không bị méo tròn thành bầu dục
             val opts = appWidgetManager.getAppWidgetOptions(appWidgetId)
             val minW = opts.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 320).coerceAtLeast(240)
             val minH = opts.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 150).coerceAtLeast(120)
@@ -169,7 +197,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             )
             views.setViewVisibility(R.id.pb_glass_shimmer, if (enableEffects) View.VISIBLE else View.GONE)
 
-            // Tách bạch hoàn toàn hiệu ứng: Trung Thu dùng trăng sao, KHÔNG dính vòng mặt trời
             val showRain = enableEffects && (activeEffect == "RAIN" || activeEffect == "THUNDER")
             val showSun = enableEffects && (activeEffect == "SUN" || activeEffect == "SUN_CLOUD")
             val showMoon = enableEffects && (activeEffect == "MOON" || activeEffect == "MOON_CLOUD" || activeEffect == "MID_AUTUMN")
@@ -188,7 +215,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
 
             val hourIds = intArrayOf(R.id.tc_hour, R.id.tc_hour_c, R.id.tc_hour_r)
             val minIds = intArrayOf(R.id.tc_minute, R.id.tc_minute_c, R.id.tc_minute_r)
-            val colonIds = intArrayOf(R.id.tv_colon, R.id.tv_colon_c, R.id.tv_colon_r)
 
             for (hId in hourIds) {
                 views.setTextColor(hId, mainColor)
@@ -202,10 +228,10 @@ class LiquidWidgetProvider : AppWidgetProvider() {
                 views.setCharSequence(mId, "setFormat24Hour", "mm")
                 views.setCharSequence(mId, "setFormat12Hour", "mm")
             }
-            for (cId in colonIds) {
-                views.setTextColor(cId, mainColor)
-                views.setTextViewTextSize(cId, TypedValue.COMPLEX_UNIT_SP, clockSize * 0.92f)
-            }
+
+            views.setViewVisibility(R.id.pb_colon, View.VISIBLE)
+            views.setViewVisibility(R.id.pb_colon_c, View.VISIBLE)
+            views.setViewVisibility(R.id.pb_colon_r, View.VISIBLE)
 
             views.setViewVisibility(R.id.layout_header_left, if (layoutMode == 0) View.VISIBLE else View.GONE)
             views.setViewVisibility(R.id.layout_header_center, if (layoutMode == 1) View.VISIBLE else View.GONE)
@@ -395,10 +421,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             return bmp
         }
 
-        /**
-         * Vẽ nền kính lỏng theo đúng tỷ lệ thực tế của Widget (mặc định 2.15f cho khung 4x2)
-         * giúp hình tròn mặt trời/mặt trăng và góc bo kính không bao giờ bị kéo giãn méo mó
-         */
         fun drawLiquidGlassBitmap(
             hexColor: String,
             alphaPercent: Int,
@@ -488,7 +510,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             canvas.drawRect(0f, 0f, w, h, p)
             p.shader = null
 
-            // Cành mai vàng bên phải & cành đào hồng bên trái
             p.style = Paint.Style.STROKE
             p.strokeCap = Paint.Cap.ROUND
             p.strokeWidth = 3.8f
@@ -507,19 +528,15 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             canvas.drawPath(leftBranch, p)
             p.style = Paint.Style.FILL
 
-            // Hoa mai 5 cánh nở rộ
             drawFivePetalBlossom(canvas, w * 0.70f, h * 0.44f, 10.5f, Color.rgb(253, 224, 71), Color.rgb(217, 119, 6))
             drawFivePetalBlossom(canvas, w * 0.75f, h * 0.30f, 9.5f, Color.rgb(254, 240, 138), Color.rgb(217, 119, 6))
             drawFivePetalBlossom(canvas, w * 0.84f, h * 0.46f, 10.0f, Color.rgb(250, 204, 21), Color.rgb(180, 83, 9))
-            // Hoa đào 5 cánh
             drawFivePetalBlossom(canvas, w * 0.25f, h * 0.44f, 9.5f, Color.rgb(253, 164, 175), Color.rgb(225, 29, 72))
             drawFivePetalBlossom(canvas, w * 0.15f, h * 0.50f, 8.5f, Color.rgb(254, 205, 211), Color.rgb(225, 29, 72))
 
-            // Lồng đèn đỏ & bao lì xì treo
             drawTetLantern3D(canvas, w * 0.56f, h * 0.15f, 0.82f)
             drawTetLantern3D(canvas, w * 0.88f, h * 0.14f, 0.75f)
 
-            // Bao lì xì đỏ viền vàng
             val lx = w * 0.64f
             val ly = h * 0.22f
             p.color = Color.rgb(220, 38, 38)
@@ -530,7 +547,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             drawRealisticFirework(canvas, w * 0.68f, h * 0.34f, 48f, Color.argb(235, 253, 224, 71), Color.argb(215, 251, 146, 60))
             drawRealisticFirework(canvas, w * 0.44f, h * 0.26f, 38f, Color.argb(230, 251, 113, 133), Color.argb(210, 253, 224, 71))
 
-            // Cánh hoa mai & hoa đào bay trong gió
             for (i in 0..24) {
                 p.color = if (i % 2 == 0) Color.argb(225, 253, 224, 71) else Color.argb(215, 253, 164, 175)
                 val cx = rnd.nextFloat() * w
@@ -585,18 +601,14 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             canvas.drawRect(0f, 0f, w, h, p)
             p.shader = null
 
-            // Trăng rằm Trung Thu tròn đầy dịu mắt, không có tia nắng mặt trời
             drawRealisticLunarMoon3D(canvas, w * 0.72f, h * 0.34f, 34f, 15, 1.0f)
 
-            // Sao đêm lấp lánh
             for (i in 0..24) {
                 p.color = Color.argb(130 + rnd.nextInt(125), 254, 249, 195)
                 canvas.drawCircle(rnd.nextFloat() * w, rnd.nextFloat() * (h * 0.72f), 0.9f + rnd.nextFloat() * 1.5f, p)
             }
 
-            // Đèn lồng Trung Thu treo nhẹ góc phải
             drawTetLantern3D(canvas, w * 0.87f, h * 0.16f, 0.72f)
-            // Mây trăng mỏng lướt ngang chân trăng
             drawRealisticCloud3D(canvas, w * 0.63f, h * 0.44f, 0.88f, 0.55f)
         }
 
@@ -605,7 +617,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             val isFullMoon = lunarDay in 12..18
             val isHalfMoon = (lunarDay in 7..11) || (lunarDay in 19..23)
 
-            // Quầng trăng dịu, gọn bán kính 2.6r để không lóa
             p.shader = RadialGradient(cx, cy, r * 2.6f, intArrayOf(Color.argb((95 * alphaMult).toInt(), 254, 249, 195), Color.argb((35 * alphaMult).toInt(), 253, 224, 71), Color.TRANSPARENT), null, Shader.TileMode.CLAMP)
             canvas.drawCircle(cx, cy, r * 2.6f, p)
             p.shader = null
@@ -615,7 +626,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             canvas.drawCircle(cx, cy, r, p)
             p.shader = null
 
-            // Bề mặt biển trăng tự nhiên
             p.color = Color.argb((38 * alphaMult).toInt(), 148, 163, 184)
             canvas.drawCircle(cx - r * 0.28f, cy - r * 0.22f, r * 0.32f, p)
             canvas.drawCircle(cx + r * 0.22f, cy - r * 0.12f, r * 0.24f, p)
@@ -634,9 +644,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             canvas.restoreToCount(saveCount)
         }
 
-        /**
-         * Mây 3D khối nổi nhiều tầng: bóng đáy mây + thân mây bồng bềnh + viền sáng đỉnh mây
-         */
         private fun drawRealisticCloud3D(canvas: Canvas, cx: Float, cy: Float, scale: Float, alphaMult: Float = 1f) {
             val p = Paint(Paint.ANTI_ALIAS_FLAG)
             val basePath = Path().apply {
@@ -646,14 +653,12 @@ class LiquidWidgetProvider : AppWidgetProvider() {
                 addCircle(cx + 18f * scale, cy - 8f * scale, 25f * scale, Path.Direction.CW)
                 addCircle(cx + 38f * scale, cy + 3f * scale, 19f * scale, Path.Direction.CW)
             }
-            // Lớp đổ bóng đáy mây tạo chiều sâu 3D
             canvas.save()
             canvas.translate(0f, 3.5f * scale)
             p.color = Color.argb((75 * alphaMult).toInt(), 30, 41, 59)
             canvas.drawPath(basePath, p)
             canvas.restore()
 
-            // Thân mây chuyển sắc 3D từ trắng tinh đỉnh mây xuống xám bạc chân mây
             p.shader = LinearGradient(
                 cx, cy - 40f * scale, cx, cy + 24f * scale,
                 intArrayOf(
@@ -667,7 +672,6 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             canvas.drawPath(basePath, p)
             p.shader = null
 
-            // Điểm bắt sáng trên đỉnh các múi mây
             p.shader = RadialGradient(cx - 10f * scale, cy - 18f * scale, 26f * scale, intArrayOf(Color.argb((140 * alphaMult).toInt(), 255, 255, 255), Color.TRANSPARENT), null, Shader.TileMode.CLAMP)
             canvas.drawCircle(cx - 10f * scale, cy - 14f * scale, 24f * scale, p)
             p.shader = null
