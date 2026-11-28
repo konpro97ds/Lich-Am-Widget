@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="10dp"
+            android:height="30dp"
+            android:viewportWidth="10"
+            android:viewportHeight="30">
+            <path
+                android:name="colon_dots"
+                android:fillColor="#FFFFFFFF"
+                android:fillAlpha="1.0"
+                android:pathData="M5,10 m-2.1,0 a2.1,2.1 0 1,0 4.2,0 a2.1,2.1 0 1,0 -4.2,0 M5,21 m-2.1,0 a2.1,2.1 0 1,0 4.2,0 a2.1,2.1 0 1,0 -4.2,0" />
+        </vector>
+    </aapt:attr>
+
+    <target android:name="colon_dots">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="500"
+                android:valueFrom="1.0"
+                android:valueTo="0.15"
+                android:repeatCount="infinite"
+                android:repeatMode="reverse"
+                android:interpolator="@android:anim/accelerate_decelerate_interpolator" />
+        </aapt:attr>
+    </target>
+</animated-vector>
