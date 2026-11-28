@@ -59,12 +59,25 @@ object WidgetPreviewHelper {
             (root.width.toFloat() / root.height.toFloat()).coerceIn(1.35f, 3.0f)
         } else 2.15f
 
-        // Bán kính bo góc 48f khớp tuyệt đối với bg_glass_clip_mask.xml (24dp)
+        // 1. Nền Kính Lỏng thuần túy
         root.findViewById<ImageView>(R.id.iv_glass_bg)?.setImageBitmap(
-            LiquidWidgetProvider.drawLiquidGlassBitmap(context, cfg.bgColorHex, cfg.bgAlpha, 48f, activeEffect, lunarToday.first, aspectRatio, isRealRain)
+            LiquidWidgetProvider.drawLiquidGlassBaseBitmap(cfg.bgColorHex, cfg.bgAlpha, 48f, aspectRatio)
         )
         root.findViewById<ProgressBar>(R.id.pb_glass_shimmer)?.visibility = if (cfg.enableEffects) View.VISIBLE else View.GONE
 
+        // 2. Nạp ảnh 3D vào iv_weather_art riêng
+        val artName = if (cfg.enableEffects) LiquidWidgetProvider.resolveArtResourceName(activeEffect, lunarToday.first) else null
+        val artBmp = if (artName != null) LiquidWidgetProvider.load3DArtBitmap(context, artName) else null
+        root.findViewById<ImageView>(R.id.iv_weather_art)?.apply {
+            if (artBmp != null) {
+                setImageBitmap(artBmp)
+                visibility = View.VISIBLE
+            } else {
+                visibility = View.GONE
+            }
+        }
+
+        // 3. Bật/tắt các lớp hiệu ứng động
         val showRain = cfg.enableEffects && (activeEffect == "RAIN" || activeEffect == "THUNDER" || ((activeEffect == "TET" || activeEffect == "NATIONAL" || activeEffect == "MID_AUTUMN") && isRealRain))
         val showThunder = cfg.enableEffects && (activeEffect == "THUNDER" || ((activeEffect == "TET" || activeEffect == "NATIONAL") && weatherEff == "THUNDER"))
         val showTet = cfg.enableEffects && (activeEffect == "TET" || activeEffect == "NATIONAL")
@@ -73,13 +86,12 @@ object WidgetPreviewHelper {
         val showMoonStars = cfg.enableEffects && (activeEffect == "MOON" || activeEffect == "MOON_CLOUD")
 
         root.findViewById<View>(R.id.pb_weather_rain)?.visibility = if (showRain) View.VISIBLE else View.GONE
+        root.findViewById<View>(R.id.pb_week_rain_splash)?.visibility = if (showRain) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_thunder)?.visibility = if (showThunder) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_tet)?.visibility = if (showTet) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_mid_autumn)?.visibility = if (showMidAutumn) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_xmas)?.visibility = if (showXmas) View.VISIBLE else View.GONE
         root.findViewById<View>(R.id.pb_weather_moon)?.visibility = if (showMoonStars) View.VISIBLE else View.GONE
-        root.findViewById<View>(R.id.pb_weather_sun)?.visibility = View.GONE
-        root.findViewById<View>(R.id.pb_weather_cloud)?.visibility = View.GONE
 
         intArrayOf(R.id.tc_hour, R.id.tc_hour_c, R.id.tc_hour_r, R.id.tc_minute, R.id.tc_minute_c, R.id.tc_minute_r).forEach { id ->
             root.findViewById<TextClock>(id)?.apply {
