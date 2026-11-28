@@ -3,136 +3,94 @@
     xmlns:aapt="http://schemas.android.com/aapt">
     <aapt:attr name="android:drawable">
         <vector
-            android:width="300dp"
-            android:height="160dp"
-            android:viewportWidth="300"
-            android:viewportHeight="160">
+            android:width="360dp"
+            android:height="168dp"
+            android:viewportWidth="360"
+            android:viewportHeight="168">
 
-            <group android:name="rain_mist_far">
+            <!-- Tầng mưa bụi xa (mảnh, mờ nhẹ) -->
+            <group android:name="rain_far">
                 <path
-                    android:strokeColor="#48E0F2FE"
+                    android:strokeColor="#40E0F2FE"
                     android:strokeWidth="0.6"
                     android:strokeLineCap="round"
-                    android:pathData="M18,-26 L15,-18 M46,-14 L44,-8 M74,-32 L71,-22 M102,-18 L100,-12 M130,-28 L127,-19 M158,-12 L156,-6 M186,-30 L183,-20 M214,-16 L212,-10 M242,-26 L239,-17 M270,-14 L268,-8 M294,-28 L291,-19 M28,16 L25,24 M56,28 L54,34 M84,12 L81,22 M112,24 L110,30 M140,14 L137,23 M168,26 L166,32 M196,12 L193,22 M224,24 L222,30 M252,16 L249,24 M280,28 L278,34 M22,56 L19,64 M50,68 L48,74 M78,52 L75,62 M106,64 L104,70 M134,54 L131,63 M162,66 L160,72 M190,52 L187,62 M218,64 L216,70 M246,56 L243,64 M274,68 L272,74" />
+                    android:pathData="M22,-20 L18,-10 M58,-32 L54,-20 M94,-16 L90,-6 M130,-28 L126,-16 M166,-18 L162,-8 M202,-30 L198,-18 M238,-14 L234,-4 M274,-26 L270,-14 M310,-18 L306,-8 M342,-28 L338,-16 M40,26 L36,36 M76,14 L72,26 M112,30 L108,40 M148,18 L144,30 M184,28 L180,38 M220,16 L216,28 M256,32 L252,42 M292,20 L288,32 M328,28 L324,38 M28,68 L24,78 M64,56 L60,68 M100,72 L96,82 M136,60 L132,72 M172,70 L168,80 M208,58 L204,70 M244,74 L240,84 M280,62 L276,74 M316,70 L312,80" />
             </group>
 
-            <group android:name="rain_soft_mid">
+            <!-- Tầng mưa vừa -->
+            <group android:name="rain_mid">
                 <path
-                    android:strokeColor="#6CE0F2FE"
-                    android:strokeWidth="0.8"
+                    android:strokeColor="#66E0F2FE"
+                    android:strokeWidth="0.85"
                     android:strokeLineCap="round"
-                    android:pathData="M32,-30 L28,-17 M64,-16 L62,-9 M96,-34 L92,-20 M128,-20 L126,-13 M160,-32 L156,-18 M192,-14 L190,-7 M224,-28 L220,-15 M256,-18 L254,-11 M286,-30 L282,-17 M20,20 L16,33 M52,32 L50,39 M84,16 L80,30 M116,28 L114,35 M148,18 L144,32 M180,30 L178,37 M212,16 L208,30 M244,28 L242,35 M276,20 L272,33 M36,60 L32,73 M68,72 L66,79 M100,56 L96,70 M132,68 L130,75 M164,58 L160,72 M196,70 L194,77 M228,56 L224,70 M260,68 L258,75 M290,60 L286,73" />
+                    android:pathData="M34,-28 L28,-13 M78,-14 L72,1 M122,-32 L116,-16 M166,-18 L160,-3 M210,-30 L204,-14 M254,-16 L248,-1 M298,-28 L292,-12 M338,-18 L332,-3 M20,22 L14,37 M64,34 L58,49 M108,18 L102,34 M152,30 L146,45 M196,20 L190,36 M240,32 L234,47 M284,18 L278,34 M328,28 L322,43 M46,64 L40,79 M90,76 L84,91 M134,60 L128,76 M178,72 L172,87 M222,62 L216,78 M266,74 L260,89 M310,60 L304,76" />
             </group>
 
-            <group android:name="rain_soft_near">
+            <!-- Tầng mưa gần (dài, rõ nét) -->
+            <group android:name="rain_near">
                 <path
-                    android:strokeColor="#99FFFFFF"
-                    android:strokeWidth="1.0"
+                    android:strokeColor="#8CFFFFFF"
+                    android:strokeWidth="1.05"
                     android:strokeLineCap="round"
-                    android:pathData="M42,-36 L36,-18 M98,-22 L94,-10 M154,-38 L148,-20 M210,-20 L206,-8 M266,-34 L260,-16 M26,18 L20,36 M82,30 L78,42 M138,14 L132,32 M194,26 L190,38 M250,16 L244,34 M48,62 L42,80 M104,74 L100,86 M160,58 L154,76 M216,70 L212,82 M272,60 L266,78" />
+                    android:pathData="M48,-36 L40,-16 M114,-20 L106,0 M180,-38 L172,-18 M246,-22 L238,-2 M312,-34 L304,-14 M30,20 L22,40 M96,34 L88,54 M162,16 L154,36 M228,30 L220,50 M294,18 L286,38 M62,66 L54,86 M128,78 L120,98 M194,62 L186,82 M260,76 L252,96 M326,64 L318,84" />
             </group>
 
-            <group android:name="divider_splash_a">
+            <!-- Vệt nước mưa trượt chậm trên mặt kính -->
+            <group android:name="glass_water_streaks">
                 <path
-                    android:fillColor="#CCFFFFFF"
-                    android:pathData="M43,82 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M51,83 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 M133,81 m-1.2,0 a1.2,1.2 0 1,0 2.4,0 a1.2,1.2 0 1,0 -2.4,0 M141,83 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 M229,82 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M237,83 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0" />
+                    android:strokeColor="#38FFFFFF"
+                    android:strokeWidth="1.4"
+                    android:strokeLineCap="round"
+                    android:pathData="M86,18 L86,34 M192,14 L192,32 M288,22 L288,40 M144,48 L144,64 M248,44 L248,62" />
             </group>
 
-            <group android:name="divider_splash_b">
-                <path
-                    android:fillColor="#B3E0F2FE"
-                    android:pathData="M85,82 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0 M93,83 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0 M181,81 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0 M189,83 m-0.9,0 a0.9,0.9 0 1,0 1.8,0 a0.9,0.9 0 1,0 -1.8,0 M269,82 m-1.0,0 a1.0,1.0 0 1,0 2.0,0 a1.0,1.0 0 1,0 -2.0,0 M277,83 m-0.8,0 a0.8,0.8 0 1,0 1.6,0 a0.8,0.8 0 1,0 -1.6,0" />
-            </group>
-
-            <group android:name="divider_drip_1">
-                <path
-                    android:fillColor="#CCE0F2FE"
-                    android:pathData="M64,113 C65.1,115.2 65.5,116.4 65.5,117.5 C65.5,118.8 64.8,119.6 64,119.6 C63.2,119.6 62.5,118.8 62.5,117.5 C62.5,116.4 62.9,115.2 64,113 Z" />
-            </group>
-
-            <group android:name="divider_drip_2">
-                <path
-                    android:fillColor="#E6FFFFFF"
-                    android:pathData="M148,113 C149.2,115.4 149.6,116.6 149.6,117.8 C149.6,119.2 148.8,120.0 148,120.0 C147.2,120.0 146.4,119.2 146.4,117.8 C146.4,116.6 146.8,115.4 148,113 Z" />
-            </group>
-
-            <group android:name="divider_drip_3">
-                <path
-                    android:fillColor="#CCE0F2FE"
-                    android:pathData="M226,113 C227.1,115.2 227.5,116.4 227.5,117.5 C227.5,118.8 226.8,119.6 226,119.6 C225.2,119.6 224.5,118.8 224.5,117.5 C224.5,116.4 224.9,115.2 226,113 Z" />
-            </group>
+            <!-- Màng nước loang mỏng ngay đúng mép trên dải lịch tuần (Y = 97) -->
+            <path
+                android:name="week_bar_ripple"
+                android:strokeColor="#BAE6FD"
+                android:strokeWidth="1.1"
+                android:strokeAlpha="0.0"
+                android:strokeLineCap="round"
+                android:pathData="M46,97 L62,97 M124,97 L142,97 M212,97 L228,97 M294,97 L310,97" />
         </vector>
     </aapt:attr>
 
-    <target android:name="rain_soft_near">
+    <target android:name="rain_near">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="560" android:valueFrom="-35" android:valueTo="135" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
-                <objectAnimator android:propertyName="translateX" android:duration="560" android:valueFrom="8" android:valueTo="-22" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="520" android:valueFrom="-35" android:valueTo="130" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="520" android:valueFrom="8" android:valueTo="-22" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
             </set>
         </aapt:attr>
     </target>
 
-    <target android:name="rain_soft_mid">
+    <target android:name="rain_mid">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="740" android:valueFrom="-38" android:valueTo="135" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
-                <objectAnimator android:propertyName="translateX" android:duration="740" android:valueFrom="6" android:valueTo="-18" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="700" android:valueFrom="-38" android:valueTo="130" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="700" android:valueFrom="6" android:valueTo="-18" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
             </set>
         </aapt:attr>
     </target>
 
-    <target android:name="rain_mist_far">
+    <target android:name="rain_far">
         <aapt:attr name="android:animation">
             <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="980" android:valueFrom="-40" android:valueTo="135" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
-                <objectAnimator android:propertyName="translateX" android:duration="980" android:valueFrom="5" android:valueTo="-14" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateY" android:duration="940" android:valueFrom="-40" android:valueTo="130" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
+                <objectAnimator android:propertyName="translateX" android:duration="940" android:valueFrom="5" android:valueTo="-14" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
             </set>
         </aapt:attr>
     </target>
 
-    <target android:name="divider_splash_a">
+    <target android:name="glass_water_streaks">
         <aapt:attr name="android:animation">
-            <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="280" android:valueFrom="2" android:valueTo="-5" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateX" android:duration="560" android:valueFrom="0" android:valueTo="-4" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
-            </set>
+            <objectAnimator android:propertyName="translateY" android:duration="2600" android:valueFrom="0" android:valueTo="52" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
         </aapt:attr>
     </target>
 
-    <target android:name="divider_splash_b">
+    <target android:name="week_bar_ripple">
         <aapt:attr name="android:animation">
-            <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="355" android:valueFrom="2" android:valueTo="-4" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
-                <objectAnimator android:propertyName="translateX" android:duration="710" android:valueFrom="0" android:valueTo="-3" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/linear_interpolator" />
-            </set>
-        </aapt:attr>
-    </target>
-
-    <target android:name="divider_drip_1">
-        <aapt:attr name="android:animation">
-            <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="1150" android:valueFrom="-2" android:valueTo="34" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
-                <objectAnimator android:propertyName="scaleX" android:duration="1150" android:valueFrom="1.1" android:valueTo="0.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
-            </set>
-        </aapt:attr>
-    </target>
-
-    <target android:name="divider_drip_2">
-        <aapt:attr name="android:animation">
-            <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="1420" android:valueFrom="-2" android:valueTo="36" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
-                <objectAnimator android:propertyName="scaleX" android:duration="1420" android:valueFrom="1.1" android:valueTo="0.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
-            </set>
-        </aapt:attr>
-    </target>
-
-    <target android:name="divider_drip_3">
-        <aapt:attr name="android:animation">
-            <set android:ordering="together">
-                <objectAnimator android:propertyName="translateY" android:duration="1680" android:valueFrom="-2" android:valueTo="34" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
-                <objectAnimator android:propertyName="scaleX" android:duration="1680" android:valueFrom="1.1" android:valueTo="0.0" android:repeatCount="infinite" android:repeatMode="restart" android:interpolator="@android:anim/accelerate_interpolator" />
-            </set>
+            <objectAnimator android:propertyName="strokeAlpha" android:duration="520" android:valueFrom="0.0" android:valueTo="0.55" android:repeatCount="infinite" android:repeatMode="reverse" android:interpolator="@android:anim/decelerate_interpolator" />
         </aapt:attr>
     </target>
 </animated-vector>
