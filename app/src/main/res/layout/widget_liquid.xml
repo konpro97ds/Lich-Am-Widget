@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="4dp">
 
-    <!-- Lớp nền Kính Lỏng vẽ bằng Canvas -->
+    <!-- Lớp nền Kính Lỏng vẽ đúng tỷ lệ khung hình thực tế -->
     <ImageView
         android:id="@+id/iv_glass_bg"
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/anim_glass_shimmer" />
 
-    <!-- Các lớp hiệu ứng thời tiết & lễ hội -->
+    <!-- Các lớp hiệu ứng chuyển động -->
     <ProgressBar
         android:id="@+id/pb_weather_cloud"
         android:layout_width="match_parent"
@@ -85,7 +85,6 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <!-- Lời chào góc trái trên (chạm để mở cài đặt) -->
         <TextView
             android:id="@+id/tv_greeting"
             android:layout_width="wrap_content"
@@ -104,7 +103,6 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!-- Cụm đồng hồ + ngày -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -128,13 +126,15 @@
                         android:textSize="36sp"
                         android:textStyle="bold" />
 
-                    <ProgressBar
-                        android:id="@+id/pb_colon"
-                        android:layout_width="12dp"
-                        android:layout_height="28dp"
-                        android:layout_marginHorizontal="2dp"
-                        android:indeterminate="true"
-                        android:indeterminateDrawable="@drawable/anim_colon_blink" />
+                    <TextView
+                        android:id="@+id/tv_colon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="2dp"
+                        android:text=":"
+                        android:textColor="#FFFFFF"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
 
                     <TextClock
                         android:id="@+id/tc_minute"
@@ -168,7 +168,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Cụm thời tiết bên phải -->
             <LinearLayout
                 android:id="@+id/zone_weather_right"
                 android:layout_width="0dp"
@@ -237,13 +236,15 @@
                     android:textSize="36sp"
                     android:textStyle="bold" />
 
-                <ProgressBar
-                    android:id="@+id/pb_colon_c"
-                    android:layout_width="12dp"
-                    android:layout_height="28dp"
-                    android:layout_marginHorizontal="2dp"
-                    android:indeterminate="true"
-                    android:indeterminateDrawable="@drawable/anim_colon_blink" />
+                <TextView
+                    android:id="@+id/tv_colon_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="2dp"
+                    android:text=":"
+                    android:textColor="#FFFFFF"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
 
                 <TextClock
                     android:id="@+id/tc_minute_c"
@@ -329,13 +330,15 @@
                         android:textSize="36sp"
                         android:textStyle="bold" />
 
-                    <ProgressBar
-                        android:id="@+id/pb_colon_r"
-                        android:layout_width="12dp"
-                        android:layout_height="28dp"
-                        android:layout_marginHorizontal="2dp"
-                        android:indeterminate="true"
-                        android:indeterminateDrawable="@drawable/anim_colon_blink" />
+                    <TextView
+                        android:id="@+id/tv_colon_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="2dp"
+                        android:text=":"
+                        android:textColor="#FFFFFF"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
 
                     <TextClock
                         android:id="@+id/tc_minute_r"
