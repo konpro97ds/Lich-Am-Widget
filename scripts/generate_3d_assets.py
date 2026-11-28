@@ -234,10 +234,10 @@ def build_all():
     im = draw_3d_cloud(im, 735, 142, scale=0.98, dark=True)
     im.save(f"{OUT_DIR}/art_cloud.png")
 
-    # 6. RAIN & THUNDER
+        # 6. RAIN & THUNDER (Đáy mây nằm đúng Y=142px để sấm sét đánh ra từ dưới bụng mây)
     for fname in ["art_rain", "art_thunder"]:
-        im = draw_3d_cloud(new_canvas(), 460, 120, scale=1.15, dark=True)
-        im = draw_3d_cloud(im, 640, 128, scale=1.28, dark=True)
+        im = draw_3d_cloud(new_canvas(), 460, 92, scale=1.15, dark=True)
+        im = draw_3d_cloud(im, 640, 100, scale=1.28, dark=True)
         d = ImageDraw.Draw(im)
         for gx, gy, gr in [(180, 90, 5), (320, 140, 6), (510, 190, 5), (710, 110, 6), (780, 175, 4)]:
             d.ellipse((gx - gr, gy - gr, gx + gr, gy + gr), fill=(224, 242, 254, 130), outline=(255, 255, 255, 190))
