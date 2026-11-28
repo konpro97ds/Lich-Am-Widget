@@ -29,6 +29,8 @@ import java.io.File
 import java.util.Calendar
 import java.util.Random
 import java.util.concurrent.TimeUnit
+import kotlin.math.cos
+import kotlin.math.sin
 
 class LiquidWidgetProvider : AppWidgetProvider() {
 
@@ -477,8 +479,8 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             p.color = petalColor
             for (i in 0 until 5) {
                 val angle = Math.toRadians((i * 72 - 18).toDouble())
-                val px = cx + (Math.cos(angle) * r * 0.58f).toFloat()
-                val py = cy + (Math.sin(angle) * r * 0.58f).toFloat()
+                val px = cx + (cos(angle) * r * 0.58f).toFloat()
+                val py = cy + (sin(angle) * r * 0.58f).toFloat()
                 canvas.drawCircle(px, py, r * 0.48f, p)
             }
             p.color = centerColor
@@ -586,8 +588,8 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             for (i in 0 until 10) {
                 val r = if (i % 2 == 0) 23f else 8.8f
                 val angle = Math.toRadians((i * 36 - 90).toDouble())
-                val sx = starCx + (Math.cos(angle) * r).toFloat()
-                val sy = starCy + (Math.sin(angle) * r).toFloat()
+                val sx = starCx + (cos(angle) * r).toFloat()
+                val sy = starCy + (sin(angle) * r).toFloat()
                 if (i == 0) starPath.moveTo(sx, sy) else starPath.lineTo(sx, sy)
             }
             starPath.close()
@@ -601,6 +603,7 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             canvas.drawRect(0f, 0f, w, h, p)
             p.shader = null
 
+            // Trăng rằm Trung Thu (ngày 15 Âm -> tròn đầy 100%)
             drawRealisticLunarMoon3D(canvas, w * 0.72f, h * 0.34f, 34f, 15, 1.0f)
 
             for (i in 0..24) {
@@ -612,35 +615,101 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             drawRealisticCloud3D(canvas, w * 0.63f, h * 0.44f, 0.88f, 0.55f)
         }
 
+        /**
+         * Vẽ mặt trăng chuẩn pha thiên văn theo đúng ngày Âm lịch (1..30):
+         * - Mùng 1, 29, 30: Trăng non (tối mờ, viền sáng mảnh)
+         * - Mùng 3..6: Trăng lưỡi liềm đầu tháng (sáng bên phải)
+         * - Mùng 7..9: Trăng bán nguyệt thượng tuần (nửa vầng trăng phải)
+         * - Mùng 10..13: Trăng khuyết trương
+         * - 14..16: Trăng tròn rằm
+         * - 17..19: Trăng khuyết đầu hạ tuần
+         * - 20..22: Trăng bán nguyệt hạ tuần (nửa vầng trăng trái - như 20/10 Âm)
+         * - 23..28: Trăng lưỡi liềm cuối tháng (sáng bên trái)
+         */
         private fun drawRealisticLunarMoon3D(canvas: Canvas, cx: Float, cy: Float, r: Float, lunarDay: Int, alphaMult: Float = 1f) {
             val p = Paint(Paint.ANTI_ALIAS_FLAG)
-            val isFullMoon = lunarDay in 12..18
-            val isHalfMoon = (lunarDay in 7..11) || (lunarDay in 19..23)
+            val d = lunarDay.coerceIn(1, 30)
 
-            p.shader = RadialGradient(cx, cy, r * 2.6f, intArrayOf(Color.argb((95 * alphaMult).toInt(), 254, 249, 195), Color.argb((35 * alphaMult).toInt(), 253, 224, 71), Color.TRANSPARENT), null, Shader.TileMode.CLAMP)
-            canvas.drawCircle(cx, cy, r * 2.6f, p)
+            // Tỷ lệ chiếu sáng từ 0.0 (trăng non) -> 1.0 (trăng tròn ngày 15) -> 0.0 (cuối tháng)
+            val illum = if (d <= 15) {
+                (d - 1) / 14.0
+            } else {
+                (30 - d) / 15.0
+            }.coerceIn(0.04, 1.0)
+
+            // Quầng trăng dịu tỷ lệ thuận với độ tròn của trăng
+            val glowAlpha = (85 * illum * alphaMult).toInt().coerceAtLeast(18)
+            p.shader = RadialGradient(
+                cx, cy, r * 2.3f,
+                intArrayOf(Color.argb(glowAlpha, 254, 249, 195), Color.argb(glowAlpha / 3, 253, 224, 71), Color.TRANSPARENT),
+                null, Shader.TileMode.CLAMP
+            )
+            canvas.drawCircle(cx, cy, r * 2.3f, p)
             p.shader = null
 
-            val saveCount = canvas.saveLayer(cx - r * 1.5f, cy - r * 1.5f, cx + r * 1.5f, cy + r * 1.5f, null)
-            p.shader = RadialGradient(cx - r * 0.25f, cy - r * 0.25f, r * 1.25f, intArrayOf(Color.argb((250 * alphaMult).toInt(), 255, 255, 255), Color.argb((235 * alphaMult).toInt(), 254, 249, 195), Color.argb((205 * alphaMult).toInt(), 253, 224, 71)), null, Shader.TileMode.CLAMP)
+            val saveCount = canvas.saveLayer(cx - r * 1.4f, cy - r * 1.4f, cx + r * 1.4f, cy + r * 1.4f, null)
+
+            // Đĩa trăng nền tối (phần khuất bóng đất) để thấy rõ khối cầu 3D của mặt trăng
+            p.color = Color.argb((45 * alphaMult).toInt(), 148, 163, 184)
+            canvas.drawCircle(cx, cy, r, p)
+
+            // Xây dựng Path phần mặt trăng được chiếu sáng chuẩn hình học
+            val litPath = Path()
+            val topY = cy - r
+            val botY = cy + r
+            val ovalRect = RectF(cx - r, topY, cx + r, botY)
+
+            // Bán trục ngang của đường phân giới sáng/tối: rx từ -r (trăng non) -> 0 (bán nguyệt) -> +r (trăng tròn)
+            val rx = ((2.0 * illum - 1.0) * r).toFloat()
+            val innerRect = RectF(cx - kotlin.math.abs(rx), topY, cx + kotlin.math.abs(rx), botY)
+
+            if (d <= 15) {
+                // Nửa tháng đầu: sáng bên PHẢI (cung ngoài từ -90° quét +180° xuống đáy)
+                litPath.arcTo(ovalRect, -90f, 180f, true)
+                if (rx >= 0f) {
+                    // Trăng khuyết trương (> bán nguyệt): cung trong lồi sang trái
+                    litPath.arcTo(innerRect, 90f, 180f, false)
+                } else {
+                    // Trăng lưỡi liềm (< bán nguyệt): cung trong lõm sang phải
+                    litPath.arcTo(innerRect, 90f, -180f, false)
+                }
+            } else {
+                // Nửa tháng sau: sáng bên TRÁI (cung ngoài từ +90° quét +180° lên đỉnh)
+                litPath.arcTo(ovalRect, 90f, 180f, true)
+                if (rx >= 0f) {
+                    // Trăng khuyết hạ tuần (> bán nguyệt): cung trong lồi sang phải
+                    litPath.arcTo(innerRect, -90f, 180f, false)
+                } else {
+                    // Trăng lưỡi liềm cuối tháng (< bán nguyệt): cung trong lõm sang trái
+                    litPath.arcTo(innerRect, -90f, -180f, false)
+                }
+            }
+            litPath.close()
+
+            canvas.save()
+            canvas.clipPath(litPath)
+
+            // Tô bề mặt trăng sáng ấm tự nhiên
+            p.shader = RadialGradient(
+                cx - r * 0.2f, cy - r * 0.2f, r * 1.25f,
+                intArrayOf(
+                    Color.argb((252 * alphaMult).toInt(), 255, 255, 255),
+                    Color.argb((235 * alphaMult).toInt(), 254, 249, 195),
+                    Color.argb((205 * alphaMult).toInt(), 253, 224, 71)
+                ),
+                null, Shader.TileMode.CLAMP
+            )
             canvas.drawCircle(cx, cy, r, p)
             p.shader = null
 
-            p.color = Color.argb((38 * alphaMult).toInt(), 148, 163, 184)
-            canvas.drawCircle(cx - r * 0.28f, cy - r * 0.22f, r * 0.32f, p)
-            canvas.drawCircle(cx + r * 0.22f, cy - r * 0.12f, r * 0.24f, p)
-            canvas.drawCircle(cx - r * 0.08f, cy + r * 0.30f, r * 0.22f, p)
+            // Biển trăng & hố thiên thạch mờ tự nhiên trên bề mặt sáng
+            p.color = Color.argb((42 * alphaMult).toInt(), 100, 116, 139)
+            canvas.drawCircle(cx - r * 0.28f, cy - r * 0.20f, r * 0.30f, p)
+            canvas.drawCircle(cx + r * 0.24f, cy - r * 0.14f, r * 0.24f, p)
+            canvas.drawCircle(cx - r * 0.12f, cy + r * 0.28f, r * 0.22f, p)
+            canvas.drawCircle(cx + r * 0.18f, cy + r * 0.22f, r * 0.16f, p)
 
-            if (!isFullMoon) {
-                val clearPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                    xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
-                    color = Color.BLACK
-                }
-                val isWaxing = lunarDay < 15
-                val offsetFactor = if (isHalfMoon) 0.58f else 0.36f
-                val shadowCx = if (isWaxing) cx - r * offsetFactor else cx + r * offsetFactor
-                canvas.drawCircle(shadowCx, cy - r * 0.08f, r * 0.96f, clearPaint)
-            }
+            canvas.restore()
             canvas.restoreToCount(saveCount)
         }
 
@@ -698,8 +767,8 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             p.strokeCap = Paint.Cap.ROUND
             for (a in 0 until 360 step 22) {
                 val rad = Math.toRadians(a.toDouble())
-                val cosA = Math.cos(rad).toFloat()
-                val sinA = Math.sin(rad).toFloat()
+                val cosA = cos(rad).toFloat()
+                val sinA = sin(rad).toFloat()
                 val innerR = radius * 0.16f
                 val outerR = if (a % 44 == 0) radius else radius * 0.72f
                 p.style = Paint.Style.STROKE
@@ -712,14 +781,67 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             }
         }
 
-        private fun drawRefractiveWaterDrop(canvas: Canvas, cx: Float, cy: Float, r: Float) {
-            val smallR = r * 0.68f
+        /**
+         * Hiệu ứng nhiễu động kính khi trời mưa:
+         * - Thấu kính giọt nước 3D khúc xạ ánh sáng bám trên bề mặt kính (bóng đổ nhẹ + viền sáng đáy giọt + đốm phản quang đỉnh)
+         * - Vệt nước chảy dài tạo cảm giác mặt kính đang ướt mưa thật
+         */
+        private fun drawGlassRainDistortion(canvas: Canvas, w: Float, h: Float, rnd: Random, densityCount: Int) {
             val p = Paint(Paint.ANTI_ALIAS_FLAG)
-            p.shader = RadialGradient(cx + smallR * 0.2f, cy + smallR * 0.2f, smallR, intArrayOf(Color.argb(15, 255, 255, 255), Color.argb(45, 224, 242, 254), Color.argb(75, 255, 255, 255), Color.TRANSPARENT), floatArrayOf(0f, 0.55f, 0.85f, 1.0f), Shader.TileMode.CLAMP)
-            canvas.drawCircle(cx, cy, smallR, p)
+
+            // 1. Vệt nước chảy dài trên kính
+            p.strokeCap = Paint.Cap.ROUND
+            for (i in 0 until densityCount / 2) {
+                val sx = 28f + rnd.nextFloat() * (w - 56f)
+                val sy = 16f + rnd.nextFloat() * (h * 0.55f)
+                val len = 18f + rnd.nextFloat() * 34f
+                p.shader = LinearGradient(
+                    sx, sy, sx, sy + len,
+                    intArrayOf(Color.TRANSPARENT, Color.argb(48, 224, 242, 254), Color.argb(95, 255, 255, 255)),
+                    null, Shader.TileMode.CLAMP
+                )
+                p.strokeWidth = 1.6f + rnd.nextFloat() * 1.2f
+                canvas.drawLine(sx, sy, sx, sy + len, p)
+                p.shader = null
+                // Đầu giọt nước đọng ở cuối vệt chảy
+                drawRefractiveWaterDrop(canvas, sx, sy + len, 3.0f + rnd.nextFloat() * 1.6f)
+            }
+
+            // 2. Các giọt nước tròn li ti bám khắp mặt kính
+            for (i in 0 until densityCount) {
+                val gx = 22f + rnd.nextFloat() * (w - 44f)
+                val gy = 18f + rnd.nextFloat() * (h - 36f)
+                val gr = 2.0f + rnd.nextFloat() * 3.4f
+                drawRefractiveWaterDrop(canvas, gx, gy, gr)
+            }
+        }
+
+        private fun drawRefractiveWaterDrop(canvas: Canvas, cx: Float, cy: Float, r: Float) {
+            val p = Paint(Paint.ANTI_ALIAS_FLAG)
+            // Bóng đổ khúc xạ dưới đáy giọt nước
+            p.color = Color.argb(65, 15, 23, 42)
+            canvas.drawCircle(cx + 0.6f, cy + 1.2f, r, p)
+
+            // Thân giọt nước trong suốt có viền tụ sáng ở nửa dưới
+            p.shader = RadialGradient(
+                cx, cy - r * 0.25f, r * 1.15f,
+                intArrayOf(Color.argb(18, 255, 255, 255), Color.argb(55, 186, 230, 253), Color.argb(125, 255, 255, 255)),
+                floatArrayOf(0f, 0.68f, 1.0f),
+                Shader.TileMode.CLAMP
+            )
+            canvas.drawCircle(cx, cy, r, p)
             p.shader = null
-            p.color = Color.argb(185, 255, 255, 255)
-            canvas.drawCircle(cx - smallR * 0.32f, cy - smallR * 0.32f, smallR * 0.24f, p)
+
+            // Viền kính mỏng bao quanh giọt
+            p.style = Paint.Style.STROKE
+            p.strokeWidth = 0.75f
+            p.color = Color.argb(110, 255, 255, 255)
+            canvas.drawCircle(cx, cy, r, p)
+            p.style = Paint.Style.FILL
+
+            // Điểm bắt sáng trắng sắc nét góc trái trên
+            p.color = Color.argb(225, 255, 255, 255)
+            canvas.drawCircle(cx - r * 0.34f, cy - r * 0.34f, (r * 0.28f).coerceAtLeast(0.8f), p)
         }
 
         private fun drawRealisticChristmasScene3D(canvas: Canvas, w: Float, h: Float, rnd: Random) {
@@ -751,8 +873,8 @@ class LiquidWidgetProvider : AppWidgetProvider() {
             for (i in 0 until 10) {
                 val rStar = if (i % 2 == 0) 9.5f else 4.2f
                 val angle = Math.toRadians((i * 36 - 90).toDouble())
-                val sx = tx + (Math.cos(angle) * rStar).toFloat()
-                val sy = starY + (Math.sin(angle) * rStar).toFloat()
+                val sx = tx + (cos(angle) * rStar).toFloat()
+                val sy = starY + (sin(angle) * rStar).toFloat()
                 if (i == 0) starPath.moveTo(sx, sy) else starPath.lineTo(sx, sy)
             }
             starPath.close()
@@ -777,32 +899,42 @@ class LiquidWidgetProvider : AppWidgetProvider() {
                 "MID_AUTUMN" -> drawMidAutumnScene3D(canvas, w, h, rnd)
                 "XMAS" -> drawRealisticChristmasScene3D(canvas, w, h, rnd)
                 "SUN", "SUN_CLOUD" -> {
+                    // Mặt trời gọn, quầng tán xạ mỏng tự nhiên sát viền mặt trời (không loang hào quang ảo)
                     val isSoftSun = (effect == "SUN_CLOUD")
                     val sx = w * 0.72f
                     val sy = h * 0.34f
-                    val sunR = if (isSoftSun) 24f else 29f
-                    val glowR = if (isSoftSun) 115f else 165f
-                    val glowAlpha1 = if (isSoftSun) 68 else 110
-                    val glowAlpha2 = if (isSoftSun) 24 else 42
+                    val sunR = if (isSoftSun) 21f else 25f
+                    val glowR = if (isSoftSun) 52f else 66f
+                    val glowAlpha1 = if (isSoftSun) 65 else 95
+                    val glowAlpha2 = if (isSoftSun) 20 else 32
 
-                    p.shader = RadialGradient(sx, sy, glowR, intArrayOf(Color.argb(glowAlpha1, 253, 224, 71), Color.argb(glowAlpha2, 245, 158, 11), Color.TRANSPARENT), null, Shader.TileMode.CLAMP)
+                    p.shader = RadialGradient(
+                        sx, sy, glowR,
+                        intArrayOf(Color.argb(glowAlpha1, 254, 240, 138), Color.argb(glowAlpha2, 251, 191, 36), Color.TRANSPARENT),
+                        floatArrayOf(0.35f, 0.70f, 1.0f),
+                        Shader.TileMode.CLAMP
+                    )
                     canvas.drawCircle(sx, sy, glowR, p)
                     p.shader = null
 
-                    p.shader = RadialGradient(sx - sunR * 0.25f, sy - sunR * 0.25f, sunR * 1.2f, intArrayOf(Color.argb(235, 254, 249, 195), Color.argb(210, 253, 224, 71), Color.argb(185, 245, 158, 11)), null, Shader.TileMode.CLAMP)
+                    p.shader = RadialGradient(
+                        sx - sunR * 0.25f, sy - sunR * 0.25f, sunR * 1.15f,
+                        intArrayOf(Color.argb(245, 255, 255, 255), Color.argb(235, 254, 240, 138), Color.argb(215, 245, 158, 11)),
+                        null, Shader.TileMode.CLAMP
+                    )
                     canvas.drawCircle(sx, sy, sunR, p)
                     p.shader = null
 
                     if (isSoftSun) {
-                        drawRealisticCloud3D(canvas, w * 0.62f, h * 0.42f, 0.96f, 0.95f)
-                        drawRealisticCloud3D(canvas, w * 0.82f, h * 0.45f, 0.78f, 0.88f)
+                        drawRealisticCloud3D(canvas, w * 0.62f, h * 0.42f, 0.94f, 0.95f)
+                        drawRealisticCloud3D(canvas, w * 0.82f, h * 0.45f, 0.76f, 0.88f)
                     }
                 }
                 "MOON", "MOON_CLOUD" -> {
                     p.shader = LinearGradient(0f, 0f, 0f, h, Color.argb(85, 9, 13, 28), Color.argb(35, 30, 27, 75), Shader.TileMode.CLAMP)
                     canvas.drawRect(0f, 0f, w, h, p)
                     p.shader = null
-                    val moonAlpha = if (effect == "MOON_CLOUD") 0.65f else 1.0f
+                    val moonAlpha = if (effect == "MOON_CLOUD") 0.72f else 1.0f
                     drawRealisticLunarMoon3D(canvas, w * 0.72f, h * 0.34f, 28f, lunarDay, moonAlpha)
                     for (i in 0..26) {
                         p.color = Color.argb((120 + rnd.nextInt(135)), 255, 255, 255)
@@ -820,20 +952,16 @@ class LiquidWidgetProvider : AppWidgetProvider() {
                     drawRealisticCloud3D(canvas, w * 0.38f, h * 0.28f, 1.12f, 0.78f)
                     drawRealisticCloud3D(canvas, w * 0.68f, h * 0.30f, 1.22f, 0.84f)
                     drawRealisticCloud3D(canvas, w * 0.88f, h * 0.34f, 0.92f, 0.72f)
-                    for (i in 0..14) {
-                        drawRefractiveWaterDrop(canvas, 24f + rnd.nextFloat() * (w - 48f), 24f + rnd.nextFloat() * (h - 48f), 1.6f + rnd.nextFloat() * 2.2f)
-                    }
+                    drawGlassRainDistortion(canvas, w, h, rnd, 22)
                 }
                 "THUNDER" -> {
-                    p.shader = LinearGradient(0f, 0f, 0f, h, Color.argb(135, 9, 13, 22), Color.argb(75, 30, 27, 75), Shader.TileMode.CLAMP)
+                    p.shader = LinearGradient(0f, 0f, 0f, h, Color.argb(145, 9, 13, 22), Color.argb(85, 30, 27, 75), Shader.TileMode.CLAMP)
                     canvas.drawRect(0f, 0f, w, h, p)
                     p.shader = null
                     if (isNight) drawRealisticLunarMoon3D(canvas, w * 0.78f, h * 0.28f, 22f, lunarDay, 0.30f)
                     drawStormCloud3D(canvas, w * 0.56f, h * 0.30f, 1.15f)
                     drawStormCloud3D(canvas, w * 0.78f, h * 0.32f, 1.05f)
-                    for (i in 0..16) {
-                        drawRefractiveWaterDrop(canvas, 20f + rnd.nextFloat() * (w - 40f), 20f + rnd.nextFloat() * (h - 40f), 2.4f + rnd.nextFloat() * 3.4f)
-                    }
+                    drawGlassRainDistortion(canvas, w, h, rnd, 26)
                 }
                 "CLOUD" -> {
                     if (isNight) drawRealisticLunarMoon3D(canvas, w * 0.72f, h * 0.32f, 25f, lunarDay, 0.45f)
